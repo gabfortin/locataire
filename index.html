@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aide aux locataires — Vos droits de locataire à Montréal</title>
+<meta name="description" content="Aide aux locataires vous aide à comprendre vos droits, à agir face à un logement insalubre et à générer une lettre de mise en demeure, dans plusieurs langues.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="bg-blob blob-1" aria-hidden="true"></div>
+<div class="bg-blob blob-2" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#" class="brand" data-view-link="home">
+      <span class="brand-mark">🏠</span>
+      <span class="brand-name">Aide aux locataires</span>
+    </a>
+    <div class="lang-switcher">
+      <label class="sr-only" for="lang-select" data-i18n="lang.label">Langue</label>
+      <select id="lang-select" aria-label="Choisir la langue / Choose language">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="ht">🇭🇹 Kreyòl</option>
+        <option value="ar">🇸🇦 العربية</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="pa">🇮🇳 ਪੰਜਾਬੀ</option>
+        <option value="ur">🇵🇰 اردو</option>
+      </select>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- HOME VIEW -->
+  <section class="view active" id="view-home">
+    <div class="container hero">
+      <span class="pill" data-i18n="home.pill">Fait pour les locataires de Montréal</span>
+      <h1 data-i18n="home.title">Connaissez vos droits.<br>Agissez avec les bons mots.</h1>
+      <p class="lead" data-i18n="home.subtitle">Un logement insalubre ? Des réparations ignorées ? Aide aux locataires vous explique la marche à suivre et génère pour vous une lettre de mise en demeure officielle, en français — peu importe votre langue.</p>
+
+      <div class="cta-grid">
+        <button class="cta-card cta-primary" data-goto="wizard">
+          <span class="cta-icon">✍️</span>
+          <span class="cta-title" data-i18n="home.cta1.title">Générer ma lettre de mise en demeure</span>
+          <span class="cta-desc" data-i18n="home.cta1.desc">Répondez à quelques questions, recevez une lettre prête à envoyer.</span>
+          <span class="cta-arrow">→</span>
+        </button>
+        <button class="cta-card" data-goto="info">
+          <span class="cta-icon">🛠️</span>
+          <span class="cta-title" data-i18n="home.cta2.title">Mon logement est insalubre, je fais quoi ?</span>
+          <span class="cta-desc" data-i18n="home.cta2.desc">Les étapes à suivre, dans l'ordre, avec les bonnes ressources.</span>
+          <span class="cta-arrow">→</span>
+        </button>
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-item">
+          <span class="trust-icon">🔒</span>
+          <span data-i18n="home.trust1">100% privé — rien n'est envoyé à un serveur</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">🆓</span>
+          <span data-i18n="home.trust2">Gratuit, sans compte</span>
+        </div>
+        <div class="trust-item">
+          <span class="trust-icon">🌐</span>
+          <span data-i18n="home.trust3">Disponible en 5 langues</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFO VIEW -->
+  <section class="view" id="view-info">
+    <div class="container">
+      <button class="back-link" data-goto="home">← <span data-i18n="common.back">Retour</span></button>
+      <h2 data-i18n="info.title">Logement insalubre ou problème grave : les étapes</h2>
+      <p class="lead" data-i18n="info.subtitle">Voici la marche à suivre, dans l'ordre. Ça ne remplace pas un avis juridique, mais ça vous aide à savoir où commencer.</p>
+
+      <ol class="steps">
+        <li class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h3 data-i18n="info.step1.title">Documentez tout</h3>
+            <p data-i18n="info.step1.desc">Prenez des photos et vidéos datées du problème (moisissure, vermine, dégât d'eau, chauffage, etc.). Gardez une trace écrite de toutes vos communications avec le locateur (textos, courriels, lettres).</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h3 data-i18n="info.step2.title">Avisez votre locateur par écrit</h3>
+            <p data-i18n="info.step2.desc">Envoyez une lettre de mise en demeure décrivant le problème et donnant un délai raisonnable pour agir (souvent 10 jours). C'est l'étape qu'Aide aux locataires peut générer pour vous.</p>
+            <button class="btn btn-small" data-goto="wizard" data-i18n="info.step2.cta">Générer cette lettre</button>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h3 data-i18n="info.step3.title">Contactez votre ville ou votre arrondissement</h3>
+            <p data-i18n="info.step3.desc">Si le logement est insalubre (moisissure, vermine, absence de chauffage, dégâts majeurs), vous pouvez demander une inspection municipale. À Montréal, composez le 311 ou consultez montreal.ca.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h3 data-i18n="info.step4.title">Urgence ou danger immédiat</h3>
+            <p data-i18n="info.step4.desc">Pas de chauffage en hiver, risque d'incendie, panne électrique dangereuse : contactez les services d'urgence de votre ville sans attendre. En cas de danger immédiat pour votre sécurité, appelez le 911.</p>
+          </div>
+        </li>
+        <li class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h3 data-i18n="info.step5.title">Toujours rien ? Allez au Tribunal administratif du logement (TAL)</h3>
+            <p data-i18n="info.step5.desc">Si le locateur ne corrige pas la situation après votre mise en demeure, vous pouvez déposer une demande au TAL : exécution forcée des travaux, diminution de loyer, résiliation du bail ou dommages-intérêts.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="resources">
+        <h3 data-i18n="info.resources.title">Ressources utiles</h3>
+        <div class="resource-grid">
+          <a class="resource-card" href="https://www.tal.gouv.qc.ca" target="_blank" rel="noopener">
+            <strong>Tribunal administratif du logement (TAL)</strong>
+            <span data-i18n="info.resources.tal">Recours officiels entre locateurs et locataires</span>
+            <span class="resource-url">tal.gouv.qc.ca</span>
+          </a>
+          <a class="resource-card" href="https://educaloi.qc.ca" target="_blank" rel="noopener">
+            <strong>Éducaloi</strong>
+            <span data-i18n="info.resources.educaloi">Explications juridiques claires et gratuites</span>
+            <span class="resource-url">educaloi.qc.ca</span>
+          </a>
+          <a class="resource-card" href="https://rclalq.qc.ca" target="_blank" rel="noopener">
+            <strong>RCLALQ</strong>
+            <span data-i18n="info.resources.rclalq">Regroupement des comités logement du Québec</span>
+            <span class="resource-url">rclalq.qc.ca</span>
+          </a>
+          <a class="resource-card" href="https://montreal.ca" target="_blank" rel="noopener">
+            <strong>Ville de Montréal — 311</strong>
+            <span data-i18n="info.resources.ville">Signaler un logement insalubre, demander une inspection</span>
+            <span class="resource-url">montreal.ca</span>
+          </a>
+        </div>
+      </div>
+
+      <p class="disclaimer" data-i18n="info.disclaimer">⚠️ Ceci est de l'information générale, pas un avis juridique. Pour une situation complexe, consultez un comité logement de votre quartier ou le TAL.</p>
+    </div>
+  </section>
+
+  <!-- WIZARD VIEW -->
+  <section class="view" id="view-wizard">
+    <div class="container">
+      <button class="back-link" data-goto="home">← <span data-i18n="common.back">Retour</span></button>
+      <h2 data-i18n="wizard.title">Générateur de lettre de mise en demeure</h2>
+      <p class="lead" data-i18n="wizard.subtitle">Répondez dans votre langue. La lettre générée sera toujours en français, prête à envoyer à votre locateur.</p>
+
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress-dot active" data-dot="1"></div>
+        <div class="progress-dot" data-dot="2"></div>
+        <div class="progress-dot" data-dot="3"></div>
+        <div class="progress-dot" data-dot="4"></div>
+        <div class="progress-dot" data-dot="5"></div>
+      </div>
+
+      <form id="letter-form" novalidate>
+
+        <!-- STEP 1: category -->
+        <fieldset class="wizard-step active" data-step="1">
+          <legend data-i18n="wizard.step1.legend">Quel est votre problème ?</legend>
+          <div class="choice-grid">
+            <label class="choice-card">
+              <input type="radio" name="category" value="salubrite" checked>
+              <span class="choice-icon">🦠</span>
+              <span class="choice-title" data-i18n="wizard.step1.salubrite">Salubrité ou réparations non faites</span>
+              <span class="choice-desc" data-i18n="wizard.step1.salubriteDesc">Moisissure, vermine, chauffage, dégât d'eau, plomberie, électricité...</span>
+            </label>
+            <label class="choice-card">
+              <input type="radio" name="category" value="grave">
+              <span class="choice-icon">🚫</span>
+              <span class="choice-title" data-i18n="wizard.step1.grave">Autre problème grave</span>
+              <span class="choice-desc" data-i18n="wizard.step1.graveDesc">Harcèlement, entrée sans préavis, atteinte à votre tranquillité...</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 2: your info -->
+        <fieldset class="wizard-step" data-step="2">
+          <legend data-i18n="wizard.step2.legend">Vos informations</legend>
+          <div class="field-grid">
+            <label class="field">
+              <span data-i18n="wizard.field.tenantName">Votre nom complet</span>
+              <input type="text" name="tenant_name" required>
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.tenantAddress">Adresse du logement (rue, numéro, appartement)</span>
+              <input type="text" name="tenant_address" required>
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.tenantCity">Ville</span>
+              <input type="text" name="tenant_city" value="Montréal">
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.tenantPostal">Code postal</span>
+              <input type="text" name="tenant_postal">
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.tenantEmail">Courriel (optionnel)</span>
+              <input type="email" name="tenant_email">
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.tenantPhone">Téléphone (optionnel)</span>
+              <input type="tel" name="tenant_phone">
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.leaseDate">Date d'entrée dans le logement (optionnel)</span>
+              <input type="date" name="lease_date">
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 3: landlord info -->
+        <fieldset class="wizard-step" data-step="3">
+          <legend data-i18n="wizard.step3.legend">Informations sur votre locateur</legend>
+          <div class="field-grid">
+            <label class="field">
+              <span data-i18n="wizard.field.landlordName">Nom du locateur ou de la compagnie</span>
+              <input type="text" name="landlord_name" required>
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.landlordAddress">Adresse du locateur (optionnel si inconnue)</span>
+              <input type="text" name="landlord_address">
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4: problem details -->
+        <fieldset class="wizard-step" data-step="4">
+          <legend data-i18n="wizard.step4.legend">Détails du problème</legend>
+
+          <div class="issues-block" data-category-block="salubrite">
+            <p class="field-label" data-i18n="wizard.field.issuesLabel">Cochez ce qui s'applique</p>
+            <div class="checkbox-grid">
+              <label class="check"><input type="checkbox" name="issue" value="moisissure"><span data-i18n="wizard.issue.moisissure">Moisissure / humidité</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="vermine"><span data-i18n="wizard.issue.vermine">Vermine (coquerelles, punaises, rongeurs)</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="chauffage"><span data-i18n="wizard.issue.chauffage">Chauffage insuffisant</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="eauchaude"><span data-i18n="wizard.issue.eauchaude">Pas d'eau chaude</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="degatEau"><span data-i18n="wizard.issue.degatEau">Dégât d'eau / infiltration</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="electricite"><span data-i18n="wizard.issue.electricite">Problème électrique</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="plomberie"><span data-i18n="wizard.issue.plomberie">Problème de plomberie</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="securite"><span data-i18n="wizard.issue.securite">Porte / fenêtre brisée, sécurité</span></label>
+            </div>
+          </div>
+
+          <div class="issues-block" data-category-block="grave" hidden>
+            <p class="field-label" data-i18n="wizard.field.graveLabel">Cochez ce qui s'applique</p>
+            <div class="checkbox-grid">
+              <label class="check"><input type="checkbox" name="grave" value="harcelement"><span data-i18n="wizard.grave.harcelement">Harcèlement de la part du locateur</span></label>
+              <label class="check"><input type="checkbox" name="grave" value="entree"><span data-i18n="wizard.grave.entree">Entrée dans le logement sans préavis / consentement</span></label>
+              <label class="check"><input type="checkbox" name="grave" value="jouissance"><span data-i18n="wizard.grave.jouissance">Atteinte à ma tranquillité / jouissance paisible</span></label>
+            </div>
+          </div>
+
+          <label class="field full">
+            <span data-i18n="wizard.field.details">Décrivez la situation en détail</span>
+            <textarea name="issue_details" rows="4" required></textarea>
+          </label>
+
+          <div class="field-grid">
+            <label class="field">
+              <span data-i18n="wizard.field.dateNoticed">Date où vous avez remarqué le problème</span>
+              <input type="date" name="date_noticed">
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.dateReported">Date où vous l'avez signalé au locateur (optionnel)</span>
+              <input type="date" name="date_reported">
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 5: deadline & remedy -->
+        <fieldset class="wizard-step" data-step="5">
+          <legend data-i18n="wizard.step5.legend">Délai et solution demandée</legend>
+          <div class="field-grid">
+            <label class="field">
+              <span data-i18n="wizard.field.deadline">Délai accordé pour corriger (en jours)</span>
+              <input type="number" name="deadline_days" value="10" min="1" max="60">
+            </label>
+            <label class="field">
+              <span data-i18n="wizard.field.remedy">Ce que vous demandez</span>
+              <select name="remedy">
+                <option value="reparation" data-i18n="wizard.remedy.reparation">Que les réparations soient faites</option>
+                <option value="cessation" data-i18n="wizard.remedy.cessation">Que les agissements cessent</option>
+                <option value="remboursement" data-i18n="wizard.remedy.remboursement">Une diminution de loyer</option>
+                <option value="autre" data-i18n="wizard.remedy.autre">Autre chose</option>
+              </select>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="wizard-nav">
+          <button type="button" class="btn btn-ghost" id="btn-prev" data-i18n="common.previous">Précédent</button>
+          <button type="button" class="btn btn-primary" id="btn-next" data-i18n="common.next">Suivant</button>
+          <button type="button" class="btn btn-primary" id="btn-generate" hidden data-i18n="wizard.generate">Générer ma lettre</button>
+        </div>
+      </form>
+
+      <div class="letter-result" id="letter-result" hidden>
+        <h3 data-i18n="wizard.result.title">Votre lettre (en français)</h3>
+        <div class="letter-paper">
+          <pre id="letter-text"></pre>
+        </div>
+        <div class="result-actions">
+          <button class="btn btn-primary" id="btn-copy" data-i18n="wizard.result.copy">📋 Copier le texte</button>
+          <button class="btn btn-primary" id="btn-download" data-i18n="wizard.result.download">⬇️ Télécharger (.txt)</button>
+          <button class="btn btn-ghost" id="btn-print" data-i18n="wizard.result.print">🖨️ Imprimer / PDF</button>
+        </div>
+        <p class="disclaimer" data-i18n="wizard.result.disclaimer">⚠️ Envoyez de préférence cette lettre par courrier recommandé et gardez une copie. Ceci est de l'information générale, pas un avis juridique.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p data-i18n="footer.text">Aide aux locataires — un outil indépendant pour les locataires de Montréal.</p>
+  </div>
+</footer>
+
+<script src="js/i18n.js"></script>
+<script src="js/letter.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
