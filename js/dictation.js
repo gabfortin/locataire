@@ -120,7 +120,7 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'mic-btn';
-    button.textContent = '🎤';
+    button.setAttribute('data-icon', 'mic');
     setListening(button, false);
     row.appendChild(button);
 

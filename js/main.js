@@ -119,7 +119,12 @@
     if (!validateCurrentStep()) return;
     const data = collectFormData();
     const letter = generateLetter(data);
+    lastLetterData = data;
+    letterPdf = null;
     letterTextEl.textContent = letter;
+    // Build the PDF right away: the share sheet must open promptly after a click (Safari).
+    getLetterPdf();
+    emailNote.hidden = true;
     letterResult.hidden = false;
     try {
       localStorage.setItem('dat_draft', JSON.stringify(data));
@@ -129,6 +134,26 @@
 
   // ---------- Result actions ----------
   let copyResetTimer;
+  let lastLetterData = null;
+  let letterPdf = null; // Promise of the PDF Blob (null if it could not be built)
+  const emailNote = document.getElementById('email-note');
+  const PDF_NAME = 'mise-en-demeure.pdf';
+
+  function getLetterPdf() {
+    if (!letterPdf) {
+      const title = letterEmailSubject(lastLetterData || {});
+      letterPdf = buildLetterPdf(letterTextEl.textContent, title).catch(() => null);
+    }
+    return letterPdf;
+  }
+
+  // Falls back to a plain-text file if the PDF could not be built.
+  async function getLetterFile() {
+    const pdf = await getLetterPdf();
+    return pdf
+      ? new File([pdf], PDF_NAME, { type: 'application/pdf' })
+      : new File([letterTextEl.textContent], 'mise-en-demeure.txt', { type: 'text/plain;charset=utf-8' });
+  }
   document.getElementById('btn-copy').addEventListener('click', async () => {
     const btn = document.getElementById('btn-copy');
     try {
@@ -148,17 +173,46 @@
     }
   });
 
-  document.getElementById('btn-download').addEventListener('click', () => {
-    const blob = new Blob([letterTextEl.textContent], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+  document.getElementById('btn-download').addEventListener('click', async () => {
+    const file = await getLetterFile();
+    const url = URL.createObjectURL(file);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'mise-en-demeure.txt';
+    a.download = file.name;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
+
+  // mailto: links cannot carry attachments. Where the system share sheet accepts files (phones,
+  // Safari, recent Chrome), the letter is shared as a real attachment; otherwise the email app
+  // opens with the letter in the body.
+  document.getElementById('btn-email').addEventListener('click', async () => {
+    const text = letterTextEl.textContent;
+    const subject = letterEmailSubject(lastLetterData || {});
+    const file = await getLetterFile();
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: subject });
+        showEmailNote(false);
+        return;
+      } catch (e) {
+        if (e.name === 'AbortError') return; // the tenant closed the share sheet
+        // Otherwise (e.g. sharing not allowed), fall back to a mailto link below.
+      }
+    }
+
+    const body = text.replace(/\n/g, '\r\n');
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    showEmailNote(true);
+  });
+
+  function showEmailNote(inBody) {
+    emailNote.querySelector('[data-i18n="wizard.result.emailInBody"]').hidden = !inBody;
+    emailNote.hidden = false;
+  }
 
   document.getElementById('btn-print').addEventListener('click', () => {
     window.print();

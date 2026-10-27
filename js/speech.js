@@ -99,6 +99,7 @@
   function setButtonState(button, speaking) {
     button.classList.toggle('speaking', speaking);
     button.setAttribute('aria-pressed', String(speaking));
+    button.setAttribute('data-icon', speaking ? 'stop' : 'volume');
     if (button.classList.contains('speak-step')) {
       const key = speaking ? 'speech.stop' : 'speech.listenStep';
       button.setAttribute('data-i18n', key);
@@ -168,7 +169,7 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'speak-icon';
-    button.textContent = '🔊';
+    button.setAttribute('data-icon', 'volume');
     button.setAttribute('data-i18n-aria-label', 'speech.listen');
     button.setAttribute('aria-label', t('speech.listen', currentLang()));
     button.addEventListener('click', (e) => {
@@ -200,6 +201,7 @@
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn btn-small btn-ghost speak-step';
+    button.setAttribute('data-icon', 'volume');
     button.setAttribute('data-i18n', 'speech.listenStep');
     button.textContent = t('speech.listenStep', currentLang());
     button.addEventListener('click', () => speak(stepText(step), button));

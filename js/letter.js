@@ -38,7 +38,7 @@ const LETTER_TEXT = {
     subject: (isGrave) => `OBJET : MISE EN DEMEURE — ${isGrave ? 'Atteinte à la jouissance paisible du logement' : "Défaut d'entretien / logement non salubre"}`,
     salutation: 'Madame, Monsieur,',
     intro: (address, since) => `Je suis locataire du logement situé au ${address || '[adresse du logement]'}${since ? ` depuis le ${since}` : ''}.`,
-    demand: (isGrave, days) => `Par la présente, je vous mets en demeure de ${isGrave ? 'cesser' : 'remédier'}, dans un délai de ${days} jours à compter de la réception de cette lettre, à la situation suivante affectant mon logement :`,
+    demand: (isGrave, days) => `Par la présente, je vous mets en demeure de ${isGrave ? 'mettre fin' : 'remédier'}, dans un délai de ${days} jours à compter de la réception de cette lettre, à la situation suivante affectant mon logement :`,
     detailsHeading: 'Description détaillée de la situation :',
     noticed: (date) => `Cette situation a été constatée le ${date}`,
     noticedPersists: ' et persiste à ce jour.',
@@ -49,6 +49,7 @@ const LETTER_TEXT = {
     consequence: (remedy) => `À défaut de correction de la situation dans le délai imparti, je me verrai dans l'obligation de déposer une demande auprès du Tribunal administratif du logement (TAL), notamment afin d'obtenir ${remedy}, ainsi que des dommages-intérêts, le cas échéant.`,
     diligence: "Je vous prie d'agir avec diligence et vous remercie de votre collaboration.",
     closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
+    emailSubject: (address) => `Mise en demeure${address ? ` — ${address}` : ''}`,
   },
   en: {
     issues: {
@@ -96,6 +97,7 @@ const LETTER_TEXT = {
     consequence: (remedy) => `Should the situation not be corrected within the time allowed, I will have no choice but to file an application with the Tribunal administratif du logement (TAL), in particular to obtain ${remedy}, as well as damages, if applicable.`,
     diligence: 'I ask that you act diligently and thank you for your cooperation.',
     closing: 'Yours truly,',
+    emailSubject: (address) => `Formal notice (mise en demeure)${address ? ` — ${address}` : ''}`,
   },
 };
 
@@ -104,6 +106,11 @@ function formatLetterDate(L, isoDate) {
   const [y, m, d] = isoDate.split('-').map(Number);
   if (!y || !m || !d) return '';
   return L.formatDate(d, L.months[m - 1], y);
+}
+
+function letterEmailSubject(data) {
+  const L = LETTER_TEXT[data.lease_lang] || LETTER_TEXT.fr;
+  return L.emailSubject(data.tenant_address);
 }
 
 function generateLetter(data) {
