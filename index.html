@@ -205,6 +205,11 @@
         </ul>
       </div>
 
+      <p class="dictation-hint">
+        <span data-i18n="dictation.hintButton" hidden>🎤 Vous pouvez répondre à voix haute avec le bouton 🎤 à côté des champs.</span>
+        <span data-i18n="dictation.hintKeyboard">Sur téléphone, le micro du clavier permet aussi de dicter.</span>
+      </p>
+
       <div class="progress-bar" aria-hidden="true">
         <div class="progress-dot active" data-dot="1"></div>
         <div class="progress-dot" data-dot="2"></div>
@@ -346,15 +351,16 @@
               <span data-i18n="wizard.field.deadline">Délai accordé pour corriger (en jours)</span>
               <input type="number" name="deadline_days" value="10" min="1" max="60">
             </label>
-            <label class="field">
-              <span data-i18n="wizard.field.remedy">Ce que vous demandez</span>
-              <select name="remedy">
-                <option value="reparation" data-i18n="wizard.remedy.reparation">Que les réparations soient faites</option>
-                <option value="cessation" data-i18n="wizard.remedy.cessation">Que les agissements cessent</option>
-                <option value="remboursement" data-i18n="wizard.remedy.remboursement">Une diminution de loyer</option>
-                <option value="autre" data-i18n="wizard.remedy.autre">Autre chose</option>
-              </select>
-            </label>
+          </div>
+
+          <div class="choice-block">
+            <p class="field-label" data-i18n="wizard.field.remedy">Ce que vous demandez</p>
+            <div class="checkbox-grid">
+              <label class="check"><input type="radio" name="remedy" value="reparation" checked><span data-i18n="wizard.remedy.reparation">Que les réparations soient faites</span></label>
+              <label class="check"><input type="radio" name="remedy" value="cessation"><span data-i18n="wizard.remedy.cessation">Que les agissements cessent</span></label>
+              <label class="check"><input type="radio" name="remedy" value="remboursement"><span data-i18n="wizard.remedy.remboursement">Une diminution de loyer</span></label>
+              <label class="check"><input type="radio" name="remedy" value="autre"><span data-i18n="wizard.remedy.autre">Autre chose</span></label>
+            </div>
           </div>
         </fieldset>
 
@@ -457,7 +463,7 @@
         </section>
         <section class="legal-section">
           <h3 data-i18n="legal.privacy.title">Confidentialité</h3>
-          <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre et votre choix de langue sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap.</p>
+          <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre et votre choix de langue sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap. La dictée vocale, si vous l'utilisez, fonctionne de la même façon : votre navigateur envoie l'enregistrement de votre voix à Google, Apple ou Microsoft pour le convertir en texte. Votre accord est demandé avant la première utilisation.</p>
         </section>
       </div>
     </div>
@@ -476,5 +482,7 @@
 <script src="js/letter.js"></script>
 <script src="js/main.js"></script>
 <script src="js/printmap.js"></script>
+<script src="js/speech.js"></script>
+<script src="js/dictation.js"></script>
 </body>
 </html>
