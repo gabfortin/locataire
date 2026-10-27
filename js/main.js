@@ -73,6 +73,16 @@
   }
   voiceToggle.addEventListener('change', () => setVoiceEnabled(voiceToggle.checked));
 
+  // ---------- Legal-basis disclosures ----------
+  document.querySelectorAll('.law-note-btn, .law-note-icon-btn').forEach((btn) => {
+    const body = btn.parentElement.querySelector('.law-note-body');
+    btn.addEventListener('click', () => {
+      const willOpen = body.hidden;
+      body.hidden = !willOpen;
+      btn.setAttribute('aria-expanded', String(willOpen));
+    });
+  });
+
   // ---------- Category toggle (salubrite vs grave) ----------
   form.querySelectorAll('input[name="category"]').forEach((radio) => {
     radio.addEventListener('change', () => {

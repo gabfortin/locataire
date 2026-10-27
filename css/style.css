@@ -596,6 +596,40 @@ legend { font-size: 1.55rem; line-height: 1.25; margin-bottom: 18px; padding: 0;
 .check input { flex: none; width: 18px; height: 18px; margin: 0; accent-color: var(--primary); }
 .lang-choice .check { min-width: 150px; }
 
+/* A checkbox with its own "legal basis" disclosure beside it (kept as a sibling of
+   .check, never nested inside the <label>, so clicking "i" can't also toggle the box). */
+.check-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.check-row .check { flex: 1; min-width: 0; }
+
+.law-note-block { margin: -4px 0 14px; }
+.law-note-icon-btn {
+  flex: none;
+  display: grid; place-items: center;
+  width: 28px; height: 28px;
+  padding: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  background: var(--glass);
+  color: var(--primary);
+  cursor: pointer;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.law-note-icon-btn:hover,
+.law-note-icon-btn[aria-expanded="true"] { border-color: var(--primary); background: var(--tint); }
+.law-note-btn[aria-expanded="true"] { color: var(--primary); border-color: var(--primary); }
+.law-note-body {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--info-border);
+  border-radius: var(--r-md);
+  background: var(--info-bg);
+  color: var(--info-text);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+.law-note-body p { margin: 0 0 8px; }
+.law-note-body a { display: inline-block; color: var(--primary); font-weight: 600; }
+
 .wizard-nav {
   display: flex; justify-content: space-between; gap: 12px;
   margin-top: 36px;

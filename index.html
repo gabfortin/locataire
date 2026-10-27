@@ -315,12 +315,23 @@
 
           <div class="issues-block" data-category-block="salubrite">
             <p class="field-label" data-i18n="wizard.field.issuesLabel">Cochez ce qui s'applique</p>
+            <div class="law-note law-note-block">
+              <button type="button" class="btn btn-small btn-ghost law-note-btn" data-icon="info" aria-expanded="false">
+                <span data-i18n="lawNote.toggleLabel">Base légale</span>
+              </button>
+              <div class="law-note-body" hidden>
+                <p data-i18n="wizard.field.issuesLabel.note">Le locateur doit délivrer un logement en bon état d'habitabilité et le maintenir ainsi, et ne peut offrir ni délivrer un logement impropre à l'habitation (articles 1910 et 1913 du Code civil du Québec).</p>
+                <a href="https://educaloi.qc.ca/capsules/logement-en-mauvais-etat-les-recours/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+              </div>
+            </div>
             <div class="checkbox-grid">
               <label class="check"><input type="checkbox" name="issue" value="moisissure"><span data-i18n="wizard.issue.moisissure">Moisissure / humidité</span></label>
               <label class="check"><input type="checkbox" name="issue" value="vermine"><span data-i18n="wizard.issue.vermine">Vermine (coquerelles, punaises, rongeurs)</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="chauffage"><span data-i18n="wizard.issue.chauffage">Chauffage insuffisant</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="chauffage"><span data-i18n="wizard.issue.chauffage">Chauffage insuffisant ou absent</span></label>
               <label class="check"><input type="checkbox" name="issue" value="eauchaude"><span data-i18n="wizard.issue.eauchaude">Pas d'eau chaude</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="eaucourante"><span data-i18n="wizard.issue.eaucourante">Absence d'eau courante</span></label>
               <label class="check"><input type="checkbox" name="issue" value="degatEau"><span data-i18n="wizard.issue.degatEau">Dégât d'eau / infiltration</span></label>
+              <label class="check"><input type="checkbox" name="issue" value="structurel"><span data-i18n="wizard.issue.structurel">Dommages structurels (plafond, mur, plancher)</span></label>
               <label class="check"><input type="checkbox" name="issue" value="electricite"><span data-i18n="wizard.issue.electricite">Problème électrique</span></label>
               <label class="check"><input type="checkbox" name="issue" value="plomberie"><span data-i18n="wizard.issue.plomberie">Problème de plomberie</span></label>
               <label class="check"><input type="checkbox" name="issue" value="securite"><span data-i18n="wizard.issue.securite">Porte / fenêtre brisée, sécurité</span></label>
@@ -330,10 +341,44 @@
           <div class="issues-block" data-category-block="grave" hidden>
             <p class="field-label" data-i18n="wizard.field.graveLabel">Cochez ce qui s'applique</p>
             <div class="checkbox-grid">
-              <label class="check"><input type="checkbox" name="grave" value="harcelement"><span data-i18n="wizard.grave.harcelement">Harcèlement de la part du locateur</span></label>
-              <label class="check"><input type="checkbox" name="grave" value="entree"><span data-i18n="wizard.grave.entree">Entrée dans le logement sans préavis / consentement</span></label>
-              <label class="check"><input type="checkbox" name="grave" value="jouissance"><span data-i18n="wizard.grave.jouissance">Atteinte à votre tranquillité ou à la jouissance paisible du logement</span></label>
-              <label class="check"><input type="checkbox" name="grave" value="serrure"><span data-i18n="wizard.grave.serrure">Serrure ou autre mécanisme posé ou changé sur une porte sans votre accord</span></label>
+              <div class="check-row">
+                <label class="check"><input type="checkbox" name="grave" value="harcelement"><span data-i18n="wizard.grave.harcelement">Harcèlement de la part du locateur</span></label>
+                <div class="law-note">
+                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
+                  <div class="law-note-body" hidden>
+                    <p data-i18n="wizard.grave.harcelement.note">L'article 1902 du Code civil du Québec interdit au locateur de harceler un locataire de manière à restreindre sa jouissance paisible du logement ou à l'amener à le quitter.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="check-row">
+                <label class="check"><input type="checkbox" name="grave" value="entree"><span data-i18n="wizard.grave.entree">Entrée dans le logement sans préavis / consentement</span></label>
+                <div class="law-note">
+                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
+                  <div class="law-note-body" hidden>
+                    <p data-i18n="wizard.grave.entree.note">Sauf urgence, le locateur doit donner un préavis de 24 heures avant de visiter le logement, entre 9 h et 21 h (articles 1931 et 1932 du Code civil du Québec).</p>
+                    <a href="https://educaloi.qc.ca/capsules/les-visites-et-acces-au-logement/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+                  </div>
+                </div>
+              </div>
+              <div class="check-row">
+                <label class="check"><input type="checkbox" name="grave" value="jouissance"><span data-i18n="wizard.grave.jouissance">Atteinte à votre tranquillité ou à la jouissance paisible du logement</span></label>
+                <div class="law-note">
+                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
+                  <div class="law-note-body" hidden>
+                    <p data-i18n="wizard.grave.jouissance.note">Le locateur doit garantir au locataire la jouissance paisible du logement pendant toute la durée du bail (article 1854 du Code civil du Québec).</p>
+                    <a href="https://educaloi.qc.ca/capsules/les-obligations-du-proprietaire/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+                  </div>
+                </div>
+              </div>
+              <div class="check-row">
+                <label class="check"><input type="checkbox" name="grave" value="serrure"><span data-i18n="wizard.grave.serrure">Serrure ou autre mécanisme posé ou changé sur une porte sans votre accord</span></label>
+                <div class="law-note">
+                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
+                  <div class="law-note-body" hidden>
+                    <p data-i18n="wizard.grave.serrure.note">Aucune serrure ou autre mécanisme restreignant l'accès au logement ne peut être posé ou changé sans le consentement du locateur et du locataire (article 1934 du Code civil du Québec).</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -366,6 +411,15 @@
 
           <div class="choice-block">
             <p class="field-label" data-i18n="wizard.field.remedy">Ce que vous demandez</p>
+            <div class="law-note law-note-block">
+              <button type="button" class="btn btn-small btn-ghost law-note-btn" data-icon="info" aria-expanded="false">
+                <span data-i18n="lawNote.toggleLabel">Base légale</span>
+              </button>
+              <div class="law-note-body" hidden>
+                <p data-i18n="wizard.field.remedy.note">Une diminution de loyer ne peut être accordée que par le Tribunal administratif du logement (TAL) ; le locateur ne peut pas y consentir lui-même. Cette lettre informe le locateur qu'une demande pourrait y être déposée s'il n'agit pas.</p>
+                <a href="https://educaloi.qc.ca/capsules/logement-en-mauvais-etat-les-recours/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+              </div>
+            </div>
             <div class="checkbox-grid">
               <label class="check"><input type="radio" name="remedy" value="reparation" checked><span data-i18n="wizard.remedy.reparation">Que les réparations soient faites</span></label>
               <label class="check"><input type="radio" name="remedy" value="cessation"><span data-i18n="wizard.remedy.cessation">Que les agissements cessent</span></label>
