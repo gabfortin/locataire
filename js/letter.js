@@ -44,8 +44,9 @@ const LETTER_TEXT = {
     noticedPersists: ' et persiste à ce jour.',
     reported: (date) => `Je vous en ai avisé le ${date}, sans qu'aucune correction n'ait été apportée à ce jour.`,
     lawGrave: "Je vous rappelle qu'en vertu du Code civil du Québec, le locateur doit garantir au locataire la jouissance paisible du logement pendant toute la durée du bail (article 1854 C.c.Q.) et doit, sauf urgence, donner un préavis de 24 heures avant de visiter le logement ou d'y effectuer des travaux (articles 1931 et 1932 C.c.Q.).",
+    lawHarcelement: "Je vous rappelle également que l'article 1902 C.c.Q. interdit spécifiquement au locateur de harceler un locataire de manière à restreindre sa jouissance paisible du logement ou à l'amener à le quitter.",
     lawLock: "De plus, aucune serrure ou autre mécanisme restreignant l'accès au logement ne peut être posé ou changé sans le consentement du locateur et du locataire (article 1934 C.c.Q.).",
-    lawSalubrite: "Je vous rappelle qu'en vertu du Code civil du Québec, le locateur est tenu de délivrer un logement en bon état d'habitabilité et de le maintenir ainsi pendant toute la durée du bail (articles 1854 et 1910 C.c.Q.), ainsi que de le rendre propre à l'usage auquel il est destiné (article 1913 C.c.Q.).",
+    lawSalubrite: "Je vous rappelle qu'en vertu du Code civil du Québec, le locateur est tenu de délivrer un logement en bon état d'habitabilité et de le maintenir ainsi pendant toute la durée du bail (articles 1854 et 1910 C.c.Q.), et qu'il ne peut offrir ni délivrer un logement impropre à l'habitation, c'est-à-dire dont l'état constitue une menace sérieuse pour la santé ou la sécurité des occupants ou du public (article 1913 C.c.Q.).",
     consequence: (remedy) => `À défaut de correction de la situation dans le délai imparti, je me verrai dans l'obligation de déposer une demande auprès du Tribunal administratif du logement (TAL), notamment afin d'obtenir ${remedy}, ainsi que des dommages-intérêts, le cas échéant.`,
     diligence: "Je vous prie d'agir avec diligence et vous remercie de votre collaboration.",
     closing: 'Veuillez agréer, Madame, Monsieur, mes salutations distinguées.',
@@ -92,8 +93,9 @@ const LETTER_TEXT = {
     noticedPersists: ' and persists to this day.',
     reported: (date) => `I notified you of it on ${date}, and no correction has been made to date.`,
     lawGrave: 'I remind you that under the Civil Code of Québec, the lessor must provide the lessee with peaceable enjoyment of the dwelling throughout the term of the lease (article 1854 C.C.Q.) and must, except in an emergency, give 24 hours\' notice before visiting the dwelling or carrying out work in it (articles 1931 and 1932 C.C.Q.).',
+    lawHarcelement: 'I further remind you that article 1902 C.C.Q. specifically prohibits the lessor from harassing a lessee in a way that restricts their peaceable enjoyment of the dwelling or is intended to cause them to leave it.',
     lawLock: 'Furthermore, no lock or other device restricting access to the dwelling may be installed or changed without the consent of both the lessor and the lessee (article 1934 C.C.Q.).',
-    lawSalubrite: 'I remind you that under the Civil Code of Québec, the lessor is bound to deliver the dwelling in good habitable condition and to maintain it in that condition throughout the term of the lease (articles 1854 and 1910 C.C.Q.), and to keep it fit for the use for which it was intended (article 1913 C.C.Q.).',
+    lawSalubrite: 'I remind you that under the Civil Code of Québec, the lessor is bound to deliver the dwelling in good habitable condition and to maintain it in that condition throughout the term of the lease (articles 1854 and 1910 C.C.Q.), and may not offer or deliver a dwelling that is unfit for habitation — that is, one whose condition poses a serious threat to the health or safety of the occupants or the public (article 1913 C.C.Q.).',
     consequence: (remedy) => `Should the situation not be corrected within the time allowed, I will have no choice but to file an application with the Tribunal administratif du logement (TAL), in particular to obtain ${remedy}, as well as damages, if applicable.`,
     diligence: 'I ask that you act diligently and thank you for your cooperation.',
     closing: 'Yours truly,',
@@ -172,7 +174,10 @@ function generateLetter(data) {
   }
 
   if (isGrave) {
-    lines.push(problemCodes.includes('serrure') ? `${L.lawGrave} ${L.lawLock}` : L.lawGrave);
+    const lawParts = [L.lawGrave];
+    if (problemCodes.includes('harcelement')) lawParts.push(L.lawHarcelement);
+    if (problemCodes.includes('serrure')) lawParts.push(L.lawLock);
+    lines.push(lawParts.join(' '));
   } else {
     lines.push(L.lawSalubrite);
   }

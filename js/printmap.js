@@ -20,7 +20,7 @@
       accept: (r) => /bureau en gros|staples/i.test(r.name || ''),
     },
     copyshop: {
-      color: '#5b3df6',
+      color: '#1e3a5f',
       query: 'copyshop',
       accept: (r) => r.type === 'copyshop',
     },
@@ -252,9 +252,13 @@
   function renderMap(state, home, places) {
     if (!state.map) {
       state.map = L.map(state.canvas, { scrollWheelZoom: false });
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      // tile.openstreetmap.org is a low-volume demo server that blocks third-party apps
+      // (see osm.wiki/Blocked). OSM France's donation-funded mirror explicitly welcomes
+      // external reuse, as long as OpenStreetMap is credited (done below).
+      L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+        subdomains: 'abc',
         maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(state.map);
     }
     if (state.layer) state.layer.remove();
@@ -297,6 +301,7 @@
     Object.entries(panels).forEach(([name, state]) => {
       state.panel.hidden = name !== kind;
     });
+    dialog.setAttribute('aria-labelledby', `map-title-${kind}`);
     if (!dialog.open) dialog.showModal();
   }
 

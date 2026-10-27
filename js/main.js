@@ -12,10 +12,22 @@
   const letterTextEl = document.getElementById('letter-text');
 
   // ---------- View routing ----------
+  // Moves focus to the new view's heading so screen reader and keyboard users notice the
+  // navigation (the trigger element they just activated is now off-screen or gone).
+  function focusHeading(el, preventScroll) {
+    if (!el) return;
+    el.setAttribute('tabindex', '-1');
+    el.focus({ preventScroll: !!preventScroll });
+  }
+
   function showView(name) {
     document.querySelectorAll('.view').forEach((v) => v.classList.remove('active'));
     const target = document.getElementById(`view-${name}`);
-    if (target) target.classList.add('active');
+    if (target) {
+      target.classList.add('active');
+      // Scroll is handled below (smooth, to the top); focus should not jump the page itself.
+      focusHeading(target.querySelector('h1'), true);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -56,15 +68,24 @@
     });
   }
 
-  function goToStep(step) {
+  function goToStep(step, moveFocus) {
     currentStep = step;
+    let legend = null;
     form.querySelectorAll('.wizard-step').forEach((fs) => {
-      fs.classList.toggle('active', Number(fs.getAttribute('data-step')) === step);
+      const active = Number(fs.getAttribute('data-step')) === step;
+      fs.classList.toggle('active', active);
+      if (active) legend = fs.querySelector('legend');
     });
     updateProgress();
     btnPrev.style.visibility = step === 1 ? 'hidden' : 'visible';
     btnNext.hidden = step === TOTAL_STEPS;
     btnGenerate.hidden = step !== TOTAL_STEPS;
+    if (moveFocus) focusHeading(legend);
+  }
+
+  function clearInvalid(e) {
+    e.target.removeAttribute('aria-invalid');
+    e.target.removeEventListener('input', clearInvalid);
   }
 
   function validateCurrentStep() {
@@ -74,6 +95,8 @@
     );
     for (const field of requiredFields) {
       if (!field.value || !field.value.trim()) {
+        field.setAttribute('aria-invalid', 'true');
+        field.addEventListener('input', clearInvalid);
         field.focus();
         alert(t('common.requiredError', currentLang));
         return false;
@@ -84,10 +107,10 @@
 
   btnNext.addEventListener('click', () => {
     if (!validateCurrentStep()) return;
-    if (currentStep < TOTAL_STEPS) goToStep(currentStep + 1);
+    if (currentStep < TOTAL_STEPS) goToStep(currentStep + 1, true);
   });
   btnPrev.addEventListener('click', () => {
-    if (currentStep > 1) goToStep(currentStep - 1);
+    if (currentStep > 1) goToStep(currentStep - 1, true);
   });
 
   // ---------- Letter generation ----------
@@ -129,6 +152,7 @@
     try {
       localStorage.setItem('dat_draft', JSON.stringify(data));
     } catch (e) { /* storage unavailable, ignore */ }
+    focusHeading(letterResult.querySelector('h3'));
     letterResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
@@ -158,7 +182,7 @@
     const btn = document.getElementById('btn-copy');
     try {
       await navigator.clipboard.writeText(letterTextEl.textContent);
-      btn.textContent = '✅ ' + t('wizard.result.copied', currentLang);
+      btn.textContent = t('wizard.result.copied', currentLang);
       clearTimeout(copyResetTimer);
       copyResetTimer = setTimeout(() => {
         btn.textContent = t('wizard.result.copy', currentLang);
@@ -251,6 +275,6 @@
 
   // ---------- Init ----------
   initLanguage();
-  goToStep(1);
+  goToStep(1, false);
   restoreDraft();
 })();

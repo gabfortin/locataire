@@ -78,7 +78,7 @@
 
   function stepText(step) {
     const texts = [item(step.querySelector('legend'))];
-    const units = step.querySelectorAll('.choice-grid, .q-row > p.field-label, label.field');
+    const units = step.querySelectorAll('.choice-grid, .q-row > p.field-label, .field');
     units.forEach((unit) => {
       if (!isVisible(unit)) return;
       if (unit.matches('.choice-grid')) {
@@ -189,8 +189,8 @@
     row.appendChild(iconButton(getTexts));
   }
 
-  form.querySelectorAll('label.field').forEach((field) => {
-    const label = field.querySelector(':scope > span[data-i18n]');
+  form.querySelectorAll('.field').forEach((field) => {
+    const label = field.querySelector(':scope > label[data-i18n]');
     if (label) attachIcon(label, () => fieldText(field));
   });
   form.querySelectorAll('p.field-label').forEach((p) => {
