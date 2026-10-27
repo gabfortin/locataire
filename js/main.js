@@ -49,6 +49,30 @@
     applyLanguage(currentLang);
   });
 
+  // ---------- Voice features (read-aloud / dictation) ----------
+  // Off by default on every device: most tenants read and type, and the extra buttons
+  // are clutter. A toggle at the top of the form turns them on for those who want them.
+  const voiceToggle = document.getElementById('voice-toggle');
+  function setVoiceEnabled(enabled) {
+    voiceToggle.checked = enabled;
+    document.body.classList.toggle('voice-enabled', enabled);
+    try {
+      localStorage.setItem('dat_voice', enabled ? '1' : '0');
+    } catch (e) { /* storage unavailable, ignore */ }
+    if (!enabled) {
+      document.dispatchEvent(new CustomEvent('locataire:stop-speech'));
+      document.dispatchEvent(new CustomEvent('locataire:stop-dictation'));
+    }
+  }
+  function initVoiceToggle() {
+    let saved = false;
+    try {
+      saved = localStorage.getItem('dat_voice') === '1';
+    } catch (e) { /* storage unavailable, ignore */ }
+    setVoiceEnabled(saved);
+  }
+  voiceToggle.addEventListener('change', () => setVoiceEnabled(voiceToggle.checked));
+
   // ---------- Category toggle (salubrite vs grave) ----------
   form.querySelectorAll('input[name="category"]').forEach((radio) => {
     radio.addEventListener('change', () => {
@@ -275,6 +299,7 @@
 
   // ---------- Init ----------
   initLanguage();
+  initVoiceToggle();
   goToStep(1, false);
   restoreDraft();
 })();

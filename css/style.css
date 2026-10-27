@@ -97,7 +97,10 @@
 /* The hidden attribute always wins over component display rules (.btn, .disclaimer, …). */
 [hidden] { display: none !important; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+/* overflow-x must be hidden on html, not just body: iOS Safari can still let the
+   root element pan/rubber-band horizontally otherwise, even with nothing actually
+   overflowing. */
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 
 body {
   margin: 0;
@@ -136,17 +139,21 @@ a { color: var(--primary); }
 }
 
 .skip-link {
-  position: absolute; top: -40px; left: 8px;
+  position: absolute; top: 8px; left: 8px;
   z-index: 30;
   padding: 10px 18px;
   border-radius: var(--r-sm);
   background: var(--primary);
   color: var(--on-primary);
   font-weight: 600;
+  line-height: 1.2;
   text-decoration: none;
-  transition: top 0.2s var(--ease);
+  /* Percentage transform (not a fixed negative top) so it stays fully off-screen
+     no matter the element's actual rendered height. */
+  transform: translateY(-150%);
+  transition: transform 0.2s var(--ease);
 }
-.skip-link:focus { top: 8px; }
+.skip-link:focus { transform: translateY(0); }
 
 /* Shared card surface */
 .site-header,
@@ -479,6 +486,7 @@ legend { font-size: 1.55rem; line-height: 1.25; margin-bottom: 18px; padding: 0;
 .choice-card {
   position: relative;
   display: flex; flex-direction: column; gap: 6px;
+  min-width: 0;
   border-radius: var(--r-lg);
   padding: 22px 24px;
   cursor: pointer;
@@ -569,6 +577,7 @@ legend { font-size: 1.55rem; line-height: 1.25; margin-bottom: 18px; padding: 0;
 }
 .check {
   display: flex; align-items: center; gap: 12px;
+  min-width: 0;
   min-height: 50px;
   padding: 11px 16px;
   border: 1px solid var(--hairline);
@@ -649,6 +658,17 @@ div.q-row { display: flex; }
   50% { box-shadow: 0 0 0 9px transparent; }
 }
 .dictation-status { font-size: 0.82rem; color: var(--primary); font-weight: 500; }
+
+/* Read-aloud and dictation are off until the tenant turns them on with the toggle
+   at the top of the form — most tenants fill the form by reading/typing, and these
+   buttons added clutter for them on both desktop and mobile. */
+.voice-toggle { margin: 0 0 20px; }
+.speak-icon, .speak-step, .mic-btn, .dictation-hint, .dictation-status { display: none; }
+body.voice-enabled .speak-icon { display: grid; }
+body.voice-enabled .speak-step { display: inline-flex; }
+body.voice-enabled .mic-btn { display: grid; }
+body.voice-enabled .dictation-hint { display: flex; }
+body.voice-enabled .dictation-status { display: block; }
 
 /* ---------- Letter result ---------- */
 
