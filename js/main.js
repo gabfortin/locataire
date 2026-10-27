@@ -1,7 +1,7 @@
 (function () {
   const TOTAL_STEPS = 5;
   let currentStep = 1;
-  let currentLang = localStorage.getItem('dat_lang') || 'fr';
+  let currentLang = getSavedLanguage();
 
   const form = document.getElementById('letter-form');
   const langSelect = document.getElementById('lang-select');
@@ -94,6 +94,7 @@
   function collectFormData() {
     const fd = new FormData(form);
     return {
+      lease_lang: fd.get('lease_lang'),
       category: fd.get('category'),
       tenant_name: (fd.get('tenant_name') || '').trim(),
       tenant_address: (fd.get('tenant_address') || '').trim(),
@@ -127,13 +128,16 @@
   });
 
   // ---------- Result actions ----------
+  let copyResetTimer;
   document.getElementById('btn-copy').addEventListener('click', async () => {
     const btn = document.getElementById('btn-copy');
     try {
       await navigator.clipboard.writeText(letterTextEl.textContent);
-      const original = btn.textContent;
       btn.textContent = '✅ ' + t('wizard.result.copied', currentLang);
-      setTimeout(() => { btn.textContent = original; }, 1800);
+      clearTimeout(copyResetTimer);
+      copyResetTimer = setTimeout(() => {
+        btn.textContent = t('wizard.result.copy', currentLang);
+      }, 1800);
     } catch (e) {
       // Fallback: select the text so the user can copy manually
       const range = document.createRange();

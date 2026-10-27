@@ -6,9 +6,6 @@
 <title>Aide aux locataires — Vos droits de locataire à Montréal</title>
 <meta name="description" content="Aide aux locataires vous aide à comprendre vos droits, à agir face à un logement insalubre et à générer une lettre de mise en demeure, dans plusieurs langues.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -44,20 +41,20 @@
   <section class="view active" id="view-home">
     <div class="container hero">
       <span class="pill" data-i18n="home.pill">Fait pour les locataires de Montréal</span>
-      <h1 data-i18n="home.title">Connaissez vos droits.<br>Agissez avec les bons mots.</h1>
-      <p class="lead" data-i18n="home.subtitle">Un logement insalubre ? Des réparations ignorées ? Aide aux locataires vous explique la marche à suivre et génère pour vous une lettre de mise en demeure officielle, en français — peu importe votre langue.</p>
+      <h1 data-i18n="home.title">Vos droits de locataire,<br>expliqués simplement.</h1>
+      <p class="lead" data-i18n="home.subtitle">Un logement insalubre ? Des réparations ignorées ? Aide aux locataires présente les étapes prévues par la loi et permet de générer un modèle de lettre de mise en demeure, dans la langue de votre bail — peu importe votre langue.</p>
 
       <div class="cta-grid">
         <button class="cta-card cta-primary" data-goto="wizard">
           <span class="cta-icon">✍️</span>
           <span class="cta-title" data-i18n="home.cta1.title">Générer ma lettre de mise en demeure</span>
-          <span class="cta-desc" data-i18n="home.cta1.desc">Répondez à quelques questions, recevez une lettre prête à envoyer.</span>
+          <span class="cta-desc" data-i18n="home.cta1.desc">Quelques questions permettent d'obtenir un modèle de lettre rempli à partir de vos réponses.</span>
           <span class="cta-arrow">→</span>
         </button>
         <button class="cta-card" data-goto="info">
           <span class="cta-icon">🛠️</span>
           <span class="cta-title" data-i18n="home.cta2.title">Mon logement est insalubre, je fais quoi ?</span>
-          <span class="cta-desc" data-i18n="home.cta2.desc">Les étapes à suivre, dans l'ordre, avec les bonnes ressources.</span>
+          <span class="cta-desc" data-i18n="home.cta2.desc">Les étapes habituelles, dans l'ordre, et les ressources existantes.</span>
           <span class="cta-arrow">→</span>
         </button>
       </div>
@@ -65,7 +62,7 @@
       <div class="trust-row">
         <div class="trust-item">
           <span class="trust-icon">🔒</span>
-          <span data-i18n="home.trust1">100% privé — rien n'est envoyé à un serveur</span>
+          <span data-i18n="home.trust1">Privé — rien n'est envoyé sans votre accord</span>
         </div>
         <div class="trust-item">
           <span class="trust-icon">🆓</span>
@@ -73,7 +70,7 @@
         </div>
         <div class="trust-item">
           <span class="trust-icon">🌐</span>
-          <span data-i18n="home.trust3">Disponible en 5 langues</span>
+          <span data-i18n="home.trust3">Disponible en 8 langues</span>
         </div>
       </div>
     </div>
@@ -83,47 +80,84 @@
   <section class="view" id="view-info">
     <div class="container">
       <button class="back-link" data-goto="home">← <span data-i18n="common.back">Retour</span></button>
-      <h2 data-i18n="info.title">Logement insalubre ou problème grave : les étapes</h2>
-      <p class="lead" data-i18n="info.subtitle">Voici la marche à suivre, dans l'ordre. Ça ne remplace pas un avis juridique, mais ça vous aide à savoir où commencer.</p>
+      <h2 data-i18n="info.title">Logement insalubre ou problème grave : les étapes habituelles</h2>
+      <p class="lead" data-i18n="info.subtitle">Voici les étapes généralement suivies, dans l'ordre. Il s'agit d'information générale, pas d'un avis juridique.</p>
+
+      <div class="definitions">
+        <div class="definition">
+          <strong data-i18n="info.def.insalubre.title">Logement insalubre (impropre à l'habitation)</strong>
+          <p data-i18n="info.def.insalubre.desc">Un logement dont l'état constitue une menace sérieuse pour la santé ou la sécurité des occupants ou du public (art. 1913 C.c.Q.). Exemples : moisissure importante, vermine, absence de chauffage, dégâts majeurs.</p>
+        </div>
+        <div class="definition">
+          <strong data-i18n="info.def.grave.title">Problème grave</strong>
+          <p data-i18n="info.def.grave.desc">Une situation qui touche la sécurité du locataire ou son droit de vivre en paix chez lui : harcèlement, entrée sans préavis, serrure posée ou changée sans son accord.</p>
+        </div>
+      </div>
 
       <ol class="steps">
         <li class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <h3 data-i18n="info.step1.title">Documentez tout</h3>
-            <p data-i18n="info.step1.desc">Prenez des photos et vidéos datées du problème (moisissure, vermine, dégât d'eau, chauffage, etc.). Gardez une trace écrite de toutes vos communications avec le locateur (textos, courriels, lettres).</p>
+            <h3 data-i18n="info.step1.title">Documentation du problème</h3>
+            <p data-i18n="info.step1.desc">Des photos et vidéos datées du problème (moisissure, vermine, dégât d'eau, chauffage, etc.) et une trace écrite des communications avec le locateur (textos, courriels, lettres) peuvent servir de preuve, notamment devant le TAL.</p>
           </div>
         </li>
         <li class="step">
           <div class="step-num">2</div>
           <div class="step-body">
-            <h3 data-i18n="info.step2.title">Avisez votre locateur par écrit</h3>
-            <p data-i18n="info.step2.desc">Envoyez une lettre de mise en demeure décrivant le problème et donnant un délai raisonnable pour agir (souvent 10 jours). C'est l'étape qu'Aide aux locataires peut générer pour vous.</p>
+            <h3 data-i18n="info.step2.title">Avis écrit au locateur</h3>
+            <p data-i18n="info.step2.desc">La mise en demeure est une lettre qui décrit le problème et donne au locateur un délai raisonnable pour agir (souvent 10 jours). Aide aux locataires permet d'en générer un modèle.</p>
             <button class="btn btn-small" data-goto="wizard" data-i18n="info.step2.cta">Générer cette lettre</button>
           </div>
         </li>
         <li class="step">
           <div class="step-num">3</div>
           <div class="step-body">
-            <h3 data-i18n="info.step3.title">Contactez votre ville ou votre arrondissement</h3>
-            <p data-i18n="info.step3.desc">Si le logement est insalubre (moisissure, vermine, absence de chauffage, dégâts majeurs), vous pouvez demander une inspection municipale. À Montréal, composez le 311 ou consultez montreal.ca.</p>
+            <h3 data-i18n="info.step3.title">Inspection par la ville ou l'arrondissement</h3>
+            <p data-i18n="info.step3.desc">Lorsqu'un logement est insalubre (moisissure, vermine, absence de chauffage, dégâts majeurs), il est possible de demander une inspection municipale. À Montréal, ces demandes passent par le 311 ou montreal.ca.</p>
           </div>
         </li>
         <li class="step">
           <div class="step-num">4</div>
           <div class="step-body">
             <h3 data-i18n="info.step4.title">Urgence ou danger immédiat</h3>
-            <p data-i18n="info.step4.desc">Pas de chauffage en hiver, risque d'incendie, panne électrique dangereuse : contactez les services d'urgence de votre ville sans attendre. En cas de danger immédiat pour votre sécurité, appelez le 911.</p>
+            <p data-i18n="info.step4.desc">Absence de chauffage en hiver, risque d'incendie, panne électrique dangereuse : les services d'urgence de la ville peuvent intervenir. En cas de danger immédiat pour la sécurité, le numéro d'urgence est le 911.</p>
           </div>
         </li>
         <li class="step">
           <div class="step-num">5</div>
           <div class="step-body">
-            <h3 data-i18n="info.step5.title">Toujours rien ? Allez au Tribunal administratif du logement (TAL)</h3>
-            <p data-i18n="info.step5.desc">Si le locateur ne corrige pas la situation après votre mise en demeure, vous pouvez déposer une demande au TAL : exécution forcée des travaux, diminution de loyer, résiliation du bail ou dommages-intérêts.</p>
+            <h3 data-i18n="info.step5.title">Si rien ne change : le Tribunal administratif du logement (TAL)</h3>
+            <p data-i18n="info.step5.desc">Si le locateur ne corrige pas la situation après la mise en demeure, le locataire peut déposer une demande au TAL : exécution forcée des travaux, diminution de loyer, résiliation du bail ou dommages-intérêts.</p>
           </div>
         </li>
       </ol>
+
+      <div class="rights">
+        <h3 data-i18n="info.rights.title">Vos droits en bref</h3>
+        <div class="send-grid">
+          <div class="send-card">
+            <span class="send-icon">🚪</span>
+            <strong data-i18n="info.rights.visit.title">Visites du logement</strong>
+            <p data-i18n="info.rights.visit.desc">Le locateur doit donner au locataire un préavis de 24 heures avant de visiter le logement, sauf en cas d'urgence (art. 1931 C.c.Q.). Sauf urgence, le locataire peut refuser une visite avant 9 h ou après 21 h (art. 1932 C.c.Q.).</p>
+          </div>
+          <div class="send-card">
+            <span class="send-icon">🛠️</span>
+            <strong data-i18n="info.rights.works.title">Travaux dans le logement</strong>
+            <p data-i18n="info.rights.works.desc">Avec un préavis de 24 heures, le locataire ne peut pas refuser l'accès au logement pour des travaux faits entre 7 h et 19 h.</p>
+          </div>
+          <div class="send-card">
+            <span class="send-icon">🔐</span>
+            <strong data-i18n="info.rights.lock.title">Serrures</strong>
+            <p data-i18n="info.rights.lock.desc">Aucune serrure ou autre mécanisme qui limite l'accès au logement ne peut être posé ou changé sans l'accord du locateur et du locataire (art. 1934 C.c.Q.).</p>
+          </div>
+          <div class="send-card">
+            <span class="send-icon">📄</span>
+            <strong data-i18n="info.rights.lease.title">Modification du bail</strong>
+            <p data-i18n="info.rights.lease.desc">Pour changer les conditions du bail (loyer, durée, etc.), le locateur doit envoyer un avis de modification du bail dans les délais prévus par la loi. Le locataire peut refuser les modifications en répondant par écrit dans le mois qui suit la réception de l'avis ; sans réponse, il est réputé les avoir acceptées.</p>
+          </div>
+        </div>
+      </div>
 
       <div class="resources">
         <h3 data-i18n="info.resources.title">Ressources utiles</h3>
@@ -151,7 +185,7 @@
         </div>
       </div>
 
-      <p class="disclaimer" data-i18n="info.disclaimer">⚠️ Ceci est de l'information générale, pas un avis juridique. Pour une situation complexe, consultez un comité logement de votre quartier ou le TAL.</p>
+      <p class="disclaimer" data-i18n="info.disclaimer">ℹ️ Ceci est de l'information générale, pas un avis juridique. Les comités logement de quartier et le TAL offrent de l'information sur les situations plus complexes.</p>
     </div>
   </section>
 
@@ -160,7 +194,16 @@
     <div class="container">
       <button class="back-link" data-goto="home">← <span data-i18n="common.back">Retour</span></button>
       <h2 data-i18n="wizard.title">Générateur de lettre de mise en demeure</h2>
-      <p class="lead" data-i18n="wizard.subtitle">Répondez dans votre langue. La lettre générée sera toujours en français, prête à envoyer à votre locateur.</p>
+      <p class="lead" data-i18n="wizard.subtitle">Vous pouvez répondre dans votre langue. La lettre est rédigée dans la langue de votre bail (français ou anglais).</p>
+
+      <div class="before-box">
+        <strong data-i18n="wizard.before.title">📋 Les informations demandées se trouvent sur votre bail</strong>
+        <ul>
+          <li data-i18n="wizard.before.name">La lettre est envoyée par un locataire dont le nom est inscrit sur le bail.</li>
+          <li data-i18n="wizard.before.landlord">Elle est adressée au locateur inscrit sur le bail.</li>
+          <li data-i18n="wizard.before.address">L'adresse du locateur utilisée est celle inscrite sur le bail.</li>
+        </ul>
+      </div>
 
       <div class="progress-bar" aria-hidden="true">
         <div class="progress-dot active" data-dot="1"></div>
@@ -186,8 +229,17 @@
               <input type="radio" name="category" value="grave">
               <span class="choice-icon">🚫</span>
               <span class="choice-title" data-i18n="wizard.step1.grave">Autre problème grave</span>
-              <span class="choice-desc" data-i18n="wizard.step1.graveDesc">Harcèlement, entrée sans préavis, atteinte à votre tranquillité...</span>
+              <span class="choice-desc" data-i18n="wizard.step1.graveDesc">Harcèlement, entrée sans préavis, serrure changée, atteinte à votre tranquillité...</span>
             </label>
+          </div>
+
+          <div class="lease-lang">
+            <p class="field-label" data-i18n="wizard.field.leaseLang">En quelle langue votre bail est-il rédigé ?</p>
+            <div class="lang-choice">
+              <label class="check"><input type="radio" name="lease_lang" value="fr" checked><span data-i18n="wizard.leaseLang.fr">Français</span></label>
+              <label class="check"><input type="radio" name="lease_lang" value="en"><span data-i18n="wizard.leaseLang.en">Anglais</span></label>
+            </div>
+            <p class="field-hint" data-i18n="wizard.leaseLang.hint">La lettre sera rédigée dans la langue de votre bail.</p>
           </div>
         </fieldset>
 
@@ -196,7 +248,7 @@
           <legend data-i18n="wizard.step2.legend">Vos informations</legend>
           <div class="field-grid">
             <label class="field">
-              <span data-i18n="wizard.field.tenantName">Votre nom complet</span>
+              <span data-i18n="wizard.field.tenantName">Votre nom complet (tel qu'inscrit sur le bail)</span>
               <input type="text" name="tenant_name" required>
             </label>
             <label class="field">
@@ -231,12 +283,12 @@
           <legend data-i18n="wizard.step3.legend">Informations sur votre locateur</legend>
           <div class="field-grid">
             <label class="field">
-              <span data-i18n="wizard.field.landlordName">Nom du locateur ou de la compagnie</span>
+              <span data-i18n="wizard.field.landlordName">Nom du locateur ou de la compagnie (tel qu'inscrit sur le bail)</span>
               <input type="text" name="landlord_name" required>
             </label>
             <label class="field">
-              <span data-i18n="wizard.field.landlordAddress">Adresse du locateur (optionnel si inconnue)</span>
-              <input type="text" name="landlord_address">
+              <span data-i18n="wizard.field.landlordAddress">Adresse du locateur (telle qu'inscrite sur le bail)</span>
+              <input type="text" name="landlord_address" required>
             </label>
           </div>
         </fieldset>
@@ -265,6 +317,7 @@
               <label class="check"><input type="checkbox" name="grave" value="harcelement"><span data-i18n="wizard.grave.harcelement">Harcèlement de la part du locateur</span></label>
               <label class="check"><input type="checkbox" name="grave" value="entree"><span data-i18n="wizard.grave.entree">Entrée dans le logement sans préavis / consentement</span></label>
               <label class="check"><input type="checkbox" name="grave" value="jouissance"><span data-i18n="wizard.grave.jouissance">Atteinte à ma tranquillité / jouissance paisible</span></label>
+              <label class="check"><input type="checkbox" name="grave" value="serrure"><span data-i18n="wizard.grave.serrure">Serrure ou autre mécanisme posé / changé sur une porte sans mon accord</span></label>
             </div>
           </div>
 
@@ -313,7 +366,8 @@
       </form>
 
       <div class="letter-result" id="letter-result" hidden>
-        <h3 data-i18n="wizard.result.title">Votre lettre (en français)</h3>
+        <h3 data-i18n="wizard.result.title">Votre lettre</h3>
+        <p class="result-note" data-i18n="wizard.result.author">Cette lettre est un modèle rempli à partir de vos réponses. Vous en êtes l'auteur et êtes responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
         <div class="letter-paper">
           <pre id="letter-text"></pre>
         </div>
@@ -322,7 +376,89 @@
           <button class="btn btn-primary" id="btn-download" data-i18n="wizard.result.download">⬇️ Télécharger (.txt)</button>
           <button class="btn btn-ghost" id="btn-print" data-i18n="wizard.result.print">🖨️ Imprimer / PDF</button>
         </div>
-        <p class="disclaimer" data-i18n="wizard.result.disclaimer">⚠️ Envoyez de préférence cette lettre par courrier recommandé et gardez une copie. Ceci est de l'information générale, pas un avis juridique.</p>
+
+        <div class="send-guide">
+          <h3 data-i18n="send.title">Imprimer et envoyer la lettre</h3>
+          <div class="send-grid">
+            <div class="send-card">
+              <span class="send-icon">🖨️</span>
+              <strong data-i18n="send.print.title">Où imprimer</strong>
+              <p data-i18n="send.print.desc">L'impression est possible à la bibliothèque de quartier (carte de bibliothèque gratuite), chez Bureau en Gros (centre d'impression qui accepte les fichiers par courriel) ou dans une imprimerie. Deux copies permettent d'en remettre une au locateur et d'en conserver une.</p>
+              <button type="button" class="btn btn-small btn-primary" data-map-kind="print" data-i18n="map.button">📍 Voir les lieux près de chez moi</button>
+              <p class="map-consent" data-i18n="map.consent">En cliquant, l'adresse du logement est envoyée à OpenStreetMap pour la situer sur la carte et trouver les lieux à proximité.</p>
+            </div>
+            <div class="send-card">
+              <span class="send-icon">📮</span>
+              <strong data-i18n="send.how.title">Comment l'envoyer</strong>
+              <p data-i18n="send.how.desc">Une lettre signée envoyée par courrier recommandé, à un comptoir de Postes Canada (bureau de poste ou comptoir dans une pharmacie), laisse une preuve de réception par le locateur, qui peut être utile devant le TAL.</p>
+              <button type="button" class="btn btn-small btn-primary" data-map-kind="post" data-i18n="map.postButton">📍 Voir les bureaux de poste près de chez moi</button>
+              <p class="map-consent" data-i18n="map.consent">En cliquant, l'adresse du logement est envoyée à OpenStreetMap pour la situer sur la carte et trouver les lieux à proximité.</p>
+              <a class="map-official" href="https://www.canadapost-postescanada.ca/scp/fr/outils/trouver-un-bureau-de-poste.page" target="_blank" rel="noopener" data-i18n="map.post.official" data-i18n-href="map.post.officialHref">Outil de recherche de bureaux de Postes Canada</a>
+            </div>
+            <div class="send-card">
+              <span class="send-icon">💬</span>
+              <strong data-i18n="send.ask.title">Ce qu'on demande au comptoir</strong>
+              <p data-i18n="send.ask.desc">Le service s'appelle le courrier recommandé, avec signature à la réception. Phrase utilisée au comptoir : « Je voudrais envoyer cette lettre par courrier recommandé, avec signature à la réception. » Le reçu remis porte un numéro de suivi qui sert de preuve d'envoi.</p>
+            </div>
+            <div class="send-card">
+              <span class="send-icon">💲</span>
+              <strong data-i18n="send.cost.title">Combien ça coûte</strong>
+              <p data-i18n="send.cost.desc">Impression : environ 0,10 $ à 0,50 $ par page. Courrier recommandé : environ 12 $ à 15 $ (timbre + option recommandé). Les tarifs peuvent changer.</p>
+            </div>
+          </div>
+
+          <dialog class="map-dialog" id="map-dialog">
+            <div class="map-dialog-body">
+              <button type="button" class="map-close" id="map-close" aria-label="Fermer" data-i18n-aria-label="common.close">✕</button>
+              <div class="places-map" data-map-panel="print" hidden>
+                <h4 data-i18n="map.print.title">Lieux pour imprimer près de chez vous</h4>
+                <p class="map-status" role="status" hidden></p>
+                <div class="map-canvas" dir="ltr"></div>
+                <ul class="map-list"></ul>
+              </div>
+
+              <div class="places-map" data-map-panel="post" hidden>
+                <h4 data-i18n="map.post.title">Bureaux de poste près de chez vous</h4>
+                <p class="map-status" role="status" hidden></p>
+                <div class="map-canvas" dir="ltr"></div>
+                <ul class="map-list"></ul>
+              </div>
+            </div>
+          </dialog>
+        </div>
+
+        <p class="disclaimer" data-i18n="wizard.result.disclaimer">ℹ️ Le courrier recommandé fournit une preuve de réception de la lettre, et une copie conservée garde une trace de son contenu. Ceci est de l'information générale, pas un avis juridique.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEGAL VIEW -->
+  <section class="view" id="view-legal">
+    <div class="container">
+      <button class="back-link" data-goto="home">← <span data-i18n="common.back">Retour</span></button>
+      <h2 data-i18n="legal.title">À propos et avis légal</h2>
+      <p class="lead" data-i18n="legal.updated">Dernière mise à jour du contenu : octobre 2026</p>
+      <div class="legal">
+        <section class="legal-section">
+          <h3 data-i18n="legal.about.title">À propos</h3>
+          <p data-i18n="legal.about.desc">Aide aux locataires est un projet gratuit créé à titre personnel par Gabriel Fortin, conseiller d'arrondissement du Plateau-Mont-Royal (district de Jeanne-Mance), et Elvira Carhuallanqui, conseillère de la ville (district de Parc-Extension, arrondissement de Villeray–Saint-Michel–Parc-Extension), pour aider les locataires de Montréal à comprendre leurs droits. Ce n'est pas un service de la Ville de Montréal ni d'un arrondissement. Le site ne vend aucun service et n'est affilié à aucun tribunal ni ordre professionnel.</p>
+        </section>
+        <section class="legal-section">
+          <h3 data-i18n="legal.advice.title">Ceci n'est pas un avis juridique</h3>
+          <p data-i18n="legal.advice.desc">Elvira Carhuallanqui est avocate, mais elle n'agit pas ici à titre d'avocate : ce site est un projet personnel. Le contenu est de l'information juridique générale, pas un avis juridique adapté à une situation particulière. Utiliser ce site ne crée aucune relation avocat-client. Les avocats, les cliniques juridiques et les comités logement peuvent donner un avis sur une situation précise.</p>
+        </section>
+        <section class="legal-section">
+          <h3 data-i18n="legal.author.title">Vous êtes l'auteur de votre lettre</h3>
+          <p data-i18n="legal.author.desc">Le générateur remplit un modèle de lettre à partir de vos réponses. Vous êtes l'auteur de la lettre et responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
+        </section>
+        <section class="legal-section">
+          <h3 data-i18n="legal.accuracy.title">Exactitude de l'information</h3>
+          <p data-i18n="legal.accuracy.desc">Nous faisons de notre mieux pour que l'information soit exacte et à jour, mais la loi peut changer et des erreurs sont possibles. Les délais et les articles de loi peuvent être vérifiés auprès du TAL ou d'Éducaloi.</p>
+        </section>
+        <section class="legal-section">
+          <h3 data-i18n="legal.privacy.title">Confidentialité</h3>
+          <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre et votre choix de langue sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap.</p>
+        </section>
       </div>
     </div>
   </section>
@@ -331,12 +467,14 @@
 
 <footer class="site-footer">
   <div class="container">
-    <p data-i18n="footer.text">Aide aux locataires — un outil indépendant pour les locataires de Montréal.</p>
+    <p data-i18n="footer.text">Aide aux locataires — pour les locataires de Montréal.</p>
+    <button class="footer-link" data-goto="legal" data-i18n="footer.legal">À propos et avis légal</button>
   </div>
 </footer>
 
 <script src="js/i18n.js"></script>
 <script src="js/letter.js"></script>
 <script src="js/main.js"></script>
+<script src="js/printmap.js"></script>
 </body>
 </html>
