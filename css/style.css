@@ -538,6 +538,11 @@ legend { font-size: 1.55rem; line-height: 1.25; margin-bottom: 18px; padding: 0;
 .field > label,
 .field > .q-row > label,
 .field-label { font-weight: 600; font-size: 0.92rem; color: var(--text); margin: 0; }
+/* Reserve the same label height across a field-grid row, so a label that wraps to two
+   lines doesn't push its input lower than its neighbours' (e.g. "Ville" vs "Votre nom
+   complet (tel qu'inscrit sur le bail)"). */
+.field-grid .field > label,
+.field-grid .field > .q-row { min-height: 3rem; }
 .field-hint { margin: 6px 0 0; font-size: 0.85rem; color: var(--text-soft); }
 
 .field input, .field textarea {
