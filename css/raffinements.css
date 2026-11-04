@@ -1,0 +1,117 @@
+/* ==========================================================================
+   Raffinements du style « institutionnel » (adoptés en novembre 2026).
+   Chargé APRÈS style.css ; référence du style C dans ~/Developer/DESIGN-PAGES.md.
+
+   1. Police Public Sans hébergée localement (aucune requête externe).
+   2. Touche « sceau » en laiton : filet sous les titres, numéros d'étape
+      cerclés, liseré en haut de la lettre.
+   3. Lisibilité : texte plus grand, gris plus foncé, lignes plus courtes.
+   4. Formulaire : choix sélectionné plus net, « Étape 1 sur 5 · … ».
+   5. Petits raffinements : pastilles de confiance, définitions, focus.
+   ========================================================================== */
+
+/* ---------- 1. Public Sans (SIL OFL, fonts/OFL.txt) ---------- */
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../fonts/public-sans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Public Sans';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url('../fonts/public-sans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+:root {
+  /* Les écritures non latines (arabe, ourdou, pendjabi) retombent sur les polices du système. */
+  --font-head: 'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-body: 'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --text-muted: #474a51;   /* plus foncé : 8,5:1 sur --bg */
+  --seal: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--accent);
+}
+@media (prefers-color-scheme: dark) {
+  :root { --text-muted: #b9bcc3; }
+}
+
+/* ---------- 3. Lisibilité ---------- */
+body { font-size: 17px; line-height: 1.65; }
+h1, h2, h3, h4, legend { letter-spacing: -0.02em; }
+.lead { font-size: 1.15rem; line-height: 1.6; }
+.cta-desc,
+.definition p,
+.step-body p,
+.choice-desc,
+.resource-card span,
+.legal-section p,
+.field-hint { font-size: 1rem; line-height: 1.6; }
+.step-body p, .legal-section p, .definition p { max-width: 70ch; }
+
+/* ---------- 2. Touche « sceau » en laiton ---------- */
+.view h1::after {
+  content: "";
+  display: block;
+  width: 48px; height: 3px;
+  margin-top: 14px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+.hero h1::after { margin-inline: auto; }
+.step-num { box-shadow: var(--seal); }
+.letter-paper { border-top: 4px solid var(--accent); }
+
+/* ---------- 4. Formulaire ---------- */
+.wizard-step-label + form .wizard-step legend, .wizard-step legend { margin-top: 4px; }
+.wizard-step-label {
+  margin: 28px 0 0;
+  font-size: 0.8rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--accent);
+}
+@media (prefers-color-scheme: light) { .wizard-step-label { color: #7d5f28; } }  /* laiton foncé : >= 4.5:1 */
+
+/* Choix sélectionné : fond clair conservé, bordure marine de 2 px, icône pleine */
+.choice-card:has(input:checked) {
+  background: var(--glass);
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary), var(--shadow-md);
+}
+.check:has(input:checked) {
+  background: var(--glass);
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+.choice-card:has(input:checked) .choice-icon {
+  background: var(--primary-fill);
+  color: #fff;
+}
+
+/* ---------- 6. Petits raffinements ---------- */
+/* Pastilles de confiance : trois colonnes égales, séparées par un filet */
+.trust-row {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; max-width: 900px; margin-inline: auto;
+}
+.trust-item {
+  flex-direction: column; justify-content: flex-start; gap: 6px; text-align: center;
+  background: none; border: none; box-shadow: none;
+  padding: 6px 18px;
+  font-size: 0.92rem; line-height: 1.4;
+}
+.trust-item + .trust-item { border-inline-start: 1px solid var(--hairline); }
+@media (max-width: 640px) {
+  .trust-row { grid-template-columns: 1fr; row-gap: 6px; }
+  .trust-item + .trust-item { border-inline-start: none; }
+  .trust-item { flex-direction: row; justify-content: center; }
+}
+
+/* Définitions : trait laiton collé au bord, sur toute la hauteur */
+.definition::before { inset-block: 0; width: 4px; }
+
+/* Focus du titre après changement de page : souligné laiton plutôt qu'un cadre */
+.view h1[tabindex="-1"]:focus { outline: none; }
+.view h1[tabindex="-1"]:focus-visible::after { width: 96px; transition: width 0.25s var(--ease); }

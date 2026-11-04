@@ -47,6 +47,7 @@
   langSelect.addEventListener('change', () => {
     currentLang = langSelect.value;
     applyLanguage(currentLang);
+    if (typeof updateProgress === 'function') updateProgress();
   });
 
   // ---------- Voice features (read-aloud / dictation) ----------
@@ -100,6 +101,12 @@
       dot.classList.toggle('active', step === currentStep);
       dot.classList.toggle('done', step < currentStep);
     });
+    // « Étape 1 sur 5 », au-dessus de la question (présent seulement si la page a l'élément)
+    const stepLabel = document.getElementById('wizard-step-label');
+    if (stepLabel) {
+      const total = form.querySelectorAll('.wizard-step').length;
+      stepLabel.textContent = t('wizard.stepOf', currentLang).replace('{n}', currentStep).replace('{total}', total);
+    }
   }
 
   function goToStep(step, moveFocus) {

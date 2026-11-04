@@ -4,7 +4,7 @@ Site d'information pour les locataires de Montréal : leurs droits, les étapes 
 
 **En ligne :** [locataire.gabfortin.com](https://locataire.gabfortin.com)
 
-Projet personnel et gratuit de Gabriel Fortin, conseiller d'arrondissement du Plateau-Mont-Royal (district de Jeanne-Mance), et d'Elvira Carhuallanqui, conseillère de la ville (district de Parc-Extension). Ce n'est pas un service de la Ville de Montréal ni d'un arrondissement.
+Projet personnel et gratuit de [Gabriel Fortin](https://gabfortin.com), conseiller d'arrondissement du Plateau-Mont-Royal (district de Jeanne-Mance), et d'[Elvira Carhuallanqui](https://elvirac.ca/), conseillère de la ville (district de Parc-Extension). Ce n'est pas un service de la Ville de Montréal ni d'un arrondissement.
 
 > Le contenu est de l'information juridique générale, pas un avis juridique. Le site est rédigé sur un ton informatif plutôt que sous forme de conseils, et toute modification du contenu devrait conserver ce ton.
 
@@ -20,16 +20,17 @@ Projet personnel et gratuit de Gabriel Fortin, conseiller d'arrondissement du Pl
 
 ## Confidentialité
 
-Le site est entièrement statique : il n'a ni serveur, ni base de données, ni compte, ni statistiques de visite.
+Le site est entièrement statique : il n'a ni serveur, ni base de données, ni compte. Les visites sont comptées de façon anonyme avec [GoatCounter](https://www.goatcounter.com) (sans cookies, sans conserver l'adresse IP), qui ne voit jamais les réponses ni la lettre.
 
 - Les réponses et la lettre restent dans le navigateur. Le brouillon et la langue choisie sont enregistrés dans le `localStorage` de l'appareil.
 - Le PDF est créé dans le navigateur (jsPDF, inclus dans le dépôt).
 - La lecture à voix haute utilise les voix installées sur l'appareil.
 
-Trois fonctions envoient des données à un tiers, toujours après une action de la personne et avec une mention ou une demande de consentement :
+Trois fonctions envoient des données à un tiers, toujours après une action de la personne et avec une mention ou une demande de consentement. S'y ajoute la mesure d'audience anonyme, décrite dans la même section de la page :
 
 | Fonction | Ce qui est envoyé | À qui |
 |---|---|---|
+| Mesure d'audience (chaque visite) | La page consultée, le site d'origine, le type d'appareil, le pays (déduit de l'adresse IP, qui n'est pas conservée) | GoatCounter |
 | Cartes des lieux | L'adresse du logement | OpenStreetMap (Nominatim), puis tuiles de carte d'OpenStreetMap et Leaflet depuis cdnjs |
 | Dictée vocale | L'enregistrement de la voix | Google, Apple ou Microsoft, selon le navigateur |
 | Envoi par courriel | La lettre | L'application de courriel choisie par la personne |
@@ -41,6 +42,8 @@ Toute nouvelle fonction qui envoie des données doit suivre le même principe et
 ```
 index.html            Toutes les pages (accueil, information, générateur, avis légal)
 css/style.css         Styles : variables de couleur (clair/sombre), composants, icônes en CSS
+css/raffinements.css  Raffinements chargés après style.css : police Public Sans, touches laiton, lisibilité, formulaire
+fonts/                Public Sans (woff2, hébergée localement) et sa licence OFL
 js/i18n.js            Textes de l'interface dans les 8 langues
 js/letter.js          Modèle de la lettre (français et anglais)
 js/pdf.js             Création du PDF de la lettre
@@ -68,7 +71,7 @@ Puis ouvrir <http://localhost:8000>. En cas de doute, faire un rechargement forc
 
 Le site est publié par GitHub Pages depuis la branche `main`, sur le domaine défini dans `CNAME`.
 
-**À chaque mise en ligne**, changer le numéro de version `?v=` des balises CSS et JS au bas de `index.html` (et dans la balise du CSS en haut). Sans ce changement, les navigateurs des visiteurs peuvent garder l'ancienne version des fichiers en cache.
+**À chaque mise en ligne**, changer le numéro de version `?v=` des balises CSS et JS au bas de `index.html` (et dans les deux balises CSS en haut : `style.css` et `raffinements.css`). Sans ce changement, les navigateurs des visiteurs peuvent garder l'ancienne version des fichiers en cache.
 
 ## Modifier le contenu
 
@@ -82,5 +85,6 @@ Les traductions autres que le français et l'anglais ont été produites sans re
 ## Crédits
 
 - [jsPDF](https://github.com/parallax/jsPDF) (MIT), inclus dans `js/vendor/`
+- [Public Sans](https://github.com/uswds/public-sans) (SIL OFL 1.1), hébergée dans `fonts/` (aucune requête externe)
 - [Leaflet](https://leafletjs.com) (BSD-2-Clause), chargé depuis cdnjs à l'ouverture d'une carte
 - Données cartographiques © les contributeurs d'[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL), recherche par [Nominatim](https://nominatim.org)
