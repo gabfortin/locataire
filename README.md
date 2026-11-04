@@ -42,8 +42,8 @@ Toute nouvelle fonction qui envoie des données doit suivre le même principe et
 ```
 index.html            Toutes les pages (accueil, information, générateur, avis légal)
 css/style.css         Styles : variables de couleur (clair/sombre), composants, icônes en CSS
-css/raffinements.css  Raffinements chargés après style.css : police Public Sans, touches laiton, lisibilité, formulaire
-fonts/                Public Sans (woff2, hébergée localement) et sa licence OFL
+css/raffinements.css  Raffinements chargés après style.css : police Inter, touches « sceau » vertes, lisibilité, formulaire, harmonisation avec le style A
+fonts/                Inter (woff2, hébergée localement) et sa licence OFL (OFL-Inter.txt)
 js/i18n.js            Textes de l'interface dans les 8 langues
 js/letter.js          Modèle de la lettre (français et anglais)
 js/pdf.js             Création du PDF de la lettre
@@ -85,6 +85,6 @@ Les traductions autres que le français et l'anglais ont été produites sans re
 ## Crédits
 
 - [jsPDF](https://github.com/parallax/jsPDF) (MIT), inclus dans `js/vendor/`
-- [Public Sans](https://github.com/uswds/public-sans) (SIL OFL 1.1), hébergée dans `fonts/` (aucune requête externe)
+- [Inter](https://rsms.me/inter/) (SIL OFL 1.1), hébergée dans `fonts/` (aucune requête externe), même police que gabfortin.com
 - [Leaflet](https://leafletjs.com) (BSD-2-Clause), chargé depuis cdnjs à l'ouverture d'une carte
 - Données cartographiques © les contributeurs d'[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL), recherche par [Nominatim](https://nominatim.org)
