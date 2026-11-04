@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f7f7f5" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f1113" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eaf4f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12201f" media="(prefers-color-scheme: dark)">
 <title>Aide aux locataires — Vos droits de locataire à Montréal</title>
 <meta name="description" content="Aide aux locataires présente les droits des locataires de Montréal, les étapes habituelles face à un logement insalubre et un générateur de modèle de lettre de mise en demeure, en 8 langues.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%231c3c6e%22/%3E%3Cpath d=%22M7.5 14.5 16 7.5l8.5 7M9.5 13v11h13V13M14 24v-6h4v6%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222.2%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css?v=2026-11-04-1">
+<link rel="stylesheet" href="css/style.css?v=2026-11-04-6">
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/raffinements.css?v=2026-11-04-1">
+<link rel="stylesheet" href="css/raffinements.css?v=2026-11-04-6">
+<link rel="stylesheet" href="css/formulaire.css?v=2026-11-04-6">
 <script>window.goatcounter = {path: function(p) { return location.host + p }}</script>
 <script data-goatcounter="https://gabfortin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -22,7 +23,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a href="#" class="brand" data-view-link="home">
-      <span class="brand-mark" aria-hidden="true"><span data-icon="home"></span></span>
+      <img class="brand-mark" src="assets/icon.svg" alt="" width="34" height="34">
       <span class="brand-name">Aide aux locataires</span>
     </a>
     <div class="lang-switcher">
@@ -86,7 +87,7 @@
   <section class="view" id="view-info">
     <div class="container">
       <button class="back-link" data-goto="home" data-icon="arrow-left"><span data-i18n="common.back">Retour</span></button>
-      <h1 data-i18n="info.title">Logement insalubre ou problème grave : les étapes habituelles</h1>
+      <h1 data-i18n="info.title2">Logement insalubre ou relation difficile avec le locateur : les étapes habituelles</h1>
       <p class="lead" data-i18n="info.subtitle">Voici les étapes généralement suivies, dans l'ordre. Il s'agit d'information générale, pas d'un avis juridique.</p>
 
       <div class="definitions">
@@ -95,7 +96,7 @@
           <p data-i18n="info.def.insalubre.desc">Un logement dont l'état constitue une menace sérieuse pour la santé ou la sécurité des occupants ou du public (art. 1913 C.c.Q.). Exemples : moisissure importante, vermine, absence de chauffage, dégâts majeurs.</p>
         </div>
         <div class="definition">
-          <strong data-i18n="info.def.grave.title">Problème grave</strong>
+          <strong data-i18n="info.def.relation.title">Relation avec le locateur</strong>
           <p data-i18n="info.def.grave.desc">Une situation qui touche la sécurité du locataire ou son droit de vivre en paix chez lui : harcèlement, entrée sans préavis, serrure posée ou changée sans son accord.</p>
         </div>
       </div>
@@ -104,7 +105,7 @@
         <li class="step">
           <div class="step-num">1</div>
           <div class="step-body">
-            <h3 data-i18n="info.step1.title">Documentation du problème</h3>
+            <h3 data-i18n="info.step1.title2">Documenter et recueillir les preuves</h3>
             <p data-i18n="info.step1.desc">Des photos et vidéos datées du problème (moisissure, vermine, dégât d'eau, chauffage, etc.) et une trace écrite des communications avec le locateur (textos, courriels, lettres) peuvent servir de preuve, notamment devant le TAL.</p>
           </div>
         </li>
@@ -120,7 +121,8 @@
           <div class="step-num">3</div>
           <div class="step-body">
             <h3 data-i18n="info.step3.title">Inspection par la ville ou l'arrondissement</h3>
-            <p data-i18n="info.step3.desc">Lorsqu'un logement est insalubre (moisissure, vermine, absence de chauffage, dégâts majeurs), il est possible de demander une inspection municipale. À Montréal, ces demandes passent par le 311 ou montreal.ca.</p>
+            <p data-i18n="info.step3.desc2">Lorsqu'un logement est insalubre (moisissure, vermine, absence de chauffage, dégâts majeurs), il est possible de demander une inspection municipale. À Montréal, la Ville demande d'abord une copie de l'avis écrit laissant 10 jours ouvrables au propriétaire pour agir, sauf urgence (chauffage en panne alors qu'il fait sous zéro, toilette hors d'usage, infiltration d'eau). La demande se fait au 311.</p>
+            <p><a href="https://montreal.ca/demander-une-inspection-dans-un-logement" target="_blank" rel="noopener" data-i18n="info.step3.link" data-i18n-href="info.step3.href">Demander une inspection dans un logement (montreal.ca)</a></p>
           </div>
         </li>
         <li class="step">
@@ -135,6 +137,9 @@
           <div class="step-body">
             <h3 data-i18n="info.step5.title">Si rien ne change : le Tribunal administratif du logement (TAL)</h3>
             <p data-i18n="info.step5.desc">Si le locateur ne corrige pas la situation après la mise en demeure, le locataire peut déposer une demande au TAL : exécution forcée des travaux, diminution de loyer, résiliation du bail ou dommages-intérêts.</p>
+            <p data-i18n="info.step5.abandon">Si le logement est impropre à l'habitation, le locataire peut l'abandonner. Il doit alors aviser le locateur de l'état du logement avant de partir ou dans les 10 jours qui suivent son départ ; le loyer n'est pas dû pendant la période où le logement est impropre à l'habitation, sauf si cet état est dû à sa faute (art. 1915 C.c.Q.). Quand le logement redevient habitable, le locateur doit en aviser le locataire, si celui-ci lui a donné sa nouvelle adresse ; le locataire a alors 10 jours pour lui dire s'il revient ou non dans le logement.</p>
+            <p><a href="https://www.tal.gouv.qc.ca/sites/default/files/notices/TAL_801_E.pdf" target="_blank" rel="noopener" data-i18n="info.step5.abandonLink" data-i18n-href="info.step5.abandonHref">Formulaire « Avis d'abandon du logement » du TAL (PDF)</a></p>
+            <p class="step-contact" data-icon="message"><span data-i18n="info.step5.phone">Joindre le TAL : 514 873-2245 (Montréal, Laval, Longueuil) ou 1 800 683-2245 (ailleurs au Québec).</span></p>
           </div>
         </li>
       </ol>
@@ -160,7 +165,7 @@
           <div class="send-card">
             <span class="send-icon" data-icon="file" aria-hidden="true"></span>
             <strong data-i18n="info.rights.lease.title">Modification du bail</strong>
-            <p data-i18n="info.rights.lease.desc">Pour changer les conditions du bail (loyer, durée, etc.), le locateur doit envoyer un avis de modification du bail dans les délais prévus par la loi. Le locataire peut refuser les modifications en répondant par écrit dans le mois qui suit la réception de l'avis ; sans réponse, il est réputé les avoir acceptées.</p>
+            <p data-i18n="info.rights.lease.desc2">Pour changer les conditions du bail (loyer, durée, etc.), le locateur doit envoyer un avis de modification du bail. Pour un bail de 12 mois ou plus, cet avis doit être envoyé entre 3 et 6 mois avant la fin du bail (art. 1942 C.c.Q.). Le locataire peut refuser les modifications en répondant par écrit dans le mois qui suit la réception de l'avis ; sans réponse, il est réputé les avoir acceptées.</p>
           </div>
           <div class="send-card">
             <span class="send-icon" data-icon="shield" aria-hidden="true"></span>
@@ -188,7 +193,7 @@
             <span data-i18n="info.resources.rclalq">Regroupement des comités logement et associations de locataires du Québec</span>
             <span class="resource-url">rclalq.qc.ca</span>
           </a>
-          <a class="resource-card" href="https://montreal.ca" target="_blank" rel="noopener">
+          <a class="resource-card" href="https://montreal.ca/demander-une-inspection-dans-un-logement" target="_blank" rel="noopener" data-i18n-href="info.step3.href">
             <strong>Ville de Montréal — 311</strong>
             <span data-i18n="info.resources.ville">Signaler un logement insalubre, demander une inspection</span>
             <span class="resource-url">montreal.ca</span>
@@ -200,272 +205,391 @@
       <aside class="source-note" aria-labelledby="sources-info-title">
         <h3 id="sources-info-title" data-i18n="info.sources.title">Sources</h3>
         <ul>
-          <li><span data-i18n="info.sources.ccq">Code civil du Québec, articles 1913, 1915, 1931, 1932 et 1934</span> (<a href="https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991" target="_blank" rel="noopener">LégisQuébec</a>)</li>
+          <li><span data-i18n="info.sources.ccq">Code civil du Québec, articles 1913, 1915, 1931, 1932, 1934 et 1942</span> (<a href="https://www.legisquebec.gouv.qc.ca/fr/document/lc/CCQ-1991" target="_blank" rel="noopener">LégisQuébec</a>)</li>
+          <li><span data-i18n="info.sources.ville">Ville de Montréal, « Demander une inspection dans un logement »</span> (<a href="https://montreal.ca/demander-une-inspection-dans-un-logement" target="_blank" rel="noopener" data-i18n-href="info.step3.href">montreal.ca</a>)</li>
+          <li><span data-i18n="info.sources.tal">Tribunal administratif du logement, formulaire « Avis d'abandon du logement »</span> (<a href="https://www.tal.gouv.qc.ca/sites/default/files/notices/TAL_801_E.pdf" target="_blank" rel="noopener" data-i18n-href="info.step5.abandonHref">tal.gouv.qc.ca</a>)</li>
         </ul>
       </aside>
     </div>
   </section>
 
-  <!-- WIZARD VIEW -->
+  <!-- WIZARD VIEW : mise en page inspirée du formulaire de plainte de la CDPDJ
+       (informations et base légale à gauche, une question à la fois à droite). -->
   <section class="view" id="view-wizard">
-    <div class="container">
-      <button class="back-link" data-goto="home" data-icon="arrow-left"><span data-i18n="common.back">Retour</span></button>
-      <h1 data-i18n="wizard.title">Générateur de lettre de mise en demeure</h1>
-      <p class="lead" data-i18n="wizard.subtitle">Vous pouvez répondre dans votre langue. La lettre est rédigée dans la langue de votre bail (français ou anglais).</p>
+    <div class="container wizard-layout">
 
-      <label class="check voice-toggle">
-        <input type="checkbox" id="voice-toggle">
-        <span data-icon="mic" data-i18n="wizard.voiceToggle">Activer la lecture des questions et la dictée vocale</span>
-      </label>
+      <aside class="wizard-side" aria-labelledby="wizard-title">
+        <button class="back-link" data-goto="home" data-icon="arrow-left"><span data-i18n="common.back">Retour</span></button>
+        <h1 id="wizard-title" class="wizard-title" data-i18n="wz.title">Générer votre lettre de mise en demeure</h1>
 
-      <div class="before-box">
-        <strong data-icon="clipboard" data-i18n="wizard.before.title">Les informations demandées se trouvent sur votre bail</strong>
-        <ul>
-          <li data-i18n="wizard.before.name">La lettre est envoyée par un locataire dont le nom est inscrit sur le bail.</li>
-          <li data-i18n="wizard.before.landlord">Elle est adressée au locateur inscrit sur le bail.</li>
-          <li data-i18n="wizard.before.address">L'adresse du locateur utilisée est celle inscrite sur le bail.</li>
-        </ul>
-      </div>
-
-      <p class="dictation-hint" data-icon="mic">
-        <span data-i18n="dictation.hintButton" hidden>Vous pouvez répondre oralement à l'aide du bouton microphone situé à côté des champs.</span>
-        <span data-i18n="dictation.hintKeyboard">Sur téléphone, le micro du clavier permet aussi de dicter.</span>
-      </p>
-
-      <div class="progress-bar" aria-hidden="true">
-        <div class="progress-dot active" data-dot="1"></div>
-        <div class="progress-dot" data-dot="2"></div>
-        <div class="progress-dot" data-dot="3"></div>
-        <div class="progress-dot" data-dot="4"></div>
-        <div class="progress-dot" data-dot="5"></div>
-      </div>
-      <p class="wizard-step-label" id="wizard-step-label"></p>
-
-      <form id="letter-form" novalidate>
-
-        <!-- STEP 1: category -->
-        <fieldset class="wizard-step active" data-step="1">
-          <legend data-i18n="wizard.step1.legend">Quel est votre problème ?</legend>
-          <div class="choice-grid">
-            <label class="choice-card">
-              <input type="radio" name="category" value="salubrite" checked>
-              <span class="choice-icon" data-icon="droplet" aria-hidden="true"></span>
-              <span class="choice-title" data-i18n="wizard.step1.salubrite">Salubrité ou réparations non faites</span>
-              <span class="choice-desc" data-i18n="wizard.step1.salubriteDesc">Moisissure, vermine, chauffage, dégât d'eau, plomberie, électricité...</span>
-            </label>
-            <label class="choice-card">
-              <input type="radio" name="category" value="grave">
-              <span class="choice-icon" data-icon="shield" aria-hidden="true"></span>
-              <span class="choice-title" data-i18n="wizard.step1.grave">Autre problème grave</span>
-              <span class="choice-desc" data-i18n="wizard.step1.graveDesc">Harcèlement, entrée sans préavis, serrure changée, atteinte à votre tranquillité...</span>
-            </label>
+        <div class="wz-progress">
+          <div class="wz-progress-head">
+            <span data-i18n="wz.progress">Progression</span>
+            <span id="wz-percent" aria-hidden="true">0 %</span>
           </div>
-
-          <div class="lease-lang">
-            <p class="field-label" data-i18n="wizard.field.leaseLang">En quelle langue votre bail est-il rédigé ?</p>
-            <div class="lang-choice">
-              <label class="check"><input type="radio" name="lease_lang" value="fr" checked><span data-i18n="wizard.leaseLang.fr">Français</span></label>
-              <label class="check"><input type="radio" name="lease_lang" value="en"><span data-i18n="wizard.leaseLang.en">Anglais</span></label>
-            </div>
-            <p class="field-hint" data-i18n="wizard.leaseLang.hint">La lettre sera rédigée dans la langue de votre bail.</p>
-          </div>
-        </fieldset>
-
-        <!-- STEP 2: your info -->
-        <fieldset class="wizard-step" data-step="2">
-          <legend data-i18n="wizard.step2.legend">Vos informations</legend>
-          <div class="field-grid">
-            <div class="field">
-              <label for="tenant_name" data-i18n="wizard.field.tenantName">Votre nom complet (tel qu'inscrit sur le bail)</label>
-              <input type="text" id="tenant_name" name="tenant_name" autocomplete="name" required>
-            </div>
-            <div class="field">
-              <label for="tenant_address" data-i18n="wizard.field.tenantAddress">Adresse du logement (rue, numéro, appartement)</label>
-              <input type="text" id="tenant_address" name="tenant_address" autocomplete="street-address" required>
-            </div>
-            <div class="field">
-              <label for="tenant_city" data-i18n="wizard.field.tenantCity">Ville</label>
-              <input type="text" id="tenant_city" name="tenant_city" value="Montréal" autocomplete="address-level2">
-            </div>
-            <div class="field">
-              <label for="tenant_postal" data-i18n="wizard.field.tenantPostal">Code postal</label>
-              <input type="text" id="tenant_postal" name="tenant_postal" autocomplete="postal-code">
-            </div>
-            <div class="field">
-              <label for="tenant_email" data-i18n="wizard.field.tenantEmail">Courriel (optionnel)</label>
-              <input type="email" id="tenant_email" name="tenant_email" autocomplete="email">
-            </div>
-            <div class="field">
-              <label for="tenant_phone" data-i18n="wizard.field.tenantPhone">Téléphone (optionnel)</label>
-              <input type="tel" id="tenant_phone" name="tenant_phone" autocomplete="tel">
-            </div>
-            <div class="field">
-              <label for="lease_date" data-i18n="wizard.field.leaseDate">Date d'entrée dans le logement (optionnel)</label>
-              <input type="date" id="lease_date" name="lease_date">
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- STEP 3: landlord info -->
-        <fieldset class="wizard-step" data-step="3">
-          <legend data-i18n="wizard.step3.legend">Informations sur votre locateur</legend>
-          <div class="field-grid">
-            <div class="field">
-              <label for="landlord_name" data-i18n="wizard.field.landlordName">Nom du locateur ou de la compagnie (tel qu'inscrit sur le bail)</label>
-              <input type="text" id="landlord_name" name="landlord_name" required>
-            </div>
-            <div class="field">
-              <label for="landlord_address" data-i18n="wizard.field.landlordAddress">Adresse du locateur (telle qu'inscrite sur le bail)</label>
-              <input type="text" id="landlord_address" name="landlord_address" required>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- STEP 4: problem details -->
-        <fieldset class="wizard-step" data-step="4">
-          <legend data-i18n="wizard.step4.legend">Détails du problème</legend>
-
-          <div class="issues-block" data-category-block="salubrite">
-            <p class="field-label" data-i18n="wizard.field.issuesLabel">Cochez ce qui s'applique</p>
-            <div class="law-note law-note-block">
-              <button type="button" class="btn btn-small btn-ghost law-note-btn" data-icon="info" aria-expanded="false">
-                <span data-i18n="lawNote.toggleLabel">Base légale</span>
-              </button>
-              <div class="law-note-body" hidden>
-                <p data-i18n="wizard.field.issuesLabel.note">Le locateur doit délivrer un logement en bon état d'habitabilité et le maintenir ainsi, et ne peut offrir ni délivrer un logement impropre à l'habitation (articles 1910 et 1913 du Code civil du Québec).</p>
-                <a href="https://educaloi.qc.ca/capsules/logement-en-mauvais-etat-les-recours/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
-              </div>
-            </div>
-            <div class="checkbox-grid">
-              <label class="check"><input type="checkbox" name="issue" value="moisissure"><span data-i18n="wizard.issue.moisissure">Moisissure / humidité</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="vermine"><span data-i18n="wizard.issue.vermine">Vermine (coquerelles, punaises, rongeurs)</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="chauffage"><span data-i18n="wizard.issue.chauffage">Chauffage insuffisant ou absent</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="eauchaude"><span data-i18n="wizard.issue.eauchaude">Pas d'eau chaude</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="eaucourante"><span data-i18n="wizard.issue.eaucourante">Absence d'eau courante</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="degatEau"><span data-i18n="wizard.issue.degatEau">Dégât d'eau / infiltration</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="structurel"><span data-i18n="wizard.issue.structurel">Dommages structurels (plafond, mur, plancher)</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="electricite"><span data-i18n="wizard.issue.electricite">Problème électrique</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="plomberie"><span data-i18n="wizard.issue.plomberie">Problème de plomberie</span></label>
-              <label class="check"><input type="checkbox" name="issue" value="securite"><span data-i18n="wizard.issue.securite">Porte / fenêtre brisée, sécurité</span></label>
-            </div>
-          </div>
-
-          <div class="issues-block" data-category-block="grave" hidden>
-            <p class="field-label" data-i18n="wizard.field.graveLabel">Cochez ce qui s'applique</p>
-            <div class="checkbox-grid">
-              <div class="check-row">
-                <label class="check"><input type="checkbox" name="grave" value="harcelement"><span data-i18n="wizard.grave.harcelement">Harcèlement de la part du locateur</span></label>
-                <div class="law-note">
-                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
-                  <div class="law-note-body" hidden>
-                    <p data-i18n="wizard.grave.harcelement.note">L'article 1902 du Code civil du Québec interdit au locateur de harceler un locataire de manière à restreindre sa jouissance paisible du logement ou à l'amener à le quitter.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="check-row">
-                <label class="check"><input type="checkbox" name="grave" value="entree"><span data-i18n="wizard.grave.entree">Entrée dans le logement sans préavis / consentement</span></label>
-                <div class="law-note">
-                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
-                  <div class="law-note-body" hidden>
-                    <p data-i18n="wizard.grave.entree.note">Sauf urgence, le locateur doit donner un préavis de 24 heures avant de visiter le logement, entre 9 h et 21 h (articles 1931 et 1932 du Code civil du Québec).</p>
-                    <a href="https://educaloi.qc.ca/capsules/les-visites-et-acces-au-logement/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
-                  </div>
-                </div>
-              </div>
-              <div class="check-row">
-                <label class="check"><input type="checkbox" name="grave" value="jouissance"><span data-i18n="wizard.grave.jouissance">Atteinte à votre tranquillité ou à la jouissance paisible du logement</span></label>
-                <div class="law-note">
-                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
-                  <div class="law-note-body" hidden>
-                    <p data-i18n="wizard.grave.jouissance.note">Le locateur doit garantir au locataire la jouissance paisible du logement pendant toute la durée du bail (article 1854 du Code civil du Québec).</p>
-                    <a href="https://educaloi.qc.ca/capsules/les-obligations-du-proprietaire/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
-                  </div>
-                </div>
-              </div>
-              <div class="check-row">
-                <label class="check"><input type="checkbox" name="grave" value="serrure"><span data-i18n="wizard.grave.serrure">Serrure ou autre mécanisme posé ou changé sur une porte sans votre accord</span></label>
-                <div class="law-note">
-                  <button type="button" class="law-note-icon-btn" data-icon="info" aria-expanded="false" aria-label="En savoir plus — base légale" data-i18n-aria-label="lawNote.toggle"></button>
-                  <div class="law-note-body" hidden>
-                    <p data-i18n="wizard.grave.serrure.note">Aucune serrure ou autre mécanisme restreignant l'accès au logement ne peut être posé ou changé sans le consentement du locateur et du locataire (article 1934 du Code civil du Québec).</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="field full">
-            <label for="issue_details" data-i18n="wizard.field.details">Décrivez la situation en détail</label>
-            <textarea id="issue_details" name="issue_details" rows="4" required></textarea>
-          </div>
-
-          <div class="field-grid">
-            <div class="field">
-              <label for="date_noticed" data-i18n="wizard.field.dateNoticed">Date où vous avez remarqué le problème</label>
-              <input type="date" id="date_noticed" name="date_noticed">
-            </div>
-            <div class="field">
-              <label for="date_reported" data-i18n="wizard.field.dateReported">Date où vous l'avez signalé au locateur (optionnel)</label>
-              <input type="date" id="date_reported" name="date_reported">
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- STEP 5: deadline & remedy -->
-        <fieldset class="wizard-step" data-step="5">
-          <legend data-i18n="wizard.step5.legend">Délai et solution demandée</legend>
-          <div class="field-grid">
-            <div class="field">
-              <label for="deadline_days" data-i18n="wizard.field.deadline">Délai accordé pour corriger (en jours)</label>
-              <input type="number" id="deadline_days" name="deadline_days" value="10" min="1" max="60">
-            </div>
-          </div>
-
-          <div class="choice-block">
-            <p class="field-label" data-i18n="wizard.field.remedy">Ce que vous demandez</p>
-            <div class="law-note law-note-block">
-              <button type="button" class="btn btn-small btn-ghost law-note-btn" data-icon="info" aria-expanded="false">
-                <span data-i18n="lawNote.toggleLabel">Base légale</span>
-              </button>
-              <div class="law-note-body" hidden>
-                <p data-i18n="wizard.field.remedy.note">Une diminution de loyer ne peut être accordée que par le Tribunal administratif du logement (TAL) ; le locateur ne peut pas y consentir lui-même. Cette lettre informe le locateur qu'une demande pourrait y être déposée s'il n'agit pas.</p>
-                <a href="https://educaloi.qc.ca/capsules/logement-en-mauvais-etat-les-recours/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
-              </div>
-            </div>
-            <div class="checkbox-grid">
-              <label class="check"><input type="radio" name="remedy" value="reparation" checked><span data-i18n="wizard.remedy.reparation">Que les réparations soient faites</span></label>
-              <label class="check"><input type="radio" name="remedy" value="cessation"><span data-i18n="wizard.remedy.cessation">Que les agissements cessent</span></label>
-              <label class="check"><input type="radio" name="remedy" value="remboursement"><span data-i18n="wizard.remedy.remboursement">Une diminution de loyer</span></label>
-              <label class="check"><input type="radio" name="remedy" value="autre"><span data-i18n="wizard.remedy.autre">Autre chose</span></label>
-            </div>
-          </div>
-        </fieldset>
-
-        <div class="wizard-nav">
-          <button type="button" class="btn btn-ghost" id="btn-prev" data-icon="arrow-left" data-i18n="common.previous">Précédent</button>
-          <button type="button" class="btn btn-primary btn-icon-end" id="btn-next" data-icon="arrow-right" data-i18n="common.next">Suivant</button>
-          <button type="button" class="btn btn-primary" id="btn-generate" hidden data-icon="sparkle" data-i18n="wizard.generate">Générer ma lettre</button>
+          <div class="wz-progress-track" aria-hidden="true"><div class="wz-progress-fill" id="wz-progress-fill"></div></div>
+          <p class="wizard-step-label" id="wizard-step-label"></p>
         </div>
-      </form>
 
-      <div class="letter-result" id="letter-result" hidden>
-        <h3 data-icon="check" data-i18n="wizard.result.title">Votre lettre</h3>
-        <p class="result-note" data-i18n="wizard.result.author">Cette lettre est un modèle rempli à partir de vos réponses. Vous en êtes l'auteur et êtes responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
-        <div class="letter-paper">
-          <pre id="letter-text"></pre>
-        </div>
-        <div class="result-actions">
-          <button class="btn btn-primary" id="btn-copy" data-icon="copy" data-i18n="wizard.result.copy">Copier le texte</button>
-          <button class="btn btn-primary" id="btn-download" data-icon="download" data-i18n="wizard.result.download">Télécharger (PDF)</button>
-          <button class="btn btn-ghost" id="btn-print" data-icon="printer" data-i18n="wizard.result.print">Imprimer</button>
-          <button class="btn btn-ghost" id="btn-email" data-icon="mail" data-i18n="wizard.result.email">Envoyer par courriel</button>
-        </div>
-        <p class="result-note email-note" id="email-note" role="status" hidden>
-          <span data-i18n="wizard.result.emailInBody" hidden>Votre application de courriel s'ouvre avec la lettre dans le corps du message. Ce type de lien ne permet pas de joindre un fichier : le fichier PDF (bouton Télécharger) peut être joint manuellement.</span>
-          <span data-icon="info" data-i18n="wizard.result.emailProof">Un courriel ne fournit pas la même preuve de réception que le courrier recommandé.</span>
+        <p class="dictation-hint" data-icon="mic">
+          <span data-i18n="dictation.hintButton" hidden>Vous pouvez répondre oralement à l'aide du bouton microphone situé à côté des champs.</span>
+          <span data-i18n="dictation.hintKeyboard">Sur téléphone, le micro du clavier permet aussi de dicter.</span>
         </p>
 
-        <div class="send-guide">
+        <!-- Informations et base légale propres à chaque étape (affichées par js/main.js) -->
+        <div class="wz-asides">
+          <section class="wz-aside" data-aside="informed">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.informed">Il est toujours recommandé d'informer votre locateur du problème avant de lui envoyer une mise en demeure : une première lettre lui donne la chance de régler la situation.</p>
+            <p data-i18n="wz.aside.informedCity">À Montréal, avant de demander une inspection, la Ville demande d'aviser d'abord le propriétaire par écrit et de lui laisser 10 jours ouvrables pour agir.</p>
+          </section>
+
+          <section class="wz-aside" data-aside="category">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="info.def.insalubre.desc">Un logement dont l'état constitue une menace sérieuse pour la santé ou la sécurité des occupants ou du public (art. 1913 C.c.Q.). Exemples : moisissure importante, vermine, absence de chauffage, dégâts majeurs.</p>
+            <p data-i18n="wz.aside.relation">La relation avec le locateur touche votre sécurité ou votre droit de vivre en paix chez vous : harcèlement, entrée sans préavis, serrure posée ou changée sans votre accord.</p>
+          </section>
+
+          <section class="wz-aside" data-aside="leaselang">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wizard.subtitle">Vous pouvez répondre dans votre langue. La lettre est rédigée dans la langue de votre bail (français ou anglais).</p>
+          </section>
+
+          <section class="wz-aside" data-aside="tenant">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wizard.before.title">Les informations demandées se trouvent sur votre bail</p>
+            <ul>
+              <li data-i18n="wizard.before.name">La lettre est envoyée par un locataire dont le nom est inscrit sur le bail.</li>
+              <li data-i18n="wizard.before.landlord">Elle est adressée au locateur inscrit sur le bail.</li>
+            </ul>
+          </section>
+
+          <section class="wz-aside" data-aside="contact">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.contact">La ville et le code postal sont obligatoires. Le courriel, le téléphone et la date d'entrée sont facultatifs : ils permettent à votre locateur de vous répondre.</p>
+          </section>
+
+          <section class="wz-aside" data-aside="landlord">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wizard.before.address">L'adresse du locateur utilisée est celle inscrite sur le bail.</p>
+          </section>
+
+          <section class="wz-aside wz-law" data-aside="problems" data-category="salubrite">
+            <h2 data-i18n="lawNote.toggleLabel">Base légale</h2>
+            <p data-i18n="wizard.field.issuesLabel.note">Le locateur doit délivrer un logement en bon état d'habitabilité et le maintenir ainsi, et ne peut offrir ni délivrer un logement impropre à l'habitation (articles 1910 et 1913 du Code civil du Québec).</p>
+            <a href="https://educaloi.qc.ca/capsules/logement-en-mauvais-etat-les-recours/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+          </section>
+          <section class="wz-aside wz-law" data-aside="problems" data-category="grave">
+            <h2 data-i18n="lawNote.toggleLabel">Base légale</h2>
+            <p data-i18n="wizard.grave.harcelement.note">L'article 1902 du Code civil du Québec interdit au locateur de harceler un locataire de manière à restreindre sa jouissance paisible du logement ou à l'amener à le quitter.</p>
+            <p data-i18n="wizard.grave.entree.note">Sauf urgence, le locateur doit donner un préavis de 24 heures avant de visiter le logement, entre 9 h et 21 h (articles 1931 et 1932 du Code civil du Québec).</p>
+            <p data-i18n="wizard.grave.jouissance.note">Le locateur doit garantir au locataire la jouissance paisible du logement pendant toute la durée du bail (article 1854 du Code civil du Québec).</p>
+            <p data-i18n="wizard.grave.serrure.note">Aucune serrure ou autre mécanisme restreignant l'accès au logement ne peut être posé ou changé sans le consentement du locateur et du locataire (article 1934 du Code civil du Québec).</p>
+            <a href="https://educaloi.qc.ca/capsules/les-obligations-du-proprietaire/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+          </section>
+
+          <section class="wz-aside" data-aside="description">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.description">Il est toujours recommandé d'avoir contacté votre locateur avant de lui envoyer une mise en demeure.</p>
+            <p data-i18n="wz.aside.descriptionTips">Restez factuel : ce que vous avez constaté, à quel endroit du logement, depuis quand, et ce que vous avez déjà fait.</p>
+          </section>
+
+          <section class="wz-aside" data-aside="dates">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.dates">Une date approximative suffit. Les dates après aujourd'hui ne sont pas acceptées.</p>
+          </section>
+
+          <section class="wz-aside" data-aside="prejudice">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.prejudice">Le préjudice, ce sont les conséquences concrètes de la situation pour vous et votre famille : par exemple, des problèmes respiratoires causés par la moisissure, ou des nuits perturbées par la vermine. Les décrire en détail peut appuyer une demande de dommages-intérêts devant le TAL.</p>
+          </section>
+
+          <section class="wz-aside" data-aside="deadline">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.deadline">À titre informatif : la Ville de Montréal demande d'aviser le propriétaire par écrit et de lui laisser 10 jours ouvrables pour agir avant de demander une inspection. En cas d'urgence (chauffage en panne alors qu'il fait sous zéro, toilette hors d'usage, infiltration d'eau), la Ville peut être contactée sans attendre.</p>
+          </section>
+          <section class="wz-aside wz-law" data-aside="deadline">
+            <h2 data-i18n="lawNote.toggleLabel">Base légale</h2>
+            <p data-i18n="wz.law.deadline">Une mise en demeure doit accorder un délai suffisant, compte tenu de la nature de l'obligation et des circonstances (article 1595 du Code civil du Québec).</p>
+          </section>
+
+          <section class="wz-aside wz-law" data-aside="demands">
+            <h2 data-i18n="lawNote.toggleLabel">Base légale</h2>
+            <p data-i18n="wizard.field.remedy.note">Une diminution de loyer ne peut être accordée que par le Tribunal administratif du logement (TAL) ; le locateur ne peut pas y consentir lui-même. Cette lettre informe le locateur qu'une demande pourrait y être déposée s'il n'agit pas.</p>
+            <a href="https://educaloi.qc.ca/capsules/logement-en-mauvais-etat-les-recours/" target="_blank" rel="noopener" data-i18n="common.educaloi">Explication sur Éducaloi</a>
+          </section>
+
+          <section class="wz-aside" data-aside="tone">
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.tone">Peu importe le ton choisi, la lettre garde les mêmes informations et la même base légale.</p>
+          </section>
+        </div>
+      </aside>
+
+      <div class="wizard-main">
+        <form id="letter-form" novalidate>
+          <p class="req-note"><span class="req" aria-hidden="true">*</span> <span data-i18n="wz.required">Champ obligatoire</span></p>
+
+          <!-- 1. Le locateur a-t-il déjà été informé ? -->
+          <fieldset class="wizard-step active" data-step-id="informed">
+            <legend><span data-i18n="wz.informed.legend">Avez-vous déjà informé votre locateur du problème ?</span> <span class="req" aria-hidden="true">*</span></legend>
+            <div class="choice-grid choice-list" data-required-group="informed">
+              <label class="check option">
+                <input type="radio" name="informed" value="oui">
+                <span class="option-text"><span class="option-title" data-i18n="wz.informed.oui">Oui, je l'ai déjà informé</span><span class="option-desc" data-i18n="wz.informed.ouiDesc">Rédiger une mise en demeure.</span></span>
+              </label>
+              <label class="check option">
+                <input type="radio" name="informed" value="non_aide">
+                <span class="option-text"><span class="option-title" data-i18n="wz.informed.nonAide">Non, pas encore</span><span class="option-desc" data-i18n="wz.informed.nonAideDesc">M'aider à rédiger une première lettre pour l'informer du problème.</span></span>
+              </label>
+              <label class="check option">
+                <input type="radio" name="informed" value="non_med">
+                <span class="option-text"><span class="option-title" data-i18n="wz.informed.nonMed">Non, mais je veux envoyer une mise en demeure</span><span class="option-desc" data-i18n="wz.informed.nonMedDesc">Rédiger une mise en demeure tout de même.</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 2. Type de problème -->
+          <fieldset class="wizard-step" data-step-id="category">
+            <legend><span data-i18n="wz.category.legend">Votre problème concerne…</span> <span class="req" aria-hidden="true">*</span></legend>
+            <div class="choice-grid choice-list">
+              <label class="check option">
+                <input type="radio" name="category" value="salubrite" checked>
+                <span class="option-icon" data-icon="droplet" aria-hidden="true"></span>
+                <span class="option-text"><span class="option-title" data-i18n="wizard.step1.salubrite">Salubrité ou réparations non faites</span><span class="option-desc" data-i18n="wizard.step1.salubriteDesc">Moisissure, vermine, chauffage, dégât d'eau, plomberie, électricité...</span></span>
+              </label>
+              <label class="check option">
+                <input type="radio" name="category" value="grave">
+                <span class="option-icon" data-icon="shield" aria-hidden="true"></span>
+                <span class="option-text"><span class="option-title" data-i18n="wz.category.relation">La relation avec votre locateur</span><span class="option-desc" data-i18n="wizard.step1.graveDesc">Harcèlement, entrée sans préavis, serrure changée, atteinte à votre tranquillité...</span></span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- 3. Langue du bail -->
+          <fieldset class="wizard-step" data-step-id="leaselang">
+            <legend><span data-i18n="wizard.field.leaseLang">En quelle langue votre bail est-il rédigé ?</span> <span class="req" aria-hidden="true">*</span></legend>
+            <div class="choice-grid choice-list">
+              <label class="check option"><input type="radio" name="lease_lang" value="fr" checked><span class="option-text"><span class="option-title" data-i18n="wizard.leaseLang.fr">Français</span></span></label>
+              <label class="check option"><input type="radio" name="lease_lang" value="en"><span class="option-text"><span class="option-title" data-i18n="wizard.leaseLang.en">Anglais</span></span></label>
+            </div>
+            <p class="field-hint" data-i18n="wizard.leaseLang.hint">La lettre sera rédigée dans la langue de votre bail.</p>
+          </fieldset>
+
+          <!-- 4. Qui envoie la lettre -->
+          <fieldset class="wizard-step" data-step-id="tenant">
+            <legend data-i18n="wizard.step2.legend">Vos informations</legend>
+            <div class="field-stack">
+              <div class="field">
+                <label for="tenant_name"><span data-i18n="wizard.field.tenantName">Votre nom complet (tel qu'inscrit sur le bail)</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="tenant_name" name="tenant_name" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="tenant_address"><span data-i18n="wizard.field.tenantAddress">Adresse du logement (rue, numéro, appartement)</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="tenant_address" name="tenant_address" autocomplete="street-address" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 5. Coordonnées -->
+          <fieldset class="wizard-step" data-step-id="contact">
+            <legend data-i18n="wz.contact.legend">Vos coordonnées</legend>
+            <div class="field-grid">
+              <div class="field">
+                <label for="tenant_city"><span data-i18n="wizard.field.tenantCity">Ville</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="tenant_city" name="tenant_city" value="Montréal" autocomplete="address-level2" required>
+              </div>
+              <div class="field">
+                <label for="tenant_postal"><span data-i18n="wizard.field.tenantPostal">Code postal</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="tenant_postal" name="tenant_postal" autocomplete="postal-code" required>
+              </div>
+              <div class="field">
+                <label for="tenant_email" data-i18n="wizard.field.tenantEmail">Courriel (optionnel)</label>
+                <input type="email" id="tenant_email" name="tenant_email" autocomplete="email">
+              </div>
+              <div class="field">
+                <label for="tenant_phone" data-i18n="wizard.field.tenantPhone">Téléphone (optionnel)</label>
+                <input type="tel" id="tenant_phone" name="tenant_phone" autocomplete="tel">
+              </div>
+              <div class="field">
+                <label for="lease_date" data-i18n="wizard.field.leaseDate">Date d'entrée dans le logement (optionnel)</label>
+                <input type="date" id="lease_date" name="lease_date">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 6. Locateur -->
+          <fieldset class="wizard-step" data-step-id="landlord">
+            <legend data-i18n="wizard.step3.legend">Informations sur votre locateur</legend>
+            <div class="field-stack">
+              <div class="field">
+                <label for="landlord_name"><span data-i18n="wizard.field.landlordName">Nom du locateur ou de la compagnie (tel qu'inscrit sur le bail)</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="landlord_name" name="landlord_name" required>
+              </div>
+              <div class="field">
+                <label for="landlord_address"><span data-i18n="wizard.field.landlordAddress">Adresse du locateur (telle qu'inscrite sur le bail)</span> <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="landlord_address" name="landlord_address" required>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 7. Problèmes (une liste à puces : la ligne devient verte une fois cochée) -->
+          <fieldset class="wizard-step" data-step-id="problems">
+            <legend data-i18n="wz.problems.legend">Quels problèmes vivez-vous ?</legend>
+            <p class="field-hint step-hint" data-i18n="wizard.field.issuesLabel">Cochez ce qui s'applique</p>
+            <div class="checkbox-grid choice-list" data-category-block="salubrite">
+              <label class="check option"><input type="checkbox" name="issue" value="moisissure"><span data-i18n="wizard.issue.moisissure">Moisissure / humidité</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="vermine"><span data-i18n="wizard.issue.vermine">Vermine (coquerelles, punaises, rongeurs)</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="chauffage"><span data-i18n="wizard.issue.chauffage">Chauffage insuffisant ou absent</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="eauchaude"><span data-i18n="wizard.issue.eauchaude">Pas d'eau chaude</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="eaucourante"><span data-i18n="wizard.issue.eaucourante">Absence d'eau courante</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="degatEau"><span data-i18n="wizard.issue.degatEau">Dégât d'eau / infiltration</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="structurel"><span data-i18n="wizard.issue.structurel">Dommages structurels (plafond, mur, plancher)</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="electricite"><span data-i18n="wizard.issue.electricite">Problème électrique</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="plomberie"><span data-i18n="wizard.issue.plomberie">Problème de plomberie</span></label>
+              <label class="check option"><input type="checkbox" name="issue" value="securite"><span data-i18n="wizard.issue.securite">Porte / fenêtre brisée, sécurité</span></label>
+            </div>
+            <div class="checkbox-grid choice-list" data-category-block="grave" hidden>
+              <label class="check option"><input type="checkbox" name="grave" value="harcelement"><span data-i18n="wizard.grave.harcelement">Harcèlement de la part du locateur</span></label>
+              <label class="check option"><input type="checkbox" name="grave" value="entree"><span data-i18n="wizard.grave.entree">Entrée dans le logement sans préavis / consentement</span></label>
+              <label class="check option"><input type="checkbox" name="grave" value="jouissance"><span data-i18n="wizard.grave.jouissance">Atteinte à votre tranquillité ou à la jouissance paisible du logement</span></label>
+              <label class="check option"><input type="checkbox" name="grave" value="serrure"><span data-i18n="wizard.grave.serrure">Serrure ou autre mécanisme posé ou changé sur une porte sans votre accord</span></label>
+            </div>
+          </fieldset>
+
+          <!-- 8. Description -->
+          <fieldset class="wizard-step" data-step-id="description">
+            <legend data-i18n="wz.description.legend">Décrivez la situation</legend>
+            <div class="field">
+              <label for="issue_details"><span data-i18n="wizard.field.details">Décrivez la situation en détail</span> <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="issue_details" name="issue_details" rows="8" required aria-describedby="details-hint word-count"></textarea>
+              <p class="field-hint" id="details-hint" data-i18n="wz.description.hint">Un ou deux paragraphes : ce qui se passe, depuis quand, à quel endroit du logement et ce que vous avez déjà fait.</p>
+              <div class="details-tools">
+                <p class="word-count" id="word-count" aria-live="polite"></p>
+                <button type="button" class="btn btn-small btn-ghost" id="btn-read-details" data-icon="volume"><span data-i18n="wz.description.listen">Écouter ce que j'ai écrit</span></button>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 9. Dates -->
+          <fieldset class="wizard-step" data-step-id="dates">
+            <legend data-i18n="wz.dates.legend">Depuis quand ?</legend>
+            <div class="field-stack">
+              <div class="field">
+                <label for="date_noticed" data-i18n="wizard.field.dateNoticed">Date où vous avez remarqué le problème</label>
+                <input type="date" id="date_noticed" name="date_noticed">
+              </div>
+              <div class="field" data-show-informed="oui">
+                <label for="date_reported" data-i18n="wizard.field.dateReported">Date où vous l'avez signalé au locateur (optionnel)</label>
+                <input type="date" id="date_reported" name="date_reported">
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- 10. Préjudice -->
+          <fieldset class="wizard-step" data-step-id="prejudice">
+            <legend data-i18n="wz.prejudice.legend">Comment cette situation vous affecte-t-elle ?</legend>
+            <p class="field-hint step-hint" data-i18n="wizard.field.issuesLabel">Cochez ce qui s'applique</p>
+            <div class="checkbox-grid choice-list">
+              <label class="check option"><input type="checkbox" name="prejudice" value="sante"><span data-i18n="wz.prejudice.sante">Problèmes de santé (respiratoires, allergies, maladie)</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="sommeil"><span data-i18n="wz.prejudice.sommeil">Sommeil perturbé, fatigue</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="stress"><span data-i18n="wz.prejudice.stress">Stress ou anxiété</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="piece"><span data-i18n="wz.prejudice.piece">Une partie du logement est inutilisable</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="biens"><span data-i18n="wz.prejudice.biens">Biens endommagés (meubles, vêtements, nourriture)</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="frais"><span data-i18n="wz.prejudice.frais">Dépenses supplémentaires (chauffage d'appoint, nettoyage, hébergement)</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="enfants"><span data-i18n="wz.prejudice.enfants">Des enfants ou des personnes vulnérables sont touchés</span></label>
+              <label class="check option"><input type="checkbox" name="prejudice" value="securite"><span data-i18n="wz.prejudice.securite">Je ne me sens pas en sécurité dans mon logement</span></label>
+            </div>
+            <div class="field">
+              <label for="prejudice_details" data-i18n="wz.prejudice.details">Précisez les répercussions (facultatif)</label>
+              <textarea id="prejudice_details" name="prejudice_details" rows="3"></textarea>
+            </div>
+          </fieldset>
+
+          <!-- 11. Délai -->
+          <fieldset class="wizard-step" data-step-id="deadline">
+            <legend data-i18n="wz.deadline.legend">Quel délai voulez-vous donner à votre locateur ?</legend>
+            <div class="field field-narrow">
+              <label for="deadline_days"><span data-i18n="wz.deadline.label">Délai (en jours ouvrables)</span> <span class="req" aria-hidden="true">*</span></label>
+              <input type="number" id="deadline_days" name="deadline_days" value="10" min="1" max="60" required>
+              <p class="field-hint" data-i18n="wz.deadline.hint">Délai recommandé : 10 jours ouvrables, à titre informatif.</p>
+            </div>
+          </fieldset>
+
+          <!-- 12. Ce que je demande -->
+          <fieldset class="wizard-step" data-step-id="demands">
+            <legend><span data-i18n="wz.demands.legend">Qu'est-ce que je veux demander ?</span> <span class="req" aria-hidden="true">*</span></legend>
+            <p class="field-hint step-hint" data-i18n="wizard.field.issuesLabel">Cochez ce qui s'applique</p>
+            <div class="checkbox-grid choice-list" data-required-group="demand">
+              <label class="check option" data-category-only="salubrite"><input type="checkbox" name="demand" value="reparation"><span data-i18n="wz.demands.reparation">Que les réparations soient faites</span></label>
+              <label class="check option" data-category-only="grave"><input type="checkbox" name="demand" value="cessation"><span data-i18n="wz.demands.cessation">Que les agissements cessent</span></label>
+              <label class="check option" data-letter-only="med"><input type="checkbox" name="demand" value="diminution"><span data-i18n="wz.demands.diminution">Une diminution de loyer (accordée seulement par le TAL)</span></label>
+              <label class="check option"><input type="checkbox" name="demand" value="autre" id="demand-autre"><span data-i18n="wizard.remedy.autre">Autre chose</span></label>
+            </div>
+            <div class="field" id="demand-other-field" hidden>
+              <label for="demand_other"><span data-i18n="wz.demands.otherLabel">Autre chose : précisez ce que vous demandez</span> <span class="req" aria-hidden="true">*</span></label>
+              <input type="text" id="demand_other" name="demand_other">
+            </div>
+          </fieldset>
+
+          <!-- 13. Ton -->
+          <fieldset class="wizard-step" data-step-id="tone">
+            <legend data-i18n="wz.tone.legend">Quel ton voulez-vous donner à votre lettre ?</legend>
+            <div class="choice-grid choice-list">
+              <label class="check option"><input type="radio" name="tone" value="neutre" checked><span class="option-text"><span class="option-title" data-i18n="wz.tone.neutre">Neutre</span><span class="option-desc" data-i18n="wz.tone.neutreDesc">Factuel et poli. Convient à la plupart des situations.</span></span></label>
+              <label class="check option"><input type="radio" name="tone" value="cordial"><span class="option-text"><span class="option-title" data-i18n="wz.tone.cordial">Cordial</span><span class="option-desc" data-i18n="wz.tone.cordialDesc">Plus conciliant, si la relation avec votre locateur est bonne.</span></span></label>
+              <label class="check option"><input type="radio" name="tone" value="ferme"><span class="option-text"><span class="option-title" data-i18n="wz.tone.ferme">Ferme</span><span class="option-desc" data-i18n="wz.tone.fermeDesc">Plus direct, si vos demandes précédentes sont restées sans réponse.</span></span></label>
+            </div>
+          </fieldset>
+
+          <p class="wz-error" id="wz-error" role="alert" hidden></p>
+
+          <div class="wizard-nav">
+            <button type="button" class="btn btn-ghost" id="btn-prev" data-icon="arrow-left" data-i18n="common.previous">Précédent</button>
+            <button type="button" class="btn btn-primary btn-icon-end" id="btn-next" data-icon="arrow-right" data-i18n="wz.next">Étape suivante</button>
+            <button type="button" class="btn btn-primary" id="btn-generate" hidden data-icon="sparkle" data-i18n="wizard.generate">Générer ma lettre</button>
+          </div>
+        </form>
+
+        <div class="letter-result" id="letter-result" hidden>
+          <h2 data-icon="check" data-i18n="wizard.result.title">Votre lettre</h2>
+          <p class="result-note" data-i18n="wizard.result.author">Cette lettre est un modèle rempli à partir de vos réponses. Vous en êtes l'auteur et êtes responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
+
+          <div class="result-tools">
+            <button type="button" class="btn btn-small btn-ghost" id="btn-read-letter" data-icon="volume"><span data-i18n="wz.result.listen">Écouter la lettre</span></button>
+            <button type="button" class="btn btn-small btn-ghost" id="btn-edit" data-icon="pen"><span data-i18n="wz.result.edit">Modifier mes réponses</span></button>
+          </div>
+
+          <div class="letter-paper">
+            <pre id="letter-text"></pre>
+          </div>
+
+          <div class="esign-box" id="esign-box">
+            <p data-i18n="wz.esign.text">Vous ne pouvez pas signer la lettre à la main ? En cliquant sur « J'accepte », votre nom est ajouté sur la ligne de signature, dans une écriture manuscrite.</p>
+            <button type="button" class="btn btn-small btn-ghost" id="btn-esign" aria-pressed="false" data-icon="pen"><span data-i18n="wz.esign.accept">J'accepte de signer électroniquement</span></button>
+          </div>
+
+          <div class="result-actions">
+            <button class="btn btn-primary" id="btn-download" data-icon="download" data-i18n="wizard.result.download">Télécharger (PDF)</button>
+            <button class="btn btn-primary" id="btn-print" data-icon="printer" data-i18n="wizard.result.print">Imprimer</button>
+            <button class="btn btn-ghost" id="btn-email" data-icon="mail" data-i18n="wizard.result.email">Envoyer par courriel</button>
+            <button class="btn btn-ghost" id="btn-copy" data-icon="copy" data-i18n="wizard.result.copy">Copier le texte</button>
+          </div>
+          <p class="result-note email-note" id="email-note" role="status" hidden>
+            <span data-i18n="wizard.result.emailInBody" hidden>Votre application de courriel s'ouvre avec la lettre dans le corps du message. Ce type de lien ne permet pas de joindre un fichier : le fichier PDF (bouton Télécharger) peut être joint manuellement.</span>
+            <span data-icon="info" data-i18n="wizard.result.emailProof">Un courriel ne fournit pas la même preuve de réception que le courrier recommandé.</span>
+          </p>
+
+          <div class="done-panel" id="done-panel" hidden tabindex="-1">
+            <span class="done-check" aria-hidden="true"></span>
+            <div>
+              <p class="done-title" data-i18n="wz.done.title">Bravo, votre lettre est prête !</p>
+              <p data-i18n="wz.done.text">Voici maintenant où l'imprimer et comment l'envoyer à votre locateur.</p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-ghost send-guide-toggle" id="btn-show-guide" data-icon="send"><span data-i18n="wz.done.howTo">Où imprimer et comment envoyer ma lettre ?</span></button>
+
+          <div class="send-guide" id="send-guide" hidden>
           <h3 data-i18n="send.title">Imprimer et envoyer la lettre</h3>
           <div class="send-grid">
             <div class="send-card">
@@ -513,11 +637,15 @@
               </div>
             </div>
           </dialog>
-        </div>
+          </div>
 
-        <p class="disclaimer" data-icon="info" data-i18n="wizard.result.disclaimer">Le courrier recommandé fournit une preuve de réception de la lettre, et une copie conservée garde une trace de son contenu. Ceci est de l'information générale, pas un avis juridique.</p>
+          <p class="disclaimer" data-icon="info" data-i18n="wizard.result.disclaimer">Le courrier recommandé fournit une preuve de réception de la lettre, et une copie conservée garde une trace de son contenu. Ceci est de l'information générale, pas un avis juridique.</p>
+        </div>
       </div>
     </div>
+
+    <!-- Lecture à voix haute et dictée : pastille flottante à côté de la colonne de gauche -->
+    <button type="button" class="voice-pill" id="voice-toggle" aria-pressed="false" data-icon="mic"><span data-i18n="wz.voice">Lecture et dictée</span></button>
   </section>
 
   <!-- LEGAL VIEW -->
@@ -562,13 +690,41 @@
   </div>
 </footer>
 
+<!-- À propos et avis légal : à lire et à accepter à la première visite (js/main.js) -->
+<dialog class="terms-dialog" id="terms-dialog" aria-labelledby="terms-title" aria-describedby="terms-instruction">
+  <div class="terms-head">
+    <div class="terms-head-text">
+      <p class="terms-title" id="terms-title" data-icon="info"><span data-i18n="terms.title">Veuillez lire les indications avant de commencer.</span></p>
+      <p class="terms-instruction" id="terms-instruction" data-i18n="terms.instruction">Faites défiler le texte, puis cliquez sur « J'ai lu et j'accepte ».</p>
+    </div>
+    <label class="sr-only" for="terms-lang" data-i18n="lang.label">Langue</label>
+    <select id="terms-lang" class="terms-lang"></select>
+  </div>
+  <div class="terms-body" id="terms-body" tabindex="0">
+    <h2 data-i18n="legal.title">À propos et avis légal</h2>
+    <h3 data-i18n="legal.about.title">À propos</h3>
+    <p data-i18n="legal.about.desc">Aide aux locataires est un projet gratuit créé à titre personnel par Gabriel Fortin, conseiller d'arrondissement du Plateau-Mont-Royal (district de Jeanne-Mance), et Elvira Carhuallanqui, conseillère de la ville (district de Parc-Extension, arrondissement de Villeray–Saint-Michel–Parc-Extension), pour aider les locataires de Montréal à comprendre leurs droits. Ce n'est pas un service de la Ville de Montréal ni d'un arrondissement. Le site ne vend aucun service et n'est affilié à aucun tribunal ni ordre professionnel.</p>
+    <h3 data-i18n="legal.advice.title">Ceci n'est pas un avis juridique</h3>
+    <p data-i18n="legal.advice.desc">Elvira Carhuallanqui est avocate, mais elle n'agit pas ici à titre d'avocate : ce site est un projet personnel. Le contenu est de l'information juridique générale, pas un avis juridique adapté à une situation particulière. Utiliser ce site ne crée aucune relation avocat-client. Les avocats, les cliniques juridiques et les comités logement peuvent donner un avis sur une situation précise.</p>
+    <h3 data-i18n="legal.author.title">Vous êtes l'auteur de votre lettre</h3>
+    <p data-i18n="legal.author.desc">Le générateur remplit un modèle de lettre à partir de vos réponses. Vous êtes l'auteur de la lettre et responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
+    <h3 data-i18n="legal.accuracy.title">Exactitude de l'information</h3>
+    <p data-i18n="legal.accuracy.desc">Nous faisons de notre mieux pour que l'information soit exacte et à jour, mais la loi peut changer et des erreurs sont possibles. Les délais et les articles de loi peuvent être vérifiés auprès du TAL ou d'Éducaloi.</p>
+    <h3 data-i18n="legal.privacy.title">Confidentialité</h3>
+    <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre et votre choix de langue sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap. La dictée vocale, si vous l'utilisez, fonctionne de la même façon : votre navigateur envoie l'enregistrement de votre voix à Google, Apple ou Microsoft pour le convertir en texte. Votre accord est demandé avant la première utilisation.</p>
+    <p data-i18n="legal.privacy.stats">Le site compte les visites de façon anonyme avec GoatCounter : page consultée, site d'origine, type d'appareil et pays. GoatCounter n'utilise pas de cookies, ne conserve pas votre adresse IP et ne voit jamais vos réponses ni votre lettre.</p>
+    <p class="terms-end" id="terms-end" data-i18n="terms.end">Fin des indications.</p>
+  </div>
+  <button type="button" class="terms-accept" id="terms-accept" disabled data-i18n="terms.accept">J'ai lu et j'accepte</button>
+</dialog>
+
 <!-- ?v= forces browsers to fetch new versions: change it on every release (CSS and JS). -->
-<script src="js/i18n.js?v=2026-11-04-1"></script>
-<script src="js/letter.js?v=2026-11-04-1"></script>
-<script src="js/pdf.js?v=2026-11-04-1"></script>
-<script src="js/main.js?v=2026-11-04-1"></script>
-<script src="js/printmap.js?v=2026-11-04-1"></script>
-<script src="js/speech.js?v=2026-11-04-1"></script>
-<script src="js/dictation.js?v=2026-11-04-1"></script>
+<script src="js/i18n.js?v=2026-11-04-6"></script>
+<script src="js/letter.js?v=2026-11-04-6"></script>
+<script src="js/pdf.js?v=2026-11-04-6"></script>
+<script src="js/main.js?v=2026-11-04-6"></script>
+<script src="js/printmap.js?v=2026-11-04-6"></script>
+<script src="js/speech.js?v=2026-11-04-6"></script>
+<script src="js/dictation.js?v=2026-11-04-6"></script>
 </body>
 </html>

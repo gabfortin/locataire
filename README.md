@@ -10,19 +10,30 @@ Projet personnel et gratuit de [Gabriel Fortin](https://gabfortin.com), conseill
 
 ## Fonctionnalités
 
-- **Information** : définitions (logement insalubre, problème grave), étapes habituelles, droits en bref (visites, travaux, serrures, modification du bail) et ressources (TAL, Éducaloi, RCLALQ, 311).
-- **Générateur de lettre** en 5 étapes : la personne répond dans sa langue, et la lettre est rédigée dans la langue du bail (français ou anglais).
-- **Lettre générée** : copie, téléchargement en PDF, impression, envoi par courriel (fichier joint via le menu de partage du système, sinon lien `mailto:`).
-- **Imprimer et envoyer** : informations sur l'impression et le courrier recommandé, avec des cartes des lieux à proximité (imprimeries, Bureau en Gros, bibliothèques, bureaux de Postes Canada).
-- **8 langues d'interface** : français, anglais, espagnol, créole haïtien, arabe, italien, pendjabi, ourdou (arabe et ourdou affichés de droite à gauche).
-- **Accessibilité** : lecture à voix haute des questions avec surlignage du choix lu, et dictée vocale des réponses.
+- **Fenêtre d'accueil** « À propos et avis légal » à la première visite : le texte doit être lu jusqu'au bout (défilement) puis accepté (« J'ai lu et j'accepte ») ; l'acceptation est gardée dans le `localStorage`. Elle a son propre menu de langue, car le reste de la page est inactif pendant qu'elle est ouverte.
+- **Information** : définitions (logement insalubre, relation avec le locateur), étapes habituelles (dont le lien vers la demande d'inspection de la Ville, l'avis d'abandon du logement du TAL et le numéro du TAL), droits en bref (visites, travaux, serrures, modification du bail, quitter un logement insalubre), ressources et bloc « Sources ».
+- **Générateur de lettre** en 13 étapes, une question à la fois (mise en page inspirée du formulaire de plainte de la CDPDJ) : colonne de gauche avec la progression en pourcentage, les informations et la base légale de l'étape ; champs obligatoires marqués d'un astérisque ; dates futures refusées ; description limitée à 250 mots.
+  1. Locateur déjà informé ? (oui → mise en demeure ; non → **première lettre d'avis** ; non → mise en demeure tout de même)
+  2. Type de problème (salubrité, relation avec le locateur) · 3. Langue du bail · 4. Nom et adresse · 5. Coordonnées · 6. Locateur
+  7. Problèmes (liste qui devient verte une fois cochée) · 8. Description · 9. Dates · 10. Préjudice · 11. Délai (10 jours ouvrables recommandés, à titre informatif) · 12. Ce que je demande (dont « Autre chose ») · 13. Ton (neutre, cordial, ferme)
+- **Lettre générée** (`js/letter.js`) : « MISE EN DEMEURE / SOUS TOUTES RÉSERVES » en grosses capitales, puis la situation, « je vous ai informé… », le préjudice, la base légale, la mise en demeure et le délai, les demandes et la suite (TAL). La mention « sous toutes réserves » est voulue : « sans préjudice » marquerait la lettre comme une offre de négociation, qu'on ne pourrait pas déposer en preuve.
+- **Après la lettre** : écoute de la lettre (voix de l'appareil, langue du bail), signature électronique (« J'accepte » : le nom s'ajoute sur la ligne de signature en écriture manuscrite, police Great Vibes), PDF, impression, courriel prérempli (objet « Mise en demeure – nom », message d'accusé de réception daté, lettre jointe), copie du texte ; puis « Bravo » et le guide pour imprimer et envoyer (cartes des lieux à proximité).
+- **8 langues d'interface** : français, anglais, espagnol, créole haïtien, arabe, italien, pendjabi, ourdou (arabe et ourdou affichés de droite à gauche). Voir « À faire » : les textes ajoutés en novembre 2026 ne sont encore qu'en français et en anglais.
+- **Accessibilité** : pastille flottante « Lecture et dictée » (lecture à voix haute des questions avec surlignage, dictée vocale des réponses), écoute de la description écrite.
 - **Mode clair et sombre** selon le réglage de l'appareil.
+
+## À faire (novembre 2026)
+
+- **Traductions** : les nouvelles clés de `js/i18n.js` (`wz.*`, `terms.*`, `info.title2`, `info.def.relation.title`, `info.step1.title2`, `info.step3.*`, `info.step5.abandon*`, `info.step5.phone`, `info.rights.lease.desc2`, `info.sources.ville`, `info.sources.tal`) n'existent qu'en français et en anglais ; les 6 autres langues affichent le français. À traduire quand le contenu sera stabilisé avec Elvira.
+- **Contenu attendu d'Elvira** : jurisprudence à ajouter ; étape 2 de la page d'information (sans consigne) et étape 4 (« trouver page »).
+- **Accès restreint** à quelques personnes pendant les essais : Cloudflare Access (voir « Mise en ligne »).
+- **Plus tard** : reformulation et correction de la description par une IA (exige un petit serveur qui garde la clé d'API, un consentement explicite et une mise à jour de la confidentialité) ; essai d'un lecteur de bail (photo → noms et langue du bail).
 
 ## Confidentialité
 
 Le site est entièrement statique : il n'a ni serveur, ni base de données, ni compte. Les visites sont comptées de façon anonyme avec [GoatCounter](https://www.goatcounter.com) (sans cookies, sans conserver l'adresse IP), qui ne voit jamais les réponses ni la lettre.
 
-- Les réponses et la lettre restent dans le navigateur. Le brouillon et la langue choisie sont enregistrés dans le `localStorage` de l'appareil.
+- Les réponses et la lettre restent dans le navigateur. Le brouillon, la langue choisie, la préférence de lecture et dictée et l'acceptation de la fenêtre d'accueil sont enregistrés dans le `localStorage` de l'appareil.
 - Le PDF est créé dans le navigateur (jsPDF, inclus dans le dépôt).
 - La lecture à voix haute utilise les voix installées sur l'appareil.
 
@@ -43,7 +54,9 @@ Toute nouvelle fonction qui envoie des données doit suivre le même principe et
 index.html            Toutes les pages (accueil, information, générateur, avis légal)
 css/style.css         Styles : variables de couleur (clair/sombre), composants, icônes en CSS
 css/raffinements.css  Raffinements chargés après style.css : police Inter, touches « sceau » vertes, lisibilité, formulaire, harmonisation avec le style A
-fonts/                Inter (woff2, hébergée localement) et sa licence OFL (OFL-Inter.txt)
+css/formulaire.css    Chargé en dernier : style C plus coloré, mise en page du générateur inspirée de la CDPDJ, fenêtre d'accueil, pastille de la voix
+assets/icon.svg       Logo (maison contenant une lettre) : barre du haut et favicon ; apple-touch-icon.png en est la version 180 px
+fonts/                Inter (woff2) et Great Vibes (signature électronique, réduite aux caractères latins), hébergées localement, avec leurs licences OFL
 js/i18n.js            Textes de l'interface dans les 8 langues
 js/letter.js          Modèle de la lettre (français et anglais)
 js/pdf.js             Création du PDF de la lettre
@@ -71,7 +84,18 @@ Puis ouvrir <http://localhost:8000>. En cas de doute, faire un rechargement forc
 
 Le site est publié par GitHub Pages depuis la branche `main`, sur le domaine défini dans `CNAME`.
 
-**À chaque mise en ligne**, changer le numéro de version `?v=` des balises CSS et JS au bas de `index.html` (et dans les deux balises CSS en haut : `style.css` et `raffinements.css`). Sans ce changement, les navigateurs des visiteurs peuvent garder l'ancienne version des fichiers en cache.
+**À chaque mise en ligne**, changer le numéro de version `?v=` des balises CSS et JS au bas de `index.html` (et dans les trois balises CSS en haut : `style.css`, `raffinements.css` et `formulaire.css`). Sans ce changement, les navigateurs des visiteurs peuvent garder l'ancienne version des fichiers en cache.
+
+### Accès restreint pendant les essais (Cloudflare Access)
+
+GitHub Pages ne sait pas restreindre l'accès. Pour réserver le site à quelques personnes (par courriel), mettre Cloudflare Access devant le domaine, sans changer le code :
+
+1. Faire gérer le DNS de `gabfortin.com` par Cloudflare (gratuit), ou au minimum celui du sous-domaine `locataire.gabfortin.com`, en gardant l'enregistrement CNAME vers GitHub Pages **proxifié** (nuage orange).
+2. Cloudflare Zero Trust → Access → Applications → *Self-hosted* : domaine `locataire.gabfortin.com`.
+3. Politique *Allow* → *Emails* : la liste des courriels autorisés. Méthode de connexion : *One-time PIN* (un code est envoyé par courriel, aucun compte requis).
+4. Vérifier dans une fenêtre privée que le site demande le courriel, puis qu'un courriel autorisé y accède.
+
+Pour ouvrir le site à tous : supprimer l'application Access. Le forfait gratuit couvre jusqu'à 50 personnes.
 
 ## Modifier le contenu
 

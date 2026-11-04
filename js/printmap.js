@@ -20,7 +20,7 @@
       accept: (r) => /bureau en gros|staples/i.test(r.name || ''),
     },
     copyshop: {
-      color: '#1c3c6e',
+      color: '#0f6b72',
       query: 'copyshop',
       accept: (r) => r.type === 'copyshop',
     },

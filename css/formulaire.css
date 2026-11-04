@@ -1,0 +1,343 @@
+/* ==========================================================================
+   Style C « plus coloré », inspiré du formulaire de plainte en ligne de la
+   Commission des droits de la personne et des droits de la jeunesse (CDPDJ),
+   adopté en novembre 2026 à la demande d'Elvira Carhuallanqui.
+   Chargé APRÈS style.css et raffinements.css.
+
+   - Mise en page de la CDPDJ, mais palette sarcelle à nous : titres sarcelle foncé,
+     boutons sarcelle, colonne d'information teintée à gauche, une question à la fois.
+   - Options sur fond gris clair qui deviennent vertes une fois choisies.
+   - Toujours sobre : aucun dégradé, coins de 4 à 10 px, police Inter.
+     Seule exception aux coins sobres : la pastille flottante de la voix.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Great Vibes'; /* signature électronique (SIL OFL, fonts/OFL-GreatVibes.txt) */
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('../fonts/GreatVibes-Regular.ttf') format('truetype');
+}
+
+:root {
+  /* Palette sarcelle (novembre 2026) : volontairement distincte du bleu de la CDPDJ
+     (#3f71c9 / #eff4f8), dont on reprend seulement la mise en page. */
+  --navy: #0c2f3a;           /* titres */
+  --title-blue: #0f6b72;     /* titre du générateur */
+  --action: #0f6b72;         /* boutons d'action : texte blanc 6,3:1 */
+  --action-hover: #0b565c;
+  --side-bg: #eaf4f4;        /* barre du haut et colonne d'information du générateur */
+  --option-bg: #f6f8f8;
+  --option-border: #d3dddd;
+  --selected: #1a9455;       /* option choisie (vert de marque) */
+  --selected-bg: #eaf6ef;
+  --req: #b42318;            /* astérisque des champs obligatoires */
+  --error-bg: #fdecea;
+  /* Le bleu hérité du style C (liens, numéros, focus) passe aussi au sarcelle */
+  --primary: #0f6b72;
+  --primary-2: #0b565c;
+  --primary-fill: #0f6b72;
+  --primary-fill-hover: #0b565c;
+  --grad-1: #0f6b72;
+  --grad-2: #0f6b72;
+  --tint: rgba(15, 107, 114, 0.07);
+  --tint-strong: rgba(15, 107, 114, 0.13);
+  --ring: rgba(15, 107, 114, 0.4);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --navy: #d6ecee;
+    --title-blue: #7cc7cc;
+    --action: #0f6b72;
+    --action-hover: #13808a;
+    --side-bg: #12201f;
+    --option-bg: #1b1f1f;
+    --option-border: rgba(255, 255, 255, 0.14);
+    --selected: #3ecf8e;
+    --selected-bg: rgba(62, 207, 142, 0.12);
+    --req: #ff8a80;
+    --error-bg: rgba(255, 138, 128, 0.12);
+    --primary: #7cc7cc;
+    --primary-2: #9ad6da;
+    --primary-fill: #0f6b72;
+    --primary-fill-hover: #13808a;
+    --grad-1: #0f6b72;
+    --grad-2: #0f6b72;
+    --tint: rgba(124, 199, 204, 0.12);
+    --tint-strong: rgba(124, 199, 204, 0.2);
+    --ring: rgba(124, 199, 204, 0.5);
+  }
+}
+
+/* ---------- Couleurs générales ---------- */
+h1, h2, h3, h4, legend { color: var(--navy); }
+.hero h1 { color: var(--navy); }
+.btn-primary { background: var(--action); border-color: var(--action); color: #fff; }
+.btn-primary:hover { background: var(--action-hover); border-color: var(--action-hover); color: #fff; opacity: 1; }
+.cta-card.cta-primary { background: var(--action); border-color: var(--action); }
+.step-num { background: var(--action); }
+/* Barre du haut en bleu pâle, comme la colonne d'information du générateur */
+.site-header { background: var(--side-bg); border-bottom-color: var(--option-border); }
+.lang-switcher select { background-color: var(--glass); border-color: var(--option-border); }
+/* Logo : maison contenant une lettre (assets/icon.svg, aussi favicon et icône du téléphone) */
+.brand-mark { display: block; width: 34px; height: 34px; padding: 0; background: none; border-radius: 9px; }
+.step-contact { display: flex; gap: 8px; align-items: center; font-weight: 600; color: var(--text) !important; }
+.step-contact::before { color: var(--action); }
+
+/* ---------- Générateur : colonne d'information + question ---------- */
+#view-wizard { padding-top: 32px; }
+.wizard-layout {
+  max-width: 1180px;
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+}
+.wizard-side {
+  position: sticky; top: 84px;
+  padding: 28px 26px 32px;
+  border-radius: var(--r-xl);
+  background: var(--side-bg);
+}
+.wizard-side .back-link { margin-bottom: 14px; }
+.wizard-title {
+  margin: 0 0 22px;
+  font-size: clamp(1.45rem, 2.4vw, 1.8rem);
+  line-height: 1.2;
+  color: var(--title-blue);
+}
+
+.wz-progress { margin-bottom: 24px; }
+.wz-progress-head { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.95rem; color: var(--navy); }
+.wz-progress-track { height: 3px; margin-top: 10px; background: var(--option-border); border-radius: 2px; overflow: hidden; }
+.wz-progress-fill { width: 0; height: 100%; background: var(--action); transition: width 0.35s var(--ease); }
+.wz-progress .wizard-step-label { margin: 8px 0 0; color: var(--text-soft) !important; font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; font-weight: 600; }
+
+.wizard-side .dictation-hint { margin: 0 0 18px; font-size: 0.85rem; }
+
+.wz-aside { margin: 0 0 22px; }
+.wz-aside h2 { margin: 0 0 10px; font-size: 1rem; letter-spacing: 0; }
+.wz-aside p, .wz-aside li { margin: 0 0 10px; font-size: 0.93rem; line-height: 1.6; color: var(--text-muted); }
+.wz-aside ul { margin: 0; padding-inline-start: 20px; }
+.wz-aside a { font-weight: 600; font-size: 0.9rem; }
+.wz-law { padding-top: 18px; border-top: 1px solid var(--option-border); }
+
+.wizard-main { min-width: 0; padding-top: 6px; }
+.req-note { margin: 0 0 18px; font-size: 0.85rem; color: var(--text-soft); text-align: end; }
+.req { color: var(--req); font-weight: 700; }
+.wizard-main legend { font-size: clamp(1.5rem, 2.6vw, 1.95rem); line-height: 1.2; margin-bottom: 24px; }
+.step-hint { margin: -12px 0 16px !important; }
+
+/* Options : une par ligne, fond gris clair, verte une fois choisie */
+.choice-list { display: flex !important; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+.check.option {
+  min-height: 64px;
+  padding: 16px 22px;
+  gap: 16px;
+  border: 1px solid var(--option-border);
+  border-radius: var(--r-md);
+  background: var(--option-bg);
+  font-size: 1rem;
+  color: var(--text);
+}
+.check.option:hover { border-color: var(--action); background: var(--glass); }
+.check.option input { width: 22px; height: 22px; accent-color: var(--selected); }
+.check.option:has(input:checked) {
+  border-color: var(--selected);
+  background: var(--selected-bg);
+  box-shadow: inset 0 0 0 1px var(--selected);
+}
+.check.option:has(input:focus-visible) { outline: 3px solid var(--ring); outline-offset: 2px; }
+.option-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.option-title { font-weight: 600; }
+.option-desc { color: var(--text-muted); font-size: 0.9rem; }
+.option-icon {
+  flex: none;
+  display: grid; place-items: center;
+  width: 40px; height: 40px;
+  border-radius: var(--r-md);
+  background: var(--glass);
+  color: var(--action);
+  font-size: 1.15rem;
+}
+.check.option:has(input:checked) .option-icon { background: var(--selected); color: #fff; }
+
+.field-stack { display: flex; flex-direction: column; gap: 22px; max-width: 620px; }
+.field-narrow { max-width: 240px; }
+.wizard-main .field-grid { max-width: 760px; }
+.wizard-main .field input, .wizard-main .field textarea { background: var(--option-bg); border-color: var(--option-border); }
+.wizard-main .field input:focus, .wizard-main .field textarea:focus { background: var(--field-bg); border-color: var(--action); }
+.wizard-main .field.full { margin: 0; }
+/* Un champ placé sous une liste d'options (préjudice, « Autre chose ») ; jamais dans une grille,
+   où une marge décalerait les colonnes. */
+.wizard-main fieldset > .checkbox-grid + .field { margin-top: 22px; }
+
+.details-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 4px; }
+.word-count { margin: 0; font-size: 0.85rem; color: var(--text-soft); font-variant-numeric: tabular-nums; }
+.word-count.over { color: var(--req); font-weight: 700; }
+
+.wz-error {
+  margin: 22px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--req);
+  background: var(--error-bg);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 0.93rem;
+}
+.wizard-main .wizard-nav { margin-top: 32px; }
+
+/* Les notes « base légale » sont maintenant dans la colonne de gauche */
+.wizard-main .law-note { display: none; }
+
+/* ---------- Pastille flottante : lecture à voix haute et dictée ---------- */
+.voice-pill {
+  position: fixed; inset-inline-start: 24px; bottom: 24px; z-index: 25;
+  display: none; align-items: center; gap: 8px;
+  padding: 12px 20px;
+  border: 1px solid var(--option-border);
+  border-radius: 999px;
+  background: var(--glass);
+  color: var(--navy);
+  font: 600 0.92rem var(--font-body);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+body.on-wizard .voice-pill { display: inline-flex; }
+.voice-pill::before { color: var(--action); }
+.voice-pill:hover { border-color: var(--action); }
+.voice-pill[aria-pressed="true"] { background: var(--selected); border-color: var(--selected); color: #fff; }
+.voice-pill[aria-pressed="true"]::before { color: #fff; }
+/* La pastille remplace l'ancienne case à cocher ; les boutons « Écouter » de chaque question
+   restent ceux de js/speech.js. Le bouton « Écouter ce que j'ai écrit » est toujours visible. */
+.no-tts #btn-read-details, .no-tts #btn-read-letter { display: none; }
+
+/* ---------- Lettre ---------- */
+.letter-result { margin-top: 0; padding-top: 0; border-top: none; }
+.letter-result > h2 { display: flex; align-items: center; gap: 10px; font-size: 1.6rem; margin: 0 0 8px; }
+.letter-result > h2::before {
+  width: 32px; height: 32px; padding: 8px;
+  border-radius: var(--r-md);
+  background-color: var(--success);
+  -webkit-mask: none; mask: none;
+  background-image: var(--icon-check-white);
+  background-size: 16px; background-position: center; background-repeat: no-repeat;
+}
+.result-tools { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 16px; }
+.letter-headline { display: block; text-align: center; font-weight: 700; font-size: 1.22em; letter-spacing: 0.04em; }
+.letter-bold { font-weight: 700; }
+.letter-esig { display: inline-block; padding-inline-start: 6px; font-family: 'Great Vibes', cursive; font-size: 2.1em; line-height: 1.1; }
+
+.esign-box {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
+  margin: 18px 0 0;
+  padding: 16px 20px;
+  border: 1px dashed var(--option-border);
+  border-radius: var(--r-md);
+  background: var(--side-bg);
+}
+.esign-box p { margin: 0; flex: 1 1 320px; font-size: 0.92rem; color: var(--text-muted); }
+#btn-esign[aria-pressed="true"] { border-color: var(--selected); background: var(--selected-bg); color: var(--text); }
+
+/* « Bravo » une fois la lettre enregistrée, imprimée ou envoyée */
+.done-panel {
+  display: flex; align-items: center; gap: 18px;
+  margin: 28px 0 0;
+  padding: 20px 24px;
+  border: 1px solid var(--selected);
+  border-radius: var(--r-lg);
+  background: var(--selected-bg);
+}
+.done-panel[hidden] { display: none; }
+.done-panel p { margin: 0; color: var(--text-muted); }
+.done-panel .done-title { color: var(--navy); font-weight: 700; font-size: 1.15rem; margin-bottom: 2px; }
+.done-check {
+  flex: none;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: var(--selected) var(--icon-check-white) center / 26px no-repeat;
+}
+.done-panel.celebrate .done-check { animation: donePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.done-panel.celebrate { animation: doneIn 0.4s var(--ease) both; }
+@keyframes donePop { 0% { transform: scale(0.2); opacity: 0; } 70% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes doneIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.send-guide-toggle { margin-top: 24px; }
+.send-guide-toggle[hidden] { display: none; }
+.letter-result .send-guide { margin-top: 28px; }
+
+/* ---------- Fenêtre d'accueil « À propos et avis légal » ---------- */
+.terms-dialog {
+  width: min(760px, calc(100vw - 24px));
+  max-height: min(88vh, 900px);
+  padding: 0;
+  border: none;
+  border-radius: var(--r-xl);
+  background: var(--glass);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.terms-dialog[open] { display: flex; flex-direction: column; }
+.terms-dialog::backdrop { background: rgba(10, 16, 32, 0.6); }
+.terms-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: 24px 30px;
+  background: #0c2f3a;
+  color: #fff;
+}
+.terms-head p { margin: 0; color: #fff; }
+.terms-title { display: flex; gap: 10px; align-items: flex-start; font-weight: 700; font-size: 1.1rem; }
+.terms-instruction { margin-top: 6px !important; color: rgba(255, 255, 255, 0.86) !important; }
+.terms-lang {
+  flex: none;
+  padding: 6px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: #fff;
+  font: 600 0.85rem var(--font-body);
+}
+.terms-lang option { color: #17181a; }
+.terms-body { overflow-y: auto; padding: 8px 30px 24px; }
+.terms-body:focus-visible { outline: 3px solid var(--ring); outline-offset: -3px; }
+.terms-body h2 { font-size: 1.35rem; margin: 18px 0 6px; }
+.terms-body h3 { font-size: 1.05rem; margin: 20px 0 6px; }
+.terms-body p { margin: 0 0 10px; color: var(--text-muted); }
+.terms-end { color: var(--text-soft) !important; font-size: 0.85rem; text-align: center; margin-top: 18px !important; }
+.terms-accept {
+  flex: none;
+  padding: 20px;
+  border: none;
+  background: var(--action);
+  color: #fff;
+  font: 700 1.05rem var(--font-body);
+  cursor: pointer;
+}
+.terms-accept:hover:not(:disabled) { background: var(--action-hover); }
+.terms-accept:disabled { background: var(--option-border); color: var(--text-soft); cursor: not-allowed; }
+.terms-accept:focus-visible { outline: 3px solid var(--ring); outline-offset: -3px; }
+
+/* ---------- Petits écrans : la question d'abord, l'information ensuite ---------- */
+@media (max-width: 860px) {
+  #view-wizard { padding-top: 20px; }
+  .wizard-layout { display: flex; flex-direction: column; align-items: stretch; gap: 22px; }
+  .wizard-side { display: contents; }
+  .wizard-side .back-link { order: -3; margin: 0; align-self: flex-start; }
+  .wizard-title { order: -2; margin: 0; }
+  .wz-progress { order: -1; margin: 0; }
+  .wizard-side .dictation-hint { order: 1; margin: 0; }
+  .wizard-main { order: 0; padding-top: 0; }
+  .wz-asides { order: 2; padding: 20px; border-radius: var(--r-lg); background: var(--side-bg); }
+  .wz-aside:last-child { margin-bottom: 0; }
+  .req-note { text-align: start; }
+  .voice-pill { inset-inline-start: 12px; bottom: 12px; padding: 10px 16px; }
+  .terms-head { padding: 18px 20px; flex-direction: column; }
+  .terms-body { padding: 4px 20px 18px; }
+}
+
+@media print {
+  .wizard-side, .voice-pill, .result-tools, .esign-box, .done-panel, .send-guide-toggle,
+  .req-note { display: none !important; }
+  .wizard-layout { display: block; }
+}

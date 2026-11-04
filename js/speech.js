@@ -1,10 +1,15 @@
 // Reads the letter generator's questions aloud, for tenants who have difficulty reading.
 // Uses the browser's built-in speech synthesis (the voices installed on the user's device),
-// in the interface language. Only the questions and their choices are read — never the letter.
-// Each part is highlighted on screen while it is being read, so the tenant can follow along.
+// in the interface language: the questions and their choices, and — on request — what the tenant
+// wrote in the description and the generated letter (in the language of the lease), through
+// window.locataireSpeech.speakText(). Each question part is highlighted on screen while it is being
+// read, so the tenant can follow along.
 
 (function () {
-  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) return;
+  if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
+    document.documentElement.classList.add('no-tts'); // hides every "Listen" button
+    return;
+  }
 
   const synth = window.speechSynthesis;
   const form = document.getElementById('letter-form');
@@ -37,7 +42,8 @@
   }
 
   function clean(text) {
-    return (text || '').replace(EMOJI, '').replace(/\s+/g, ' ').trim();
+    // "*" marks required fields on screen; it is not read aloud.
+    return (text || '').replace(EMOJI, '').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
   }
 
   function isVisible(el) {
@@ -78,10 +84,10 @@
 
   function stepText(step) {
     const texts = [item(step.querySelector('legend'))];
-    const units = step.querySelectorAll('.choice-grid, .q-row > p.field-label, .field');
+    const units = step.querySelectorAll('.choice-grid, .checkbox-grid, .q-row > p.field-label, .field');
     units.forEach((unit) => {
       if (!isVisible(unit)) return;
-      if (unit.matches('.choice-grid')) {
+      if (unit.matches('.choice-grid, .checkbox-grid')) {
         // Choices that directly follow the legend (no paragraph label of their own).
         const prev = unit.previousElementSibling;
         if (!prev || !prev.matches('.q-row')) texts.push(...choicesText(unit));
@@ -100,6 +106,7 @@
     button.classList.toggle('speaking', speaking);
     button.setAttribute('aria-pressed', String(speaking));
     button.setAttribute('data-icon', speaking ? 'stop' : 'volume');
+    if (button.classList.contains('speak-text')) return; // its label stays (e.g. "Listen to the letter")
     if (button.classList.contains('speak-step')) {
       const key = speaking ? 'speech.stop' : 'speech.listenStep';
       button.setAttribute('data-i18n', key);
@@ -145,12 +152,12 @@
     synth.speak(utterance);
   }
 
-  function speak(items, button) {
+  function speak(items, button, lang) {
     const wasActive = activeButton === button;
     stop();
     if (wasActive) return; // second click on the same button stops the reading
 
-    const voice = voiceFor(currentLang());
+    const voice = voiceFor(lang || currentLang());
     const parts = items
       .map(({ text, el }) => ({ text: clean(text), el }))
       .filter(({ text }) => text);
@@ -190,7 +197,7 @@
   }
 
   form.querySelectorAll('.field').forEach((field) => {
-    const label = field.querySelector(':scope > label[data-i18n]');
+    const label = field.querySelector(':scope > label');
     if (label) attachIcon(label, () => fieldText(field));
   });
   form.querySelectorAll('p.field-label').forEach((p) => {
@@ -207,6 +214,15 @@
     button.addEventListener('click', () => speak(stepText(step), button));
     step.querySelector('legend').insertAdjacentElement('afterend', button);
   });
+
+  // ---------- Free text: the description written by the tenant, the generated letter ----------
+  // Read paragraph by paragraph in the given language (the letter: the language of the lease).
+  function speakText(text, lang, button) {
+    button.classList.add('speak-text');
+    const parts = (text || '').split(/\n+/).map((line) => ({ text: line, el: null }));
+    speak(parts, button, lang);
+  }
+  window.locataireSpeech = { speakText };
 
   // ---------- Stop when the context changes ----------
 

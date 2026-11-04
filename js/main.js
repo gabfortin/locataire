@@ -1,6 +1,5 @@
 (function () {
-  const TOTAL_STEPS = 5;
-  let currentStep = 1;
+  const MAX_WORDS = 250; // description of the problem: one or two good paragraphs
   let currentLang = getSavedLanguage();
 
   const form = document.getElementById('letter-form');
@@ -10,6 +9,9 @@
   const btnGenerate = document.getElementById('btn-generate');
   const letterResult = document.getElementById('letter-result');
   const letterTextEl = document.getElementById('letter-text');
+  const errorEl = document.getElementById('wz-error');
+  const steps = Array.from(form.querySelectorAll('.wizard-step'));
+  let currentIndex = 0;
 
   // ---------- View routing ----------
   // Moves focus to the new view's heading so screen reader and keyboard users notice the
@@ -25,37 +27,74 @@
     const target = document.getElementById(`view-${name}`);
     if (target) {
       target.classList.add('active');
-      // Scroll is handled below (smooth, to the top); focus should not jump the page itself.
       focusHeading(target.querySelector('h1'), true);
     }
+    document.body.classList.toggle('on-wizard', name === 'wizard');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   document.querySelectorAll('[data-goto], [data-view-link]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
-      const name = el.getAttribute('data-goto') || el.getAttribute('data-view-link');
-      showView(name);
+      showView(el.getAttribute('data-goto') || el.getAttribute('data-view-link'));
     });
   });
 
   // ---------- Language ----------
-  function initLanguage() {
-    langSelect.value = currentLang;
-    applyLanguage(currentLang);
+  function setLanguage(lang) {
+    currentLang = lang;
+    langSelect.value = lang;
+    termsLang.value = lang;
+    applyLanguage(lang);
+    updateProgress();
+    updateWordCount();
   }
-  langSelect.addEventListener('change', () => {
-    currentLang = langSelect.value;
-    applyLanguage(currentLang);
-    if (typeof updateProgress === 'function') updateProgress();
+  langSelect.addEventListener('change', () => setLanguage(langSelect.value));
+
+  // ---------- « À propos et avis légal » : à lire et à accepter à la première visite ----------
+  const termsDialog = document.getElementById('terms-dialog');
+  const termsBody = document.getElementById('terms-body');
+  const termsAccept = document.getElementById('terms-accept');
+  const termsLang = document.getElementById('terms-lang');
+  // The rest of the page is inert while the dialog is open: it gets its own language menu.
+  termsLang.innerHTML = langSelect.innerHTML;
+  termsLang.addEventListener('change', () => setLanguage(termsLang.value));
+
+  function termsAccepted() {
+    try {
+      return localStorage.getItem('dat_terms') === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+  // The button is enabled once the text has been scrolled to the end (or fits without scrolling).
+  function checkTermsScrolled() {
+    if (termsBody.scrollTop + termsBody.clientHeight >= termsBody.scrollHeight - 8) {
+      termsAccept.disabled = false;
+    }
+  }
+  function openTerms() {
+    termsAccept.disabled = true;
+    termsDialog.showModal();
+    termsBody.scrollTop = 0;
+    termsBody.focus();
+    requestAnimationFrame(checkTermsScrolled);
+  }
+  termsBody.addEventListener('scroll', checkTermsScrolled);
+  window.addEventListener('resize', () => termsDialog.open && checkTermsScrolled());
+  termsDialog.addEventListener('cancel', (e) => e.preventDefault()); // Escape doesn't skip it
+  termsAccept.addEventListener('click', () => {
+    try {
+      localStorage.setItem('dat_terms', '1');
+    } catch (e) { /* storage unavailable: it will be asked again next visit */ }
+    termsDialog.close();
   });
 
   // ---------- Voice features (read-aloud / dictation) ----------
-  // Off by default on every device: most tenants read and type, and the extra buttons
-  // are clutter. A toggle at the top of the form turns them on for those who want them.
+  // Off by default: a floating pill beside the form turns them on for those who want them.
   const voiceToggle = document.getElementById('voice-toggle');
   function setVoiceEnabled(enabled) {
-    voiceToggle.checked = enabled;
+    voiceToggle.setAttribute('aria-pressed', String(enabled));
     document.body.classList.toggle('voice-enabled', enabled);
     try {
       localStorage.setItem('dat_voice', enabled ? '1' : '0');
@@ -65,149 +104,231 @@
       document.dispatchEvent(new CustomEvent('locataire:stop-dictation'));
     }
   }
-  function initVoiceToggle() {
-    let saved = false;
-    try {
-      saved = localStorage.getItem('dat_voice') === '1';
-    } catch (e) { /* storage unavailable, ignore */ }
-    setVoiceEnabled(saved);
+  voiceToggle.addEventListener('click', () => setVoiceEnabled(voiceToggle.getAttribute('aria-pressed') !== 'true'));
+
+  // ---------- Answers that change what is shown ----------
+  const value = (name) => (form.querySelector(`input[name="${name}"]:checked`) || {}).value;
+
+  // "No, help me write a first letter": a notice, not a formal demand.
+  function letterKind() {
+    return value('informed') === 'non_aide' ? 'avis' : 'med';
   }
-  voiceToggle.addEventListener('change', () => setVoiceEnabled(voiceToggle.checked));
 
-  // ---------- Legal-basis disclosures ----------
-  document.querySelectorAll('.law-note-btn, .law-note-icon-btn').forEach((btn) => {
-    const body = btn.parentElement.querySelector('.law-note-body');
-    btn.addEventListener('click', () => {
-      const willOpen = body.hidden;
-      body.hidden = !willOpen;
-      btn.setAttribute('aria-expanded', String(willOpen));
-    });
-  });
+  function updateConditional() {
+    const category = value('category') || 'salubrite';
+    const kind = letterKind();
+    const informed = value('informed');
 
-  // ---------- Category toggle (salubrite vs grave) ----------
-  form.querySelectorAll('input[name="category"]').forEach((radio) => {
-    radio.addEventListener('change', () => {
-      const category = form.querySelector('input[name="category"]:checked').value;
-      form.querySelectorAll('[data-category-block]').forEach((block) => {
-        block.hidden = block.getAttribute('data-category-block') !== category;
-      });
+    form.querySelectorAll('[data-category-block]').forEach((block) => {
+      block.hidden = block.getAttribute('data-category-block') !== category;
     });
-  });
+    form.querySelectorAll('[data-category-only], [data-letter-only]').forEach((el) => {
+      const okCategory = !el.hasAttribute('data-category-only') || el.getAttribute('data-category-only') === category;
+      const okKind = !el.hasAttribute('data-letter-only') || el.getAttribute('data-letter-only') === kind;
+      el.hidden = !(okCategory && okKind);
+      if (el.hidden) el.querySelectorAll('input').forEach((input) => { input.checked = false; });
+    });
+    form.querySelectorAll('[data-show-informed]').forEach((el) => {
+      el.hidden = el.getAttribute('data-show-informed') !== informed;
+    });
+    const other = document.getElementById('demand-autre');
+    document.getElementById('demand-other-field').hidden = !other.checked;
+    document.getElementById('demand_other').required = other.checked;
+    updateAside();
+  }
+  form.addEventListener('change', updateConditional);
+
+  // Dates: no date after today (the problem can't have been noticed in the future).
+  const today = new Date();
+  const todayIso = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+  form.querySelectorAll('input[type="date"]').forEach((input) => { input.max = todayIso; });
+
+  // ---------- Description: word limit ----------
+  const details = document.getElementById('issue_details');
+  const wordCountEl = document.getElementById('word-count');
+  function countWords(text) {
+    return (text.trim().match(/\S+/g) || []).length;
+  }
+  function updateWordCount() {
+    const n = countWords(details.value);
+    wordCountEl.textContent = t('wz.description.count', currentLang).replace('{n}', n).replace('{max}', MAX_WORDS);
+    wordCountEl.classList.toggle('over', n > MAX_WORDS);
+  }
+  details.addEventListener('input', updateWordCount);
+
+  // ---------- Sidebar: information and legal basis of the current step ----------
+  function updateAside() {
+    const id = steps[currentIndex].getAttribute('data-step-id');
+    const category = value('category') || 'salubrite';
+    document.querySelectorAll('.wz-aside').forEach((aside) => {
+      const forStep = aside.getAttribute('data-aside') === id;
+      const forCategory = !aside.hasAttribute('data-category') || aside.getAttribute('data-category') === category;
+      aside.hidden = !(forStep && forCategory);
+    });
+  }
 
   // ---------- Wizard navigation ----------
   function updateProgress() {
-    document.querySelectorAll('.progress-dot').forEach((dot) => {
-      const step = Number(dot.getAttribute('data-dot'));
-      dot.classList.toggle('active', step === currentStep);
-      dot.classList.toggle('done', step < currentStep);
-    });
-    // « Étape 1 sur 5 », au-dessus de la question (présent seulement si la page a l'élément)
-    const stepLabel = document.getElementById('wizard-step-label');
-    if (stepLabel) {
-      const total = form.querySelectorAll('.wizard-step').length;
-      stepLabel.textContent = t('wizard.stepOf', currentLang).replace('{n}', currentStep).replace('{total}', total);
+    const total = steps.length;
+    const n = currentIndex + 1;
+    const percent = Math.round((n / total) * 100);
+    document.getElementById('wz-percent').textContent = `${percent} %`;
+    document.getElementById('wz-progress-fill').style.width = `${percent}%`;
+    document.getElementById('wizard-step-label').textContent = t('wizard.stepOf', currentLang).replace('{n}', n).replace('{total}', total);
+  }
+
+  function goToStep(index, moveFocus) {
+    currentIndex = index;
+    steps.forEach((fs, i) => fs.classList.toggle('active', i === index));
+    hideError();
+    updateConditional();
+    updateProgress();
+    btnPrev.style.visibility = index === 0 ? 'hidden' : 'visible';
+    btnNext.hidden = index === steps.length - 1;
+    btnGenerate.hidden = index !== steps.length - 1;
+    if (moveFocus) {
+      focusHeading(steps[index].querySelector('legend'), true);
+      document.querySelector('.wizard-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 
-  function goToStep(step, moveFocus) {
-    currentStep = step;
-    let legend = null;
-    form.querySelectorAll('.wizard-step').forEach((fs) => {
-      const active = Number(fs.getAttribute('data-step')) === step;
-      fs.classList.toggle('active', active);
-      if (active) legend = fs.querySelector('legend');
-    });
-    updateProgress();
-    btnPrev.style.visibility = step === 1 ? 'hidden' : 'visible';
-    btnNext.hidden = step === TOTAL_STEPS;
-    btnGenerate.hidden = step !== TOTAL_STEPS;
-    if (moveFocus) focusHeading(legend);
+  function showError(key, field) {
+    errorEl.textContent = t(key, currentLang);
+    errorEl.hidden = false;
+    if (field) {
+      field.setAttribute('aria-invalid', 'true');
+      field.addEventListener('input', clearInvalid, { once: true });
+      field.addEventListener('change', clearInvalid, { once: true });
+      field.focus();
+    }
   }
-
+  function hideError() {
+    errorEl.hidden = true;
+  }
   function clearInvalid(e) {
     e.target.removeAttribute('aria-invalid');
-    e.target.removeEventListener('input', clearInvalid);
+    hideError();
   }
 
   function validateCurrentStep() {
-    const fieldset = form.querySelector(`.wizard-step[data-step="${currentStep}"]`);
-    const requiredFields = Array.from(fieldset.querySelectorAll('[required]')).filter(
-      (el) => el.offsetParent !== null // ignore hidden fields (e.g. issue block not shown)
-    );
-    for (const field of requiredFields) {
-      if (!field.value || !field.value.trim()) {
-        field.setAttribute('aria-invalid', 'true');
-        field.addEventListener('input', clearInvalid);
-        field.focus();
-        alert(t('common.requiredError', currentLang));
+    const fieldset = steps[currentIndex];
+    const visible = (el) => !el.closest('[hidden]');
+
+    for (const group of fieldset.querySelectorAll('[data-required-group]')) {
+      const name = group.getAttribute('data-required-group');
+      const inputs = Array.from(group.querySelectorAll(`input[name="${name}"]`)).filter(visible);
+      if (inputs.length && !inputs.some((input) => input.checked)) {
+        showError('wz.error.choose', inputs[0]);
         return false;
       }
+    }
+    for (const field of fieldset.querySelectorAll('[required]')) {
+      if (visible(field) && !(field.value || '').trim()) {
+        showError('common.requiredError', field);
+        return false;
+      }
+    }
+    if (fieldset.contains(details) && countWords(details.value) > MAX_WORDS) {
+      showError('wz.error.tooLong', details);
+      return false;
     }
     return true;
   }
 
   btnNext.addEventListener('click', () => {
     if (!validateCurrentStep()) return;
-    if (currentStep < TOTAL_STEPS) goToStep(currentStep + 1, true);
+    if (currentIndex < steps.length - 1) goToStep(currentIndex + 1, true);
   });
   btnPrev.addEventListener('click', () => {
-    if (currentStep > 1) goToStep(currentStep - 1, true);
+    if (currentIndex > 0) goToStep(currentIndex - 1, true);
   });
 
   // ---------- Letter generation ----------
   function collectFormData() {
     const fd = new FormData(form);
+    const text = (name) => (fd.get(name) || '').trim();
     return {
+      informed: fd.get('informed'),
       lease_lang: fd.get('lease_lang'),
       category: fd.get('category'),
-      tenant_name: (fd.get('tenant_name') || '').trim(),
-      tenant_address: (fd.get('tenant_address') || '').trim(),
-      tenant_city: (fd.get('tenant_city') || '').trim(),
-      tenant_postal: (fd.get('tenant_postal') || '').trim(),
-      tenant_email: (fd.get('tenant_email') || '').trim(),
-      tenant_phone: (fd.get('tenant_phone') || '').trim(),
+      tenant_name: text('tenant_name'),
+      tenant_address: text('tenant_address'),
+      tenant_city: text('tenant_city'),
+      tenant_postal: text('tenant_postal'),
+      tenant_email: text('tenant_email'),
+      tenant_phone: text('tenant_phone'),
       lease_date: fd.get('lease_date'),
-      landlord_name: (fd.get('landlord_name') || '').trim(),
-      landlord_address: (fd.get('landlord_address') || '').trim(),
+      landlord_name: text('landlord_name'),
+      landlord_address: text('landlord_address'),
       issues: fd.getAll('issue'),
       grave: fd.getAll('grave'),
-      issue_details: (fd.get('issue_details') || '').trim(),
+      issue_details: text('issue_details'),
       date_noticed: fd.get('date_noticed'),
-      date_reported: fd.get('date_reported'),
+      date_reported: fd.get('informed') === 'oui' ? fd.get('date_reported') : '',
+      prejudices: fd.getAll('prejudice'),
+      prejudice_details: text('prejudice_details'),
       deadline_days: fd.get('deadline_days'),
-      remedy: fd.get('remedy'),
+      demands: fd.getAll('demand').filter((d) => d !== 'autre'),
+      demand_other: fd.getAll('demand').includes('autre') ? text('demand_other') : '',
+      tone: fd.get('tone'),
     };
+  }
+
+  let lastLetterData = null;
+  let letterLines = [];
+  let letterPdf = null; // Promise of the PDF Blob (null if it could not be built)
+  let esigned = false;
+  const emailNote = document.getElementById('email-note');
+  const btnEsign = document.getElementById('btn-esign');
+
+  function renderLetter() {
+    letterLines = generateLetter({ ...lastLetterData, esign: esigned });
+    letterTextEl.innerHTML = letterToHtml(letterLines);
+    letterPdf = null;
+    getLetterPdf(); // built right away: the share sheet must open promptly after a click (Safari)
   }
 
   btnGenerate.addEventListener('click', () => {
     if (!validateCurrentStep()) return;
-    const data = collectFormData();
-    const letter = generateLetter(data);
-    lastLetterData = data;
-    letterPdf = null;
-    letterTextEl.textContent = letter;
-    // Build the PDF right away: the share sheet must open promptly after a click (Safari).
-    getLetterPdf();
+    lastLetterData = collectFormData();
+    esigned = false;
+    btnEsign.setAttribute('aria-pressed', 'false');
+    renderLetter();
     emailNote.hidden = true;
+    document.getElementById('done-panel').hidden = true;
+    document.getElementById('send-guide').hidden = true;
+    form.hidden = true;
     letterResult.hidden = false;
     try {
-      localStorage.setItem('dat_draft', JSON.stringify(data));
+      localStorage.setItem('dat_draft', JSON.stringify(lastLetterData));
     } catch (e) { /* storage unavailable, ignore */ }
-    focusHeading(letterResult.querySelector('h3'));
-    letterResult.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    focusHeading(letterResult.querySelector('h2'), true);
+    document.querySelector('.wizard-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('wz-percent').textContent = '100 %';
+    document.getElementById('wz-progress-fill').style.width = '100%';
+  });
+
+  document.getElementById('btn-edit').addEventListener('click', () => {
+    letterResult.hidden = true;
+    form.hidden = false;
+    goToStep(0, true);
+  });
+
+  // Electronic signature: the tenant's name, in a handwriting font, above the signature line.
+  btnEsign.addEventListener('click', () => {
+    esigned = !esigned;
+    btnEsign.setAttribute('aria-pressed', String(esigned));
+    renderLetter();
   });
 
   // ---------- Result actions ----------
   let copyResetTimer;
-  let lastLetterData = null;
-  let letterPdf = null; // Promise of the PDF Blob (null if it could not be built)
-  const emailNote = document.getElementById('email-note');
+  const letterText = () => letterToText(letterLines);
   const PDF_NAME = 'mise-en-demeure.pdf';
 
   function getLetterPdf() {
     if (!letterPdf) {
-      const title = letterEmailSubject(lastLetterData || {});
-      letterPdf = buildLetterPdf(letterTextEl.textContent, title).catch(() => null);
+      letterPdf = buildLetterPdf(letterLines, letterEmailSubject(lastLetterData || {})).catch(() => null);
     }
     return letterPdf;
   }
@@ -217,12 +338,33 @@
     const pdf = await getLetterPdf();
     return pdf
       ? new File([pdf], PDF_NAME, { type: 'application/pdf' })
-      : new File([letterTextEl.textContent], 'mise-en-demeure.txt', { type: 'text/plain;charset=utf-8' });
+      : new File([letterText()], 'mise-en-demeure.txt', { type: 'text/plain;charset=utf-8' });
   }
+
+  // "Bravo!" once the letter has been saved, printed or sent, then where to print and how to send it.
+  function showDone() {
+    const panel = document.getElementById('done-panel');
+    const wasHidden = panel.hidden;
+    panel.hidden = false;
+    document.getElementById('send-guide').hidden = false;
+    document.getElementById('btn-show-guide').hidden = true;
+    if (wasHidden) {
+      panel.classList.remove('celebrate');
+      void panel.offsetWidth; // restart the animation
+      panel.classList.add('celebrate');
+      setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
+    }
+  }
+  document.getElementById('btn-show-guide').addEventListener('click', () => {
+    document.getElementById('send-guide').hidden = false;
+    document.getElementById('btn-show-guide').hidden = true;
+    focusHeading(document.querySelector('#send-guide h3'));
+  });
+
   document.getElementById('btn-copy').addEventListener('click', async () => {
     const btn = document.getElementById('btn-copy');
     try {
-      await navigator.clipboard.writeText(letterTextEl.textContent);
+      await navigator.clipboard.writeText(letterText());
       btn.textContent = t('wizard.result.copied', currentLang);
       clearTimeout(copyResetTimer);
       copyResetTimer = setTimeout(() => {
@@ -248,20 +390,23 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    showDone();
   });
 
   // mailto: links cannot carry attachments. Where the system share sheet accepts files (phones,
-  // Safari, recent Chrome), the letter is shared as a real attachment; otherwise the email app
-  // opens with the letter in the body.
+  // Safari, recent Chrome), the letter is shared as a real attachment with a short message;
+  // otherwise the email app opens with the message and the letter in the body.
   document.getElementById('btn-email').addEventListener('click', async () => {
-    const text = letterTextEl.textContent;
-    const subject = letterEmailSubject(lastLetterData || {});
+    const data = lastLetterData || {};
+    const subject = letterEmailSubject(data);
+    const message = letterEmailBody(data);
     const file = await getLetterFile();
 
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
-        await navigator.share({ files: [file], title: subject });
+        await navigator.share({ files: [file], title: subject, text: message });
         showEmailNote(false);
+        showDone();
         return;
       } catch (e) {
         if (e.name === 'AbortError') return; // the tenant closed the share sheet
@@ -269,9 +414,10 @@
       }
     }
 
-    const body = text.replace(/\n/g, '\r\n');
+    const body = `${message}\n\n---\n\n${letterText()}`.replace(/\n/g, '\r\n');
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     showEmailNote(true);
+    showDone();
   });
 
   function showEmailNote(inBody) {
@@ -281,42 +427,57 @@
 
   document.getElementById('btn-print').addEventListener('click', () => {
     window.print();
+    showDone();
+  });
+
+  // ---------- Read aloud: what the tenant wrote, and the letter ----------
+  document.getElementById('btn-read-details').addEventListener('click', (e) => {
+    if (window.locataireSpeech) window.locataireSpeech.speakText(details.value, currentLang, e.currentTarget);
+  });
+  document.getElementById('btn-read-letter').addEventListener('click', (e) => {
+    if (window.locataireSpeech) {
+      window.locataireSpeech.speakText(letterText(), (lastLetterData || {}).lease_lang || 'fr', e.currentTarget);
+    }
   });
 
   // ---------- Draft restore ----------
+  const ARRAY_FIELDS = { issues: 'issue', grave: 'grave', prejudices: 'prejudice', demands: 'demand' };
   function restoreDraft() {
     try {
       const raw = localStorage.getItem('dat_draft');
       if (!raw) return;
       const data = JSON.parse(raw);
-      Object.entries(data).forEach(([key, value]) => {
-        if (Array.isArray(value)) {
-          value.forEach((v) => {
-            const el = form.querySelector(`[name="${key === 'issues' ? 'issue' : 'grave'}"][value="${v}"]`);
+      Object.entries(data).forEach(([key, val]) => {
+        if (Array.isArray(val)) {
+          const name = ARRAY_FIELDS[key];
+          if (!name) return;
+          val.forEach((v) => {
+            const el = form.querySelector(`[name="${name}"][value="${v}"]`);
             if (el) el.checked = true;
           });
-        } else if (value) {
+        } else if (val) {
           const el = form.querySelector(`[name="${key}"]`);
-          if (el && el.type === 'radio') {
-            const target = form.querySelector(`[name="${key}"][value="${value}"]`);
+          if (el && (el.type === 'radio' || el.type === 'checkbox')) {
+            const target = form.querySelector(`[name="${key}"][value="${val}"]`);
             if (target) target.checked = true;
           } else if (el) {
-            el.value = value;
+            el.value = val;
           }
         }
       });
-      const category = form.querySelector('input[name="category"]:checked');
-      if (category) {
-        form.querySelectorAll('[data-category-block]').forEach((block) => {
-          block.hidden = block.getAttribute('data-category-block') !== category.value;
-        });
-      }
+      if (data.demand_other) document.getElementById('demand-autre').checked = true;
     } catch (e) { /* ignore malformed draft */ }
   }
 
   // ---------- Init ----------
-  initLanguage();
-  initVoiceToggle();
-  goToStep(1, false);
+  setLanguage(currentLang);
+  try {
+    setVoiceEnabled(localStorage.getItem('dat_voice') === '1');
+  } catch (e) {
+    setVoiceEnabled(false);
+  }
   restoreDraft();
+  goToStep(0, false);
+  updateWordCount();
+  if (!termsAccepted()) openTerms();
 })();
