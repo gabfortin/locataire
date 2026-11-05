@@ -9,10 +9,10 @@
 <meta name="description" content="Aide aux locataires présente les droits des locataires de Montréal, les étapes habituelles face à un logement insalubre et un générateur de modèle de lettre de mise en demeure, en 8 langues.">
 <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css?v=2026-11-04-11">
+<link rel="stylesheet" href="css/style.css?v=2026-11-04-27">
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/raffinements.css?v=2026-11-04-11">
-<link rel="stylesheet" href="css/formulaire.css?v=2026-11-04-11">
+<link rel="stylesheet" href="css/raffinements.css?v=2026-11-04-27">
+<link rel="stylesheet" href="css/formulaire.css?v=2026-11-04-27">
 <script>window.goatcounter = {path: function(p) { return location.host + p }}</script>
 <script data-goatcounter="https://gabfortin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -322,6 +322,14 @@
             <h2 data-i18n="wz.aside.info">Informations</h2>
             <p data-i18n="wz.aside.tone">Peu importe le ton choisi, la lettre garde les mêmes informations et la même base légale.</p>
           </section>
+          <section class="wz-aside" data-aside="letter" hidden>
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.letter">Relisez la lettre avant de l'envoyer. Vous pouvez l'écouter ou modifier vos réponses : la lettre est alors générée de nouveau.</p>
+          </section>
+          <section class="wz-aside" data-aside="send" hidden>
+            <h2 data-i18n="wz.aside.info">Informations</h2>
+            <p data-i18n="wz.aside.send">Le courrier recommandé, avec signature à la réception, laisse la meilleure preuve que votre locateur a reçu la lettre. Gardez-en une copie.</p>
+          </section>
         </div>
       </aside>
 
@@ -378,6 +386,18 @@
           <!-- 4. Qui envoie la lettre -->
           <fieldset class="wizard-step" data-step-id="tenant">
             <legend data-i18n="wizard.step2.legend">Vos informations</legend>
+            <details class="scan-box" data-scan-step="tenant">
+              <summary class="scan-summary"><span class="scan-icon" data-icon="camera" aria-hidden="true"></span><span class="scan-title" data-i18n="scan.title">Gagnez du temps : photographiez votre bail</span></summary>
+              <div class="scan-body">
+                <p class="scan-desc" data-i18n="scan.desc">Photographiez la première page du bail (sections A et B), à plat et bien éclairée. Le texte est lu sur votre appareil : la photo n'est envoyée nulle part. Fonctionne mieux avec un bail rempli à l'ordinateur.</p>
+                <div class="scan-actions">
+                  <label class="btn btn-primary scan-btn" data-icon="camera"><span data-i18n="scan.button">Photographier mon bail</span><input type="file" accept="image/*" capture="environment" class="sr-only"></label>
+                  <label class="scan-alt"><span data-i18n="scan.choose">ou choisir une image</span><input type="file" accept="image/*" class="sr-only"></label>
+                </div>
+                <p class="scan-status" role="status" aria-live="polite" hidden></p>
+                <div class="scan-lang" role="alert" hidden><p class="scan-lang-text"></p><button type="button" class="btn btn-small btn-ghost scan-lang-btn"></button></div>
+              </div>
+            </details>
             <div class="field-stack">
               <div class="field">
                 <label for="tenant_name"><span data-i18n="wizard.field.tenantName">Votre nom complet (tel qu'inscrit sur le bail)</span> <span class="req" aria-hidden="true">*</span></label>
@@ -420,6 +440,18 @@
           <!-- 6. Locateur -->
           <fieldset class="wizard-step" data-step-id="landlord">
             <legend data-i18n="wizard.step3.legend">Informations sur votre locateur</legend>
+            <details class="scan-box" data-scan-step="landlord">
+              <summary class="scan-summary"><span class="scan-icon" data-icon="camera" aria-hidden="true"></span><span class="scan-title" data-i18n="scan.title">Gagnez du temps : photographiez votre bail</span></summary>
+              <div class="scan-body">
+                <p class="scan-desc" data-i18n="scan.desc">Photographiez la première page du bail (sections A et B), à plat et bien éclairée. Le texte est lu sur votre appareil : la photo n'est envoyée nulle part. Fonctionne mieux avec un bail rempli à l'ordinateur.</p>
+                <div class="scan-actions">
+                  <label class="btn btn-primary scan-btn" data-icon="camera"><span data-i18n="scan.button">Photographier mon bail</span><input type="file" accept="image/*" capture="environment" class="sr-only"></label>
+                  <label class="scan-alt"><span data-i18n="scan.choose">ou choisir une image</span><input type="file" accept="image/*" class="sr-only"></label>
+                </div>
+                <p class="scan-status" role="status" aria-live="polite" hidden></p>
+                <div class="scan-lang" role="alert" hidden><p class="scan-lang-text"></p><button type="button" class="btn btn-small btn-ghost scan-lang-btn"></button></div>
+              </div>
+            </details>
             <div class="field-stack">
               <div class="field">
                 <label for="landlord_name"><span data-i18n="wizard.field.landlordName">Nom du locateur ou de la compagnie (tel qu'inscrit sur le bail)</span> <span class="req" aria-hidden="true">*</span></label>
@@ -539,6 +571,11 @@
               <label class="check option"><input type="radio" name="tone" value="cordial"><span class="option-text"><span class="option-title" data-i18n="wz.tone.cordial">Cordial</span><span class="option-desc" data-i18n="wz.tone.cordialDesc">Plus conciliant, si la relation avec votre locateur est bonne.</span></span></label>
               <label class="check option"><input type="radio" name="tone" value="ferme"><span class="option-text"><span class="option-title" data-i18n="wz.tone.ferme">Ferme</span><span class="option-desc" data-i18n="wz.tone.fermeDesc">Plus direct, si vos demandes précédentes sont restées sans réponse.</span></span></label>
             </div>
+            <!-- Signature électronique (facultative) : choisie ici pour que la page de la lettre ne montre que les boutons d'action -->
+            <div class="esign-choice">
+              <p class="field-hint" data-i18n="wz.esign.text">Vous ne pouvez pas signer la lettre à la main ? En cliquant sur « J'accepte », votre nom est ajouté sur la ligne de signature, dans une écriture manuscrite.</p>
+              <label class="check option"><input type="checkbox" name="esign" value="1"><span class="option-text"><span class="option-title" data-i18n="wz.esign.accept">J'accepte de signer électroniquement</span></span></label>
+            </div>
           </fieldset>
 
           <p class="wz-error" id="wz-error" role="alert" hidden></p>
@@ -551,74 +588,93 @@
         </form>
 
         <div class="letter-result" id="letter-result" hidden>
-          <h2 data-icon="check" data-i18n="wizard.result.title">Votre lettre</h2>
-          <p class="result-note" data-i18n="wizard.result.author">Cette lettre est un modèle rempli à partir de vos réponses. Vous en êtes l'auteur et êtes responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
+          <!-- Étape 14 : la lettre (lire, écouter, modifier), puis « Envoyer la lettre » -->
+          <div class="result-stage" id="stage-letter">
+            <div class="done-panel" id="ready-panel" tabindex="-1">
+              <span class="done-check" aria-hidden="true"></span>
+              <div>
+                <h2 class="done-title" id="letter-title" data-i18n="wz.done.title">Bravo, votre lettre est prête !</h2>
+                <p data-i18n="wz.ready.text">Veuillez la relire et la corriger au besoin avant de l'envoyer.</p>
+              </div>
+            </div>
+            <span class="sr-only" id="letter-region-label" data-i18n="wizard.result.title">Votre lettre</span>
+            <p class="result-note" data-i18n="wizard.result.author">Cette lettre est un modèle rempli à partir de vos réponses. Vous en êtes l'auteur et êtes responsable de son contenu, qui peut être relu et modifié avant l'envoi.</p>
 
-          <div class="result-tools">
+            <div class="result-tools">
             <button type="button" class="btn btn-small btn-ghost" id="btn-read-letter" data-icon="volume"><span data-i18n="wz.result.listen">Écouter la lettre</span></button>
             <button type="button" class="btn btn-small btn-ghost" id="btn-edit" data-icon="pen"><span data-i18n="wz.result.edit">Modifier mes réponses</span></button>
           </div>
 
-          <div class="letter-paper">
+            <div class="letter-paper" tabindex="0" role="region" aria-labelledby="letter-region-label">
             <pre id="letter-text"></pre>
           </div>
 
-          <div class="esign-box" id="esign-box">
-            <p data-i18n="wz.esign.text">Vous ne pouvez pas signer la lettre à la main ? En cliquant sur « J'accepte », votre nom est ajouté sur la ligne de signature, dans une écriture manuscrite.</p>
-            <button type="button" class="btn btn-small btn-ghost" id="btn-esign" aria-pressed="false" data-icon="pen"><span data-i18n="wz.esign.accept">J'accepte de signer électroniquement</span></button>
+            <div class="finish-row">
+              <button type="button" class="btn btn-primary btn-icon-end" id="btn-send-letter" data-icon="arrow-right"><span data-i18n="wz.sendLetter">Envoyer la lettre</span></button>
+            </div>
           </div>
 
-          <div class="result-actions">
-            <button class="btn btn-primary" id="btn-download" data-icon="download" data-i18n="wizard.result.download">Télécharger (PDF)</button>
-            <button class="btn btn-primary" id="btn-print" data-icon="printer" data-i18n="wizard.result.print">Imprimer</button>
-            <button class="btn btn-ghost" id="btn-email" data-icon="mail" data-i18n="wizard.result.email">Envoyer par courriel</button>
-            <button class="btn btn-ghost" id="btn-copy" data-icon="copy" data-i18n="wizard.result.copy">Copier le texte</button>
-          </div>
-          <p class="result-note email-note" id="email-note" role="status" hidden>
+          <!-- Étape 15 : Bravo, puis par courriel ou par la poste -->
+          <div class="result-stage" id="stage-send" hidden>
+            <div class="done-panel" id="done-panel" tabindex="-1">
+              <span class="done-check" aria-hidden="true"></span>
+              <div>
+                <h2 class="done-title" id="send-title" data-i18n="wz.done.title">Bravo, votre lettre est prête !</h2>
+                <p data-i18n="wz.done.text">Voici comment l'envoyer à votre locateur : par courriel ou par la poste.</p>
+              </div>
+            </div>
+
+            <section class="send-section" aria-labelledby="send-email-title">
+              <h3 id="send-email-title" data-icon="mail" data-i18n="wz.send.emailTitle">Par courriel</h3>
+              <p data-i18n="wz.send.emailDesc">Votre application de courriel s'ouvre avec la lettre et un message qui demande un accusé de réception. Vous pouvez aussi télécharger le PDF pour l'envoyer vous-même.</p>
+              <div class="result-actions">
+                <button class="btn btn-primary" id="btn-email" data-icon="mail" data-i18n="wizard.result.email">Envoyer par courriel</button>
+                <button class="btn btn-ghost" id="btn-download" data-icon="download" data-i18n="wizard.result.download">Télécharger (PDF)</button>
+              </div>
+              <p class="wz-error" id="pdf-error" role="alert" hidden data-i18n="wz.pdfError">Le PDF n'a pas pu être créé. Vérifiez votre connexion Internet, puis cliquez de nouveau sur « Télécharger (PDF) ».</p>
+              <p class="result-note email-note" id="email-note" role="status" hidden>
             <span data-i18n="wizard.result.emailInBody" hidden>Votre application de courriel s'ouvre avec la lettre dans le corps du message. Ce type de lien ne permet pas de joindre un fichier : le fichier PDF (bouton Télécharger) peut être joint manuellement.</span>
             <span data-icon="info" data-i18n="wizard.result.emailProof">Un courriel ne fournit pas la même preuve de réception que le courrier recommandé.</span>
           </p>
+            </section>
 
-          <div class="done-panel" id="done-panel" hidden tabindex="-1">
-            <span class="done-check" aria-hidden="true"></span>
-            <div>
-              <p class="done-title" data-i18n="wz.done.title">Bravo, votre lettre est prête !</p>
-              <p data-i18n="wz.done.text">Voici maintenant où l'imprimer et comment l'envoyer à votre locateur.</p>
-            </div>
-          </div>
-          <button type="button" class="btn btn-ghost send-guide-toggle" id="btn-show-guide" data-icon="send"><span data-i18n="wz.done.howTo">Où imprimer et comment envoyer ma lettre ?</span></button>
-
-          <div class="send-guide" id="send-guide" hidden>
-          <h3 data-i18n="send.title">Imprimer et envoyer la lettre</h3>
-          <div class="send-grid">
-            <div class="send-card">
-              <span class="send-icon" data-icon="printer" aria-hidden="true"></span>
-              <strong data-i18n="send.print.title">Où imprimer</strong>
+            <section class="send-section send-guide" id="send-guide" aria-labelledby="send-mail-title">
+              <h3 id="send-mail-title" data-icon="send" data-i18n="wz.send.mailTitle">Par la poste</h3>
+              <p data-i18n="wz.send.mailDesc">Imprimez la lettre, signez-la et envoyez-la par courrier recommandé : c'est ce qui laisse la meilleure preuve de réception.</p>
+              <div class="result-actions">
+                <button class="btn btn-primary" id="btn-print" data-icon="printer" data-i18n="wizard.result.print">Imprimer</button>
+              </div>
+              <div class="send-grid">
+            <details class="send-card send-card-more">
+              <summary><span class="send-icon" data-icon="printer" aria-hidden="true"></span><strong data-i18n="send.print.title">Où imprimer</strong></summary>
+              <div class="send-card-body">
               <p data-i18n="send.print.desc">L'impression est possible à la bibliothèque de quartier (carte de bibliothèque gratuite), chez Bureau en Gros (centre d'impression qui accepte les fichiers par courriel) ou dans une imprimerie. Deux copies permettent d'en remettre une au locateur et d'en conserver une.</p>
               <button type="button" class="btn btn-small btn-primary" data-map-kind="print" data-icon="map-pin" data-i18n="map.button">Voir les lieux à proximité</button>
               <p class="map-consent" data-i18n="map.consent">En cliquant, l'adresse du logement est envoyée à OpenStreetMap pour la situer sur la carte et trouver les lieux à proximité.</p>
-            </div>
-            <div class="send-card">
-              <span class="send-icon" data-icon="send" aria-hidden="true"></span>
-              <strong data-i18n="send.how.title">Comment l'envoyer</strong>
+              </div>
+            </details>
+            <details class="send-card send-card-more">
+              <summary><span class="send-icon" data-icon="send" aria-hidden="true"></span><strong data-i18n="send.how.title">Comment l'envoyer</strong></summary>
+              <div class="send-card-body">
               <p data-i18n="send.how.desc">Une lettre signée envoyée par courrier recommandé, à un comptoir de Postes Canada (bureau de poste ou comptoir dans une pharmacie), laisse une preuve de réception par le locateur, qui peut être utile devant le TAL.</p>
               <button type="button" class="btn btn-small btn-primary" data-map-kind="post" data-icon="map-pin" data-i18n="map.postButton">Voir les bureaux de poste à proximité</button>
               <p class="map-consent" data-i18n="map.consent">En cliquant, l'adresse du logement est envoyée à OpenStreetMap pour la situer sur la carte et trouver les lieux à proximité.</p>
               <a class="map-official" data-icon="external" href="https://www.canadapost-postescanada.ca/scp/fr/outils/trouver-un-bureau-de-poste.page" target="_blank" rel="noopener" data-i18n="map.post.official" data-i18n-href="map.post.officialHref">Outil de recherche de bureaux de Postes Canada</a>
-            </div>
-            <div class="send-card">
-              <span class="send-icon" data-icon="message" aria-hidden="true"></span>
-              <strong data-i18n="send.ask.title">Ce qui est demandé au comptoir</strong>
+              </div>
+            </details>
+            <details class="send-card send-card-more">
+              <summary><span class="send-icon" data-icon="message" aria-hidden="true"></span><strong data-i18n="send.ask.title">Ce qui est demandé au comptoir</strong></summary>
               <p data-i18n="send.ask.desc">Le service s'appelle le courrier recommandé, avec signature à la réception. Phrase utilisée au comptoir : « Je voudrais envoyer cette lettre par courrier recommandé, avec signature à la réception. » Le reçu remis porte un numéro de suivi qui sert de preuve d'envoi.</p>
-            </div>
-            <div class="send-card">
-              <span class="send-icon" data-icon="coins" aria-hidden="true"></span>
-              <strong data-i18n="send.cost.title">Coût approximatif</strong>
+            </details>
+            <details class="send-card send-card-more">
+              <summary><span class="send-icon" data-icon="coins" aria-hidden="true"></span><strong data-i18n="send.cost.title">Coût approximatif</strong></summary>
               <p data-i18n="send.cost.desc">Impression : environ 0,10 $ à 0,50 $ par page. Courrier recommandé : environ 12 $ à 15 $ (timbre + option recommandé). Les tarifs peuvent changer.</p>
-            </div>
+            </details>
           </div>
+              <p class="disclaimer" data-icon="info" data-i18n="wizard.result.disclaimer">Le courrier recommandé fournit une preuve de réception de la lettre, et une copie conservée garde une trace de son contenu. Ceci est de l'information générale, pas un avis juridique.</p>
+            </section>
 
-          <dialog class="map-dialog" id="map-dialog">
+            <dialog class="map-dialog" id="map-dialog">
             <div class="map-dialog-body">
               <button type="button" class="map-close" id="map-close" aria-label="Fermer" data-i18n-aria-label="common.close" data-icon="x"></button>
               <div class="places-map" data-map-panel="print" hidden>
@@ -636,9 +692,11 @@
               </div>
             </div>
           </dialog>
-          </div>
 
-          <p class="disclaimer" data-icon="info" data-i18n="wizard.result.disclaimer">Le courrier recommandé fournit une preuve de réception de la lettre, et une copie conservée garde une trace de son contenu. Ceci est de l'information générale, pas un avis juridique.</p>
+            <div class="wizard-nav">
+              <button type="button" class="btn btn-ghost" id="btn-back-letter" data-icon="arrow-left"><span data-i18n="wz.send.back">Revenir à la lettre</span></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -672,7 +730,8 @@
         </section>
         <section class="legal-section">
           <h3 data-i18n="legal.privacy.title">Confidentialité</h3>
-          <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre et votre choix de langue sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap. La dictée vocale, si vous l'utilisez, fonctionne de la même façon : votre navigateur envoie l'enregistrement de votre voix à Google, Apple ou Microsoft pour le convertir en texte. Votre accord est demandé avant la première utilisation.</p>
+          <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre, votre choix de langue et votre acceptation des indications sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap. La dictée vocale, si vous l'utilisez, fonctionne de la même façon : votre navigateur envoie l'enregistrement de votre voix à Google, Apple ou Microsoft pour le convertir en texte. Votre accord est demandé avant la première utilisation.</p>
+          <p data-i18n="legal.privacy.scan">Le lecteur de bail, si vous l'utilisez, lit la photo de votre bail directement sur votre appareil : la photo et son texte ne sont envoyés à personne.</p>
           <p data-i18n="legal.privacy.stats">Le site compte les visites de façon anonyme avec GoatCounter : page consultée, site d'origine, type d'appareil et pays. GoatCounter n'utilise pas de cookies, ne conserve pas votre adresse IP et ne voit jamais vos réponses ni votre lettre.</p>
         </section>
       </div>
@@ -708,7 +767,8 @@
     <h3 data-i18n="legal.accuracy.title">Exactitude de l'information</h3>
     <p data-i18n="legal.accuracy.desc">Nous faisons de notre mieux pour que l'information soit exacte et à jour, mais la loi peut changer et des erreurs sont possibles. Les délais et les articles de loi peuvent être vérifiés auprès du TAL ou d'Éducaloi.</p>
     <h3 data-i18n="legal.privacy.title">Confidentialité</h3>
-    <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre et votre choix de langue sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap. La dictée vocale, si vous l'utilisez, fonctionne de la même façon : votre navigateur envoie l'enregistrement de votre voix à Google, Apple ou Microsoft pour le convertir en texte. Votre accord est demandé avant la première utilisation.</p>
+    <p data-i18n="legal.privacy.desc">Vos réponses restent dans votre navigateur : le brouillon de votre lettre, votre choix de langue et votre acceptation des indications sont enregistrés seulement sur votre appareil. Seule exception : les boutons de carte (lieux pour imprimer, bureaux de poste) envoient l'adresse du logement à OpenStreetMap (service Nominatim) pour trouver les lieux à proximité, et la carte est alors chargée depuis les serveurs d'OpenStreetMap. La dictée vocale, si vous l'utilisez, fonctionne de la même façon : votre navigateur envoie l'enregistrement de votre voix à Google, Apple ou Microsoft pour le convertir en texte. Votre accord est demandé avant la première utilisation.</p>
+    <p data-i18n="legal.privacy.scan">Le lecteur de bail, si vous l'utilisez, lit la photo de votre bail directement sur votre appareil : la photo et son texte ne sont envoyés à personne.</p>
     <p data-i18n="legal.privacy.stats">Le site compte les visites de façon anonyme avec GoatCounter : page consultée, site d'origine, type d'appareil et pays. GoatCounter n'utilise pas de cookies, ne conserve pas votre adresse IP et ne voit jamais vos réponses ni votre lettre.</p>
     <p class="terms-end" id="terms-end" data-i18n="terms.end">Fin des indications.</p>
   </div>
@@ -716,12 +776,13 @@
 </dialog>
 
 <!-- ?v= forces browsers to fetch new versions: change it on every release (CSS and JS). -->
-<script src="js/i18n.js?v=2026-11-04-11"></script>
-<script src="js/letter.js?v=2026-11-04-11"></script>
-<script src="js/pdf.js?v=2026-11-04-11"></script>
-<script src="js/main.js?v=2026-11-04-11"></script>
-<script src="js/printmap.js?v=2026-11-04-11"></script>
-<script src="js/speech.js?v=2026-11-04-11"></script>
-<script src="js/dictation.js?v=2026-11-04-11"></script>
+<script src="js/i18n.js?v=2026-11-04-27"></script>
+<script src="js/letter.js?v=2026-11-04-27"></script>
+<script src="js/pdf.js?v=2026-11-04-27"></script>
+<script src="js/main.js?v=2026-11-04-27"></script>
+<script src="js/printmap.js?v=2026-11-04-27"></script>
+<script src="js/speech.js?v=2026-11-04-27"></script>
+<script src="js/dictation.js?v=2026-11-04-27"></script>
+<script src="js/scan.js?v=2026-11-04-27"></script>
 </body>
 </html>

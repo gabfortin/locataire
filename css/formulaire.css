@@ -228,18 +228,29 @@ body.on-wizard .voice-pill { display: inline-flex; }
 .letter-bold { font-weight: 700; }
 .letter-esig { display: inline-block; padding-inline-start: 6px; font-family: 'Great Vibes', cursive; font-size: 2.1em; line-height: 1.1; }
 
-.esign-box {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
-  margin: 18px 0 0;
-  padding: 16px 20px;
-  border: 1px dashed var(--option-border);
-  border-radius: var(--r-md);
-  background: var(--side-bg);
-}
-.esign-box p { margin: 0; flex: 1 1 320px; font-size: 0.92rem; color: var(--text-muted); }
-#btn-esign[aria-pressed="true"] { border-color: var(--selected); background: var(--selected-bg); color: var(--text); }
+/* Signature électronique : case facultative sous les tons, à l'étape 13 */
+.esign-choice { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--option-border); }
+.esign-choice .field-hint { margin: 0 0 12px; }
 
-/* « Bravo » une fois la lettre enregistrée, imprimée ou envoyée */
+/* Sous la lettre : les boutons d'action, puis « Terminer » (à droite, comme « Étape suivante ») */
+.finish-row { display: flex; justify-content: flex-end; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--option-border); }
+.finish-row[hidden] { display: none; }
+
+/* Étape 15 : Bravo, puis deux sections « Par courriel » et « Par la poste » */
+.send-section { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--option-border); }
+.send-section > h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; font-size: 1.3rem; color: var(--navy); }
+.send-section > h3::before { color: var(--action); }
+.send-section > p { margin: 0 0 16px; max-width: 70ch; color: var(--text-muted); }
+.send-section .result-actions { margin: 0 0 18px; }
+.send-section .send-grid { margin-top: 6px; }
+.result-stage .done-panel { margin-top: 0; }
+.result-stage .done-title { margin: 0 0 2px; font-size: 1.25rem; line-height: 1.3; letter-spacing: 0; }
+.result-stage .done-title::after { display: none; }
+#ready-panel { margin-bottom: 14px; }
+#stage-send .wizard-nav { margin-top: 30px; }
+.send-section .disclaimer { margin-top: 18px; }
+
+/* « Bravo » à l'arrivée sur l'étape 15 */
 .done-panel {
   display: flex; align-items: center; gap: 18px;
   margin: 28px 0 0;
@@ -260,9 +271,7 @@ body.on-wizard .voice-pill { display: inline-flex; }
 .done-panel.celebrate { animation: doneIn 0.4s var(--ease) both; }
 @keyframes donePop { 0% { transform: scale(0.2); opacity: 0; } 70% { transform: scale(1.12); opacity: 1; } 100% { transform: scale(1); } }
 @keyframes doneIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-.send-guide-toggle { margin-top: 24px; }
-.send-guide-toggle[hidden] { display: none; }
-.letter-result .send-guide { margin-top: 28px; }
+.letter-result .send-guide.send-section { margin-top: 30px; }
 
 /* ---------- Fenêtre d'accueil « À propos et avis légal » ---------- */
 .terms-dialog {
@@ -324,8 +333,11 @@ body.on-wizard .voice-pill { display: inline-flex; }
 }
 
 @media print {
-  .wizard-side, .voice-pill, .result-tools, .esign-box, .done-panel, .send-guide-toggle,
+  .wizard-side, .voice-pill, .result-tools, .finish-row, .done-panel,
   .req-note { display: none !important; }
+  /* « Imprimer » est à l'étape 15 : on imprime la lettre de l'étape 14, même masquée à l'écran */
+  #stage-letter[hidden] { display: block !important; }
+  #stage-send { display: none !important; }
   .wizard-layout { display: block; }
 }
 
@@ -402,7 +414,6 @@ body {
 .before-box,
 .pill,
 .wizard-side,
-.esign-box,
 .letter-paper {
   -webkit-backdrop-filter: var(--glass-blur);
   backdrop-filter: var(--glass-blur);
@@ -507,3 +518,92 @@ body {
   body { background: #fff; }
   .wizard-side, .letter-paper { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
 }
+
+/* ---------- Lecteur de bail (étapes 4 et 6, js/scan.js) ---------- */
+[data-icon="camera"] { --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8.5A1.5 1.5 0 0 1 5.5 7h2.2l1.5-2.2h5.6L16.3 7h2.2A1.5 1.5 0 0 1 20 8.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5z'/%3E%3Ccircle cx='12' cy='12.8' r='3.4'/%3E%3C/svg%3E"); }
+.scan-box {
+  max-width: 620px;
+  margin: 0 0 26px;
+  padding: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  background: var(--side-bg);
+  box-shadow: var(--glass-hl), var(--glass-shadow);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.scan-icon {
+  flex: none; display: grid; place-items: center;
+  width: 40px; height: 40px; border-radius: var(--r-md);
+  background: var(--primary-fill); color: #fff; font-size: 1.2rem;
+}
+/* Replié par défaut : une seule ligne cliquable (icône + « Gagnez du temps… ») */
+.scan-summary {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 18px 12px 12px;
+  cursor: pointer;
+  list-style: none;
+  border-radius: var(--r-lg);
+}
+.scan-summary::-webkit-details-marker { display: none; }
+.scan-summary::after {
+  content: ""; flex: none; margin-inline-start: auto;
+  width: 9px; height: 9px;
+  border-right: 2px solid var(--action); border-bottom: 2px solid var(--action);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.2s var(--ease);
+}
+.scan-box[open] > .scan-summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.scan-summary:hover .scan-title { text-decoration: underline; text-underline-offset: 3px; }
+.scan-summary:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.scan-body { min-width: 0; padding: 0 20px 18px 66px; }
+html[dir="rtl"] .scan-body { padding: 0 66px 18px 20px; }
+.scan-title { font-weight: 700; color: var(--navy); }
+.scan-desc { margin: 0 0 14px; font-size: 0.9rem; color: var(--text-muted); }
+.scan-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.scan-btn { position: relative; cursor: pointer; gap: 8px; }
+.scan-alt { position: relative; cursor: pointer; font-size: 0.9rem; font-weight: 600; color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+.scan-btn:has(input:focus-visible), .scan-alt:has(input:focus-visible) { outline: 3px solid var(--ring); outline-offset: 3px; }
+.scan-box.busy .scan-btn, .scan-box.busy .scan-alt { opacity: 0.55; pointer-events: none; }
+.scan-status { margin: 12px 0 0; font-size: 0.9rem; font-weight: 600; color: var(--navy); }
+.scan-status.ok { color: var(--selected); }
+.scan-status.warn { color: var(--req); }
+@media (prefers-color-scheme: light) { .scan-status.ok { color: #12733f; } }
+/* Champ rempli à partir du bail : teinte verte jusqu'à ce que la personne le modifie */
+.wizard-main .field input.autofilled { background: var(--selected-bg); border-color: var(--selected); }
+@media (max-width: 560px) {
+  .scan-body, html[dir="rtl"] .scan-body { padding: 0 16px 16px; }
+}
+/* Une valeur en caractères latins (adresse, nom) garde son ordre même en arabe ou en ourdou */
+.wizard-main .field input, .wizard-main .field textarea { unicode-bidi: plaintext; }
+.letter-paper:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
+
+/* Étape 15 : « Ce qui est demandé au comptoir » et « Coût approximatif » repliés par défaut
+   (icône + titre), dépliés au clic */
+.send-card-more { display: block; align-self: start; padding: 0; }
+.send-card-more > summary {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 22px;
+  cursor: pointer; list-style: none;
+  border-radius: var(--r-lg);
+}
+.send-card-more > summary::-webkit-details-marker { display: none; }
+.send-card-more > summary .send-icon { margin: 0; flex: none; }
+.send-card-more > summary::after {
+  content: ""; flex: none; margin-inline-start: auto;
+  width: 9px; height: 9px;
+  border-right: 2px solid var(--action); border-bottom: 2px solid var(--action);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform 0.2s var(--ease);
+}
+.send-card-more[open] > summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.send-card-more > summary:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.send-card-more > summary:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.send-card-more > p { padding: 0 22px 20px; }
+.send-card-body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 22px 20px; }
+#pdf-error { margin: -6px 0 16px; }
+/* Langue du bail lue ≠ langue choisie à l'étape 3 */
+.scan-lang { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 12px; padding: 12px 14px; border: 1px solid var(--req); border-radius: var(--r-md); background: var(--error-bg); }
+.scan-lang[hidden] { display: none; }
+.scan-lang p { margin: 0; flex: 1 1 260px; font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.scan-lang.done { border-color: var(--selected); background: var(--selected-bg); }

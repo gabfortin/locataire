@@ -162,8 +162,12 @@
   details.addEventListener('input', updateWordCount);
 
   // ---------- Sidebar: information and legal basis of the current step ----------
+  // Après les 13 questions : étape 14 « Votre lettre » et étape 15 « Envoi » (hors du formulaire).
+  const RESULT_STAGES = ['letter', 'send'];
+  let resultStage = null; // null pendant les questions
+
   function updateAside() {
-    const id = steps[currentIndex].getAttribute('data-step-id');
+    const id = resultStage || steps[currentIndex].getAttribute('data-step-id');
     const category = value('category') || 'salubrite';
     document.querySelectorAll('.wz-aside').forEach((aside) => {
       const forStep = aside.getAttribute('data-aside') === id;
@@ -174,8 +178,8 @@
 
   // ---------- Wizard navigation ----------
   function updateProgress() {
-    const total = steps.length;
-    const n = currentIndex + 1;
+    const total = steps.length + RESULT_STAGES.length;
+    const n = resultStage ? steps.length + RESULT_STAGES.indexOf(resultStage) + 1 : currentIndex + 1;
     const percent = Math.round((n / total) * 100);
     document.getElementById('wz-percent').textContent = `${percent} %`;
     document.getElementById('wz-progress-fill').style.width = `${percent}%`;
@@ -184,6 +188,7 @@
 
   function goToStep(index, moveFocus) {
     currentIndex = index;
+    resultStage = null;
     steps.forEach((fs, i) => fs.classList.toggle('active', i === index));
     hideError();
     updateConditional();
@@ -276,42 +281,53 @@
       demands: fd.getAll('demand').filter((d) => d !== 'autre'),
       demand_other: fd.getAll('demand').includes('autre') ? text('demand_other') : '',
       tone: fd.get('tone'),
+      esign: fd.get('esign') === '1',
     };
   }
 
   let lastLetterData = null;
   let letterLines = [];
   let letterPdf = null; // Promise of the PDF Blob (null if it could not be built)
-  let esigned = false;
   const emailNote = document.getElementById('email-note');
-  const btnEsign = document.getElementById('btn-esign');
 
   function renderLetter() {
-    letterLines = generateLetter({ ...lastLetterData, esign: esigned });
+    // Signature électronique : choisie à l'étape 13 (case « J'accepte de signer électroniquement »).
+    letterLines = generateLetter(lastLetterData);
     letterTextEl.innerHTML = letterToHtml(letterLines);
     letterPdf = null;
-    getLetterPdf(); // built right away: the share sheet must open promptly after a click (Safari)
+    getLetterPdf().catch(() => {}); // built right away: the share sheet must open promptly after a click (Safari)
   }
 
   btnGenerate.addEventListener('click', () => {
     if (!validateCurrentStep()) return;
     lastLetterData = collectFormData();
-    esigned = false;
-    btnEsign.setAttribute('aria-pressed', 'false');
     renderLetter();
     emailNote.hidden = true;
-    document.getElementById('done-panel').hidden = true;
-    document.getElementById('send-guide').hidden = true;
     form.hidden = true;
     letterResult.hidden = false;
     try {
       localStorage.setItem('dat_draft', JSON.stringify(lastLetterData));
     } catch (e) { /* storage unavailable, ignore */ }
-    focusHeading(letterResult.querySelector('h2'), true);
-    document.querySelector('.wizard-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    document.getElementById('wz-percent').textContent = '100 %';
-    document.getElementById('wz-progress-fill').style.width = '100%';
+    showStage('letter');
   });
+
+  // Étape 14 (la lettre) ou 15 (envoi : Bravo, par courriel, par la poste).
+  function showStage(name) {
+    resultStage = name;
+    document.getElementById('stage-letter').hidden = name !== 'letter';
+    document.getElementById('stage-send').hidden = name !== 'send';
+    updateProgress();
+    updateAside();
+    // « Bravo » animé en haut de chaque étape (14 : relire la lettre ; 15 : l'envoyer)
+    const panel = document.getElementById(name === 'letter' ? 'ready-panel' : 'done-panel');
+    panel.classList.remove('celebrate');
+    void panel.offsetWidth; // restart the animation
+    panel.classList.add('celebrate');
+    focusHeading(document.getElementById(name === 'letter' ? 'letter-title' : 'send-title'), true);
+    document.querySelector('.wizard-layout').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.getElementById('btn-send-letter').addEventListener('click', () => showStage('send'));
+  document.getElementById('btn-back-letter').addEventListener('click', () => showStage('letter'));
 
   document.getElementById('btn-edit').addEventListener('click', () => {
     letterResult.hidden = true;
@@ -319,74 +335,43 @@
     goToStep(0, true);
   });
 
-  // Electronic signature: the tenant's name, in a handwriting font, above the signature line.
-  btnEsign.addEventListener('click', () => {
-    esigned = !esigned;
-    btnEsign.setAttribute('aria-pressed', String(esigned));
-    renderLetter();
-  });
-
   // ---------- Result actions ----------
-  let copyResetTimer;
   const letterText = () => letterToText(letterLines);
   const PDF_NAME = 'mise-en-demeure.pdf';
 
+  // Le PDF est créé dans le navigateur (jsPDF chargé à la demande). Un échec n'est pas gardé en
+  // mémoire : un nouvel essai est fait (ex. connexion coupée pendant le chargement de jsPDF).
   function getLetterPdf() {
     if (!letterPdf) {
-      letterPdf = buildLetterPdf(letterLines, letterEmailSubject(lastLetterData || {})).catch(() => null);
+      letterPdf = buildLetterPdf(letterLines, letterEmailSubject(lastLetterData || {})).catch((e) => {
+        letterPdf = null;
+        throw e;
+      });
     }
     return letterPdf;
   }
 
-  // Falls back to a plain-text file if the PDF could not be built.
-  async function getLetterFile() {
-    const pdf = await getLetterPdf();
-    return pdf
-      ? new File([pdf], PDF_NAME, { type: 'application/pdf' })
-      : new File([letterText()], 'mise-en-demeure.txt', { type: 'text/plain;charset=utf-8' });
+  async function getPdfFile() {
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      try {
+        const pdf = await getLetterPdf();
+        return new File([pdf], PDF_NAME, { type: 'application/pdf' });
+      } catch (e) {
+        await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+      }
+    }
+    return null;
   }
 
-  // "Bravo!" once the letter has been saved, printed or sent, then where to print and how to send it.
-  function showDone() {
-    const panel = document.getElementById('done-panel');
-    const wasHidden = panel.hidden;
-    panel.hidden = false;
-    document.getElementById('send-guide').hidden = false;
-    document.getElementById('btn-show-guide').hidden = true;
-    if (wasHidden) {
-      panel.classList.remove('celebrate');
-      void panel.offsetWidth; // restart the animation
-      panel.classList.add('celebrate');
-      setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'center' }), 400);
-    }
-  }
-  document.getElementById('btn-show-guide').addEventListener('click', () => {
-    document.getElementById('send-guide').hidden = false;
-    document.getElementById('btn-show-guide').hidden = true;
-    focusHeading(document.querySelector('#send-guide h3'));
-  });
-
-  document.getElementById('btn-copy').addEventListener('click', async () => {
-    const btn = document.getElementById('btn-copy');
-    try {
-      await navigator.clipboard.writeText(letterText());
-      btn.textContent = t('wizard.result.copied', currentLang);
-      clearTimeout(copyResetTimer);
-      copyResetTimer = setTimeout(() => {
-        btn.textContent = t('wizard.result.copy', currentLang);
-      }, 1800);
-    } catch (e) {
-      // Fallback: select the text so the user can copy manually
-      const range = document.createRange();
-      range.selectNodeContents(letterTextEl);
-      const sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    }
-  });
+  const pdfError = document.getElementById('pdf-error');
 
   document.getElementById('btn-download').addEventListener('click', async () => {
-    const file = await getLetterFile();
+    pdfError.hidden = true;
+    const file = await getPdfFile();
+    if (!file) {
+      pdfError.hidden = false; // jamais de .txt à la place : la personne réessaie
+      return;
+    }
     const url = URL.createObjectURL(file);
     const a = document.createElement('a');
     a.href = url;
@@ -395,7 +380,6 @@
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    showDone();
   });
 
   // mailto: links cannot carry attachments. Where the system share sheet accepts files (phones,
@@ -405,14 +389,13 @@
     const data = lastLetterData || {};
     const subject = letterEmailSubject(data);
     const message = letterEmailBody(data);
-    const file = await getLetterFile();
+    const file = await getPdfFile();
 
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({ files: [file], title: subject, text: message });
         showEmailNote(false);
-        showDone();
-        return;
+            return;
       } catch (e) {
         if (e.name === 'AbortError') return; // the tenant closed the share sheet
         // Otherwise (e.g. sharing not allowed), fall back to a mailto link below.
@@ -422,7 +405,6 @@
     const body = `${message}\n\n---\n\n${letterText()}`.replace(/\n/g, '\r\n');
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     showEmailNote(true);
-    showDone();
   });
 
   function showEmailNote(inBody) {
@@ -432,7 +414,6 @@
 
   document.getElementById('btn-print').addEventListener('click', () => {
     window.print();
-    showDone();
   });
 
   // ---------- Read aloud: what the tenant wrote, and the letter ----------
@@ -471,6 +452,7 @@
         }
       });
       if (data.demand_other) document.getElementById('demand-autre').checked = true;
+      form.querySelector('[name="esign"]').checked = data.esign === true;
     } catch (e) { /* ignore malformed draft */ }
   }
 
