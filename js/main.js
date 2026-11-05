@@ -383,35 +383,18 @@
     URL.revokeObjectURL(url);
   });
 
-  // mailto: links cannot carry attachments. Where the system share sheet accepts files (phones,
-  // Safari, recent Chrome), the letter is shared as a real attachment with a short message;
-  // otherwise the email app opens with the message and the letter in the body.
-  document.getElementById('btn-email').addEventListener('click', async () => {
+  // Le client de courriel s'ouvre directement (lien mailto:), avec la lettre dans le corps du
+  // message. Un lien mailto: ne peut pas joindre de fichier : le PDF se joint avec le bouton
+  // Télécharger. Le menu de partage du système (navigator.share) n'est pas utilisé, car il ne
+  // permet pas d'ouvrir directement le client de courriel.
+  document.getElementById('btn-email').addEventListener('click', () => {
     const data = lastLetterData || {};
     const subject = letterEmailSubject(data);
     const message = letterEmailBody(data);
-    const file = await getPdfFile();
-
-    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-      try {
-        await navigator.share({ files: [file], title: subject, text: message });
-        showEmailNote(false);
-            return;
-      } catch (e) {
-        if (e.name === 'AbortError') return; // the tenant closed the share sheet
-        // Otherwise (e.g. sharing not allowed), fall back to a mailto link below.
-      }
-    }
-
     const body = `${message}\n\n---\n\n${letterText()}`.replace(/\n/g, '\r\n');
     window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    showEmailNote(true);
-  });
-
-  function showEmailNote(inBody) {
-    emailNote.querySelector('[data-i18n="wizard.result.emailInBody"]').hidden = !inBody;
     emailNote.hidden = false;
-  }
+  });
 
   document.getElementById('btn-print').addEventListener('click', () => {
     window.print();
