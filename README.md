@@ -10,21 +10,21 @@ Projet personnel et gratuit de [Gabriel Fortin](https://gabfortin.com), conseill
 
 ## Fonctionnalités
 
-- **Fenêtre d'accueil** « À propos et avis légal » à la première visite : le texte doit être lu jusqu'au bout (défilement) puis accepté (« J'ai lu et j'accepte ») ; l'acceptation est gardée dans le `localStorage`. Elle a son propre menu de langue, car le reste de la page est inactif pendant qu'elle est ouverte.
+- **Fenêtre « À propos et avis légal »** au premier clic sur « Générer ma lettre » (ou « Générer cette lettre ») : elle s'affiche dans la langue choisie sur le site à ce moment ; le texte doit être lu jusqu'au bout (défilement) puis accepté (« J'ai lu et j'accepte »), et le générateur s'ouvre ensuite. Échap la ferme sans accepter. L'acceptation est gardée dans le `localStorage`.
 - **Information** : définitions (logement insalubre, relation avec le locateur), étapes habituelles (dont le lien vers la demande d'inspection de la Ville, l'avis d'abandon du logement du TAL et le numéro du TAL), droits en bref (visites, travaux, serrures, modification du bail, quitter un logement insalubre), ressources et bloc « Sources ».
-- **Générateur de lettre** en 13 étapes, une question à la fois (mise en page inspirée du formulaire de plainte de la CDPDJ) : colonne de gauche avec la progression en pourcentage, les informations et la base légale de l'étape ; champs obligatoires marqués d'un astérisque ; dates futures refusées ; description limitée à 250 mots.
+- **Générateur de lettre** en 13 étapes, une question à la fois (mise en page « formulaire informatif ») : colonne de gauche avec la progression en pourcentage, les informations et la base légale de l'étape ; champs obligatoires marqués d'un astérisque ; dates futures refusées ; description limitée à 250 mots.
   1. Locateur déjà informé ? (oui → mise en demeure ; non → **première lettre d'avis** ; non → mise en demeure tout de même)
   2. Type de problème (salubrité, relation avec le locateur) · 3. Langue du bail · 4. Nom et adresse · 5. Coordonnées · 6. Locateur
   7. Problèmes (liste qui devient verte une fois cochée) · 8. Description · 9. Dates · 10. Préjudice · 11. Délai (10 jours ouvrables recommandés, à titre informatif) · 12. Ce que je demande (dont « Autre chose ») · 13. Ton (neutre, cordial, ferme)
 - **Lettre générée** (`js/letter.js`) : « MISE EN DEMEURE / SOUS TOUTES RÉSERVES » en grosses capitales, puis la situation, « je vous ai informé… », le préjudice, la base légale, la mise en demeure et le délai, les demandes et la suite (TAL). La mention « sous toutes réserves » est voulue : « sans préjudice » marquerait la lettre comme une offre de négociation, qu'on ne pourrait pas déposer en preuve.
 - **Après la lettre** : écoute de la lettre (voix de l'appareil, langue du bail), signature électronique (« J'accepte » : le nom s'ajoute sur la ligne de signature en écriture manuscrite, police Great Vibes), PDF, impression, courriel prérempli (objet « Mise en demeure – nom », message d'accusé de réception daté, lettre jointe), copie du texte ; puis « Bravo » et le guide pour imprimer et envoyer (cartes des lieux à proximité).
-- **8 langues d'interface** : français, anglais, espagnol, créole haïtien, arabe, italien, pendjabi, ourdou (arabe et ourdou affichés de droite à gauche). Voir « À faire » : les textes ajoutés en novembre 2026 ne sont encore qu'en français et en anglais.
+- **8 langues d'interface** : français, anglais, espagnol, créole haïtien, arabe, italien, pendjabi, ourdou (arabe et ourdou affichés de droite à gauche).
 - **Accessibilité** : pastille flottante « Lecture et dictée » (lecture à voix haute des questions avec surlignage, dictée vocale des réponses), écoute de la description écrite.
 - **Mode clair et sombre** selon le réglage de l'appareil.
 
 ## À faire (novembre 2026)
 
-- **Traductions** : les nouvelles clés de `js/i18n.js` (`wz.*`, `terms.*`, `info.title2`, `info.def.relation.title`, `info.step1.title2`, `info.step3.*`, `info.step5.abandon*`, `info.step5.phone`, `info.rights.lease.desc2`, `info.sources.ville`, `info.sources.tal`) n'existent qu'en français et en anglais ; les 6 autres langues affichent le français. À traduire quand le contenu sera stabilisé avec Elvira.
+- **Relecture des traductions** : les textes ajoutés en novembre 2026 (générateur `wz.*`, fenêtre `terms.*`, ajouts d'Elvira dans la page d'information) ont été traduits dans les 6 autres langues le 4 novembre 2026, en brouillon, sans relecture : à faire relire par Elvira et, idéalement, par des locuteurs natifs. Liens officiels : versions françaises pour l'espagnol, le créole, l'arabe et l'italien ; versions anglaises pour le pendjabi et l'ourdou (même règle que les liens existants).
 - **Contenu attendu d'Elvira** : jurisprudence à ajouter ; étape 2 de la page d'information (sans consigne) et étape 4 (« trouver page »).
 - **Accès restreint** à quelques personnes pendant les essais : Cloudflare Access (voir « Mise en ligne »).
 - **Plus tard** : reformulation et correction de la description par une IA (exige un petit serveur qui garde la clé d'API, un consentement explicite et une mise à jour de la confidentialité) ; essai d'un lecteur de bail (photo → noms et langue du bail).
@@ -33,7 +33,7 @@ Projet personnel et gratuit de [Gabriel Fortin](https://gabfortin.com), conseill
 
 Le site est entièrement statique : il n'a ni serveur, ni base de données, ni compte. Les visites sont comptées de façon anonyme avec [GoatCounter](https://www.goatcounter.com) (sans cookies, sans conserver l'adresse IP), qui ne voit jamais les réponses ni la lettre.
 
-- Les réponses et la lettre restent dans le navigateur. Le brouillon, la langue choisie, la préférence de lecture et dictée et l'acceptation de la fenêtre d'accueil sont enregistrés dans le `localStorage` de l'appareil.
+- Les réponses et la lettre restent dans le navigateur. Le brouillon, la langue choisie, la préférence de lecture et dictée et l'acceptation de l'avis légal sont enregistrés dans le `localStorage` de l'appareil.
 - Le PDF est créé dans le navigateur (jsPDF, inclus dans le dépôt).
 - La lecture à voix haute utilise les voix installées sur l'appareil.
 
@@ -54,7 +54,7 @@ Toute nouvelle fonction qui envoie des données doit suivre le même principe et
 index.html            Toutes les pages (accueil, information, générateur, avis légal)
 css/style.css         Styles : variables de couleur (clair/sombre), composants, icônes en CSS
 css/raffinements.css  Raffinements chargés après style.css : police Inter, touches « sceau » vertes, lisibilité, formulaire, harmonisation avec le style A
-css/formulaire.css    Chargé en dernier : style C plus coloré, mise en page du générateur inspirée de la CDPDJ, fenêtre d'accueil, pastille de la voix
+css/formulaire.css    Chargé en dernier : style C en sarcelle, mise en page « formulaire informatif » du générateur, fenêtre d'avis légal, pastille de la voix ; en fin de fichier, touches de verre (fond discret, verre léger, ombres douces ; fenêtres modales opaques)
 assets/icon.svg       Logo (maison contenant une lettre) : barre du haut et favicon ; apple-touch-icon.png en est la version 180 px
 fonts/                Inter (woff2) et Great Vibes (signature électronique, réduite aux caractères latins), hébergées localement, avec leurs licences OFL
 js/i18n.js            Textes de l'interface dans les 8 langues

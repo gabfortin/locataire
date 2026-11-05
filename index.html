@@ -9,10 +9,10 @@
 <meta name="description" content="Aide aux locataires présente les droits des locataires de Montréal, les étapes habituelles face à un logement insalubre et un générateur de modèle de lettre de mise en demeure, en 8 langues.">
 <link rel="icon" type="image/svg+xml" href="assets/icon.svg">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css?v=2026-11-04-6">
+<link rel="stylesheet" href="css/style.css?v=2026-11-04-11">
 <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/raffinements.css?v=2026-11-04-6">
-<link rel="stylesheet" href="css/formulaire.css?v=2026-11-04-6">
+<link rel="stylesheet" href="css/raffinements.css?v=2026-11-04-11">
+<link rel="stylesheet" href="css/formulaire.css?v=2026-11-04-11">
 <script>window.goatcounter = {path: function(p) { return location.host + p }}</script>
 <script data-goatcounter="https://gabfortin.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -213,7 +213,7 @@
     </div>
   </section>
 
-  <!-- WIZARD VIEW : mise en page inspirée du formulaire de plainte de la CDPDJ
+  <!-- WIZARD VIEW : mise en page « formulaire informatif »
        (informations et base légale à gauche, une question à la fois à droite). -->
   <section class="view" id="view-wizard">
     <div class="container wizard-layout">
@@ -232,8 +232,7 @@
         </div>
 
         <p class="dictation-hint" data-icon="mic">
-          <span data-i18n="dictation.hintButton" hidden>Vous pouvez répondre oralement à l'aide du bouton microphone situé à côté des champs.</span>
-          <span data-i18n="dictation.hintKeyboard">Sur téléphone, le micro du clavier permet aussi de dicter.</span>
+          <span class="dictation-hint-text"><span data-i18n="dictation.hintButton" hidden>Vous pouvez répondre oralement à l'aide du bouton microphone situé à côté des champs.</span> <span data-i18n="dictation.hintKeyboard">Sur téléphone, le micro du clavier permet aussi de dicter.</span></span>
         </p>
 
         <!-- Informations et base légale propres à chaque étape (affichées par js/main.js) -->
@@ -690,15 +689,13 @@
   </div>
 </footer>
 
-<!-- À propos et avis légal : à lire et à accepter à la première visite (js/main.js) -->
+<!-- À propos et avis légal : à lire et à accepter avant d'ouvrir le générateur, dans la langue du site (js/main.js) -->
 <dialog class="terms-dialog" id="terms-dialog" aria-labelledby="terms-title" aria-describedby="terms-instruction">
   <div class="terms-head">
     <div class="terms-head-text">
       <p class="terms-title" id="terms-title" data-icon="info"><span data-i18n="terms.title">Veuillez lire les indications avant de commencer.</span></p>
       <p class="terms-instruction" id="terms-instruction" data-i18n="terms.instruction">Faites défiler le texte, puis cliquez sur « J'ai lu et j'accepte ».</p>
     </div>
-    <label class="sr-only" for="terms-lang" data-i18n="lang.label">Langue</label>
-    <select id="terms-lang" class="terms-lang"></select>
   </div>
   <div class="terms-body" id="terms-body" tabindex="0">
     <h2 data-i18n="legal.title">À propos et avis légal</h2>
@@ -719,12 +716,12 @@
 </dialog>
 
 <!-- ?v= forces browsers to fetch new versions: change it on every release (CSS and JS). -->
-<script src="js/i18n.js?v=2026-11-04-6"></script>
-<script src="js/letter.js?v=2026-11-04-6"></script>
-<script src="js/pdf.js?v=2026-11-04-6"></script>
-<script src="js/main.js?v=2026-11-04-6"></script>
-<script src="js/printmap.js?v=2026-11-04-6"></script>
-<script src="js/speech.js?v=2026-11-04-6"></script>
-<script src="js/dictation.js?v=2026-11-04-6"></script>
+<script src="js/i18n.js?v=2026-11-04-11"></script>
+<script src="js/letter.js?v=2026-11-04-11"></script>
+<script src="js/pdf.js?v=2026-11-04-11"></script>
+<script src="js/main.js?v=2026-11-04-11"></script>
+<script src="js/printmap.js?v=2026-11-04-11"></script>
+<script src="js/speech.js?v=2026-11-04-11"></script>
+<script src="js/dictation.js?v=2026-11-04-11"></script>
 </body>
 </html>

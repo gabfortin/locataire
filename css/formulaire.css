@@ -1,10 +1,9 @@
 /* ==========================================================================
-   Style C « plus coloré », inspiré du formulaire de plainte en ligne de la
-   Commission des droits de la personne et des droits de la jeunesse (CDPDJ),
+   Style C « plus coloré », avec la mise en page « formulaire informatif »,
    adopté en novembre 2026 à la demande d'Elvira Carhuallanqui.
    Chargé APRÈS style.css et raffinements.css.
 
-   - Mise en page de la CDPDJ, mais palette sarcelle à nous : titres sarcelle foncé,
+   - Mise en page formulaire informatif, palette sarcelle : titres sarcelle foncé,
      boutons sarcelle, colonne d'information teintée à gauche, une question à la fois.
    - Options sur fond gris clair qui deviennent vertes une fois choisies.
    - Toujours sobre : aucun dégradé, coins de 4 à 10 px, police Inter.
@@ -20,8 +19,7 @@
 }
 
 :root {
-  /* Palette sarcelle (novembre 2026) : volontairement distincte du bleu de la CDPDJ
-     (#3f71c9 / #eff4f8), dont on reprend seulement la mise en page. */
+  /* Palette sarcelle (novembre 2026). */
   --navy: #0c2f3a;           /* titres */
   --title-blue: #0f6b72;     /* titre du générateur */
   --action: #0f6b72;         /* boutons d'action : texte blanc 6,3:1 */
@@ -289,16 +287,6 @@ body.on-wizard .voice-pill { display: inline-flex; }
 .terms-head p { margin: 0; color: #fff; }
 .terms-title { display: flex; gap: 10px; align-items: flex-start; font-weight: 700; font-size: 1.1rem; }
 .terms-instruction { margin-top: 6px !important; color: rgba(255, 255, 255, 0.86) !important; }
-.terms-lang {
-  flex: none;
-  padding: 6px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: var(--r-sm);
-  background: transparent;
-  color: #fff;
-  font: 600 0.85rem var(--font-body);
-}
-.terms-lang option { color: #17181a; }
 .terms-body { overflow-y: auto; padding: 8px 30px 24px; }
 .terms-body:focus-visible { outline: 3px solid var(--ring); outline-offset: -3px; }
 .terms-body h2 { font-size: 1.35rem; margin: 18px 0 6px; }
@@ -331,7 +319,6 @@ body.on-wizard .voice-pill { display: inline-flex; }
   .wz-asides { order: 2; padding: 20px; border-radius: var(--r-lg); background: var(--side-bg); }
   .wz-aside:last-child { margin-bottom: 0; }
   .req-note { text-align: start; }
-  .voice-pill { inset-inline-start: 12px; bottom: 12px; padding: 10px 16px; }
   .terms-head { padding: 18px 20px; flex-direction: column; }
   .terms-body { padding: 4px 20px 18px; }
 }
@@ -340,4 +327,183 @@ body.on-wizard .voice-pill { display: inline-flex; }
   .wizard-side, .voice-pill, .result-tools, .esign-box, .done-panel, .send-guide-toggle,
   .req-note { display: none !important; }
   .wizard-layout { display: block; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Touches du style « verre » de gabfortin (style B, compteurvelo.com), novembre 2026.
+   Même principe que l'hybride D : fond coloré discret et immobile, verre léger,
+   ombres douces. On garde la palette sarcelle, Inter, les boutons carrés et la
+   mise en page. Pas de dérive animée du fond, pas de titre en dégradé.
+   Les fenêtres modales restent opaques (--surface-solid).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --glass: rgba(255, 255, 255, 0.72);
+  --glass-strong: rgba(255, 255, 255, 0.84);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-hl: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --glass-blur: saturate(170%) blur(14px);
+  --glass-shadow: 0 1px 1px rgba(12, 47, 58, 0.03), 0 10px 32px -10px rgba(12, 47, 58, 0.16);
+  --side-bg: rgba(226, 241, 241, 0.7);
+  --option-bg: rgba(255, 255, 255, 0.62);
+  --field-bg: rgba(255, 255, 255, 0.9);
+  --mesh-1: rgba(15, 107, 114, 0.16);
+  --mesh-2: rgba(26, 148, 85, 0.12);
+  --mesh-3: rgba(41, 140, 226, 0.10);
+  --mesh-base: #f2f6f5;
+  --surface-solid: #ffffff;   /* fenêtres (avis légal, carte) : jamais en verre */
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass: rgba(26, 34, 34, 0.66);
+    --glass-strong: rgba(26, 34, 34, 0.82);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hl: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 10px 32px -10px rgba(0, 0, 0, 0.5);
+    --side-bg: rgba(18, 40, 40, 0.62);
+    --option-bg: rgba(255, 255, 255, 0.04);
+    --field-bg: rgba(20, 26, 26, 0.85);
+    --mesh-1: rgba(15, 107, 114, 0.22);
+    --mesh-2: rgba(26, 148, 85, 0.10);
+    --mesh-3: rgba(41, 140, 226, 0.08);
+    --mesh-base: #0d1213;
+    --surface-solid: #171d1d;
+  }
+}
+
+/* ---------- Fond : trois taches très discrètes, immobiles ---------- */
+body {
+  background-color: var(--mesh-base);
+  background-image:
+    radial-gradient(42% 38% at 8% 4%, var(--mesh-1), transparent 70%),
+    radial-gradient(38% 34% at 96% 18%, var(--mesh-3), transparent 70%),
+    radial-gradient(46% 40% at 70% 100%, var(--mesh-2), transparent 70%);
+  background-attachment: fixed;
+}
+
+/* ---------- Barre du haut : verre ---------- */
+.site-header {
+  background: rgba(234, 244, 244, 0.62);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  border-bottom-color: rgba(15, 107, 114, 0.12);
+}
+@media (prefers-color-scheme: dark) {
+  .site-header { background: rgba(14, 22, 22, 0.6); border-bottom-color: rgba(255, 255, 255, 0.08); }
+}
+
+/* ---------- Surfaces en verre léger ---------- */
+.cta-card:not(.cta-primary),
+.step,
+.definition,
+.send-card,
+.resource-card,
+.legal-section,
+.before-box,
+.pill,
+.wizard-side,
+.esign-box,
+.letter-paper {
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.cta-card:not(.cta-primary),
+.step,
+.definition,
+.resource-card,
+.wizard-side {
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-hl), var(--glass-shadow);
+}
+.wizard-side { background: var(--side-bg); }
+
+/* Carte principale : sarcelle pleine, avec le reflet et l'ombre du verre */
+.cta-card.cta-primary {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 14px 34px -12px rgba(15, 107, 114, 0.55);
+}
+
+/* Pastille et repères en pilules (les boutons restent carrés) */
+.pill { border-radius: 999px; padding: 6px 16px; }
+.voice-pill {
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-hl), var(--glass-shadow);
+}
+
+/* « Lecture et dictée » : bouton rond, à mi-hauteur de l'écran sur le bord ;
+   le libellé apparaît en bulle au survol ou au clavier (toujours lu par les lecteurs d'écran). */
+.voice-pill {
+  top: 50%; bottom: auto; transform: translateY(-50%);
+  justify-content: center;
+  width: 56px; height: 56px; padding: 0;
+  border-radius: 50%;
+  font-size: 1.35rem;
+}
+.voice-pill > span {
+  position: absolute; inset-inline-start: calc(100% + 10px); top: 50%;
+  transform: translateY(-50%);
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--navy); color: var(--bg);
+  font-size: 0.85rem; white-space: nowrap;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.15s var(--ease);
+}
+.voice-pill:hover > span, .voice-pill:focus-visible > span { opacity: 1; }
+/* Sous 1280 px, il n'y a plus de marge libre à gauche du générateur : le bouton
+   retourne dans le coin inférieur pour ne pas cacher la question ni la colonne. */
+@media (max-width: 1279px) {
+  .voice-pill { inset-inline-start: 12px; top: auto; bottom: 12px; transform: none; }
+}
+@media (min-width: 1280px) {
+  .voice-pill { inset-inline-start: 10px; }
+}
+@media (max-width: 860px) {
+  .voice-pill { width: 50px; height: 50px; }
+}
+.dictation-hint-text { min-width: 0; }
+
+/* Options du générateur : verre clair, reflet en haut */
+.check.option {
+  background: var(--option-bg);
+  border-color: var(--glass-border);
+  box-shadow: var(--glass-hl), 0 1px 2px rgba(12, 47, 58, 0.04);
+  -webkit-backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur);
+}
+.check.option:hover { background: var(--glass-strong); border-color: var(--action); }
+@media (prefers-color-scheme: dark) {
+  .check.option:hover { border-color: var(--primary); }
+}
+
+/* Barre de progression un peu plus présente, avec une lueur */
+.wz-progress-track { height: 5px; border-radius: 3px; background: rgba(15, 107, 114, 0.14); }
+.wz-progress-fill { box-shadow: 0 0 10px rgba(15, 107, 114, 0.45); }
+@media (prefers-color-scheme: dark) {
+  .wz-progress-track { background: rgba(255, 255, 255, 0.14); }
+  .wz-progress-fill { background: var(--primary); box-shadow: 0 0 10px rgba(124, 199, 204, 0.45); }
+}
+
+/* Bouton principal : même forme carrée, petit reflet et ombre colorée */
+.btn-primary {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 6px 16px -6px rgba(15, 107, 114, 0.6);
+}
+
+/* Pied de page translucide */
+.site-footer { background: rgba(255, 255, 255, 0.35); border-top-color: rgba(15, 107, 114, 0.12); }
+@media (prefers-color-scheme: dark) {
+  .site-footer { background: rgba(0, 0, 0, 0.2); border-top-color: rgba(255, 255, 255, 0.08); }
+}
+
+/* Le verre crée un contexte d'empilement : garder la barre et le bouton de voix au-dessus */
+.site-header { z-index: 30; }
+
+/* Fenêtres modales opaques : le texte à lire et à accepter ne doit pas laisser voir la page dessous */
+.terms-dialog, .map-dialog { background: var(--surface-solid); }
+
+/* Mouvement réduit / impression : rien d'animé ici ; à l'impression, fond blanc */
+@media print {
+  body { background: #fff; }
+  .wizard-side, .letter-paper { backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none; }
 }

@@ -36,7 +36,10 @@
   document.querySelectorAll('[data-goto], [data-view-link]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
-      showView(el.getAttribute('data-goto') || el.getAttribute('data-view-link'));
+      const name = el.getAttribute('data-goto') || el.getAttribute('data-view-link');
+      // The generator opens only once « À propos et avis légal » has been read and accepted.
+      if (name === 'wizard' && !termsAccepted()) openTerms(() => showView('wizard'));
+      else showView(name);
     });
   });
 
@@ -44,21 +47,17 @@
   function setLanguage(lang) {
     currentLang = lang;
     langSelect.value = lang;
-    termsLang.value = lang;
     applyLanguage(lang);
     updateProgress();
     updateWordCount();
   }
   langSelect.addEventListener('change', () => setLanguage(langSelect.value));
 
-  // ---------- « À propos et avis légal » : à lire et à accepter à la première visite ----------
+  // ---------- « À propos et avis légal » : à lire et à accepter avant d'ouvrir le générateur ----------
+  // Shown in the language selected on the site at that moment (already applied by applyLanguage).
   const termsDialog = document.getElementById('terms-dialog');
   const termsBody = document.getElementById('terms-body');
   const termsAccept = document.getElementById('terms-accept');
-  const termsLang = document.getElementById('terms-lang');
-  // The rest of the page is inert while the dialog is open: it gets its own language menu.
-  termsLang.innerHTML = langSelect.innerHTML;
-  termsLang.addEventListener('change', () => setLanguage(termsLang.value));
 
   function termsAccepted() {
     try {
@@ -73,7 +72,9 @@
       termsAccept.disabled = false;
     }
   }
-  function openTerms() {
+  let afterTerms = null;
+  function openTerms(then) {
+    afterTerms = then || null;
     termsAccept.disabled = true;
     termsDialog.showModal();
     termsBody.scrollTop = 0;
@@ -82,12 +83,16 @@
   }
   termsBody.addEventListener('scroll', checkTermsScrolled);
   window.addEventListener('resize', () => termsDialog.open && checkTermsScrolled());
-  termsDialog.addEventListener('cancel', (e) => e.preventDefault()); // Escape doesn't skip it
+  // Escape closes it without accepting: the person stays where they were.
+  termsDialog.addEventListener('cancel', () => { afterTerms = null; });
   termsAccept.addEventListener('click', () => {
     try {
       localStorage.setItem('dat_terms', '1');
     } catch (e) { /* storage unavailable: it will be asked again next visit */ }
     termsDialog.close();
+    const next = afterTerms;
+    afterTerms = null;
+    if (next) next();
   });
 
   // ---------- Voice features (read-aloud / dictation) ----------
@@ -479,5 +484,4 @@
   restoreDraft();
   goToStep(0, false);
   updateWordCount();
-  if (!termsAccepted()) openTerms();
 })();
