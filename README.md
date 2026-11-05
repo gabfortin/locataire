@@ -4,7 +4,7 @@ Site d'information pour les locataires de Montréal : leurs droits, les étapes 
 
 **En ligne :** [locataire.gabfortin.com](https://locataire.gabfortin.com)
 
-Projet personnel et gratuit de [Gabriel Fortin](https://gabfortin.com), conseiller d'arrondissement du Plateau-Mont-Royal (district de Jeanne-Mance), et d'[Elvira Carhuallanqui](https://elvirac.ca/), conseillère de la ville (district de Parc-Extension). Ce n'est pas un service de la Ville de Montréal ni d'un arrondissement.
+Projet personnel et gratuit d'[Elvira Carhuallanqui](https://elvirac.ca/), conseillère de la ville (district de Parc-Extension), et de [Gabriel Fortin](https://gabfortin.com), conseiller d'arrondissement du Plateau-Mont-Royal (district de Jeanne-Mance). Ce n'est pas un service de la Ville de Montréal ni d'un arrondissement.
 
 > Le contenu est de l'information juridique générale, pas un avis juridique. Le site est rédigé sur un ton informatif plutôt que sous forme de conseils, et toute modification du contenu devrait conserver ce ton.
 

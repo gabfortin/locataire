@@ -337,7 +337,8 @@
 
   // ---------- Result actions ----------
   const letterText = () => letterToText(letterLines);
-  const PDF_NAME = 'mise-en-demeure.pdf';
+  // Nom du fichier selon le type de lettre : « avis » (première lettre) ou mise en demeure.
+  const pdfName = () => (isAvisLetter(lastLetterData || {}) ? 'avis-au-locateur.pdf' : 'mise-en-demeure.pdf');
 
   // Le PDF est créé dans le navigateur (jsPDF chargé à la demande). Un échec n'est pas gardé en
   // mémoire : un nouvel essai est fait (ex. connexion coupée pendant le chargement de jsPDF).
@@ -355,7 +356,7 @@
     for (let attempt = 0; attempt < 3; attempt += 1) {
       try {
         const pdf = await getLetterPdf();
-        return new File([pdf], PDF_NAME, { type: 'application/pdf' });
+        return new File([pdf], pdfName(), { type: 'application/pdf' });
       } catch (e) {
         await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
       }
