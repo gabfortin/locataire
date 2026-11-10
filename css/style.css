@@ -60,7 +60,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:where(:not([data-theme="light"])) {
     --bg: #0f1113;
 
     --glass: #17191c;
@@ -97,6 +97,44 @@
     --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.3), 0 30px 64px -20px rgba(0, 0, 0, 0.6);
   }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :root:where([data-theme="dark"]) {
+    --bg: #0f1113;
+
+    --glass: #17191c;
+    --glass-strong: #17191c;
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hl: 0 0 0 0 transparent;
+    --hairline: rgba(255, 255, 255, 0.18);
+    --field-bg: #1e2125;
+    --border-hover: rgba(255, 255, 255, 0.3);
+
+    --text: #ececea;
+    --text-muted: #cfd1d4;
+    --text-soft: #9a9ea5;
+
+    --primary: #9dbcf0;
+    --primary-2: #b6cdf4;
+    --accent: #3ecf8e;
+    --primary-fill: #2a5290;             /* le --primary sombre (#9dbcf0) est trop clair pour du texte blanc */
+    --primary-fill-hover: #34619f;
+    --grad-1: #2a5290;
+    --grad-2: #2a5290;
+    --tint: rgba(157, 188, 240, 0.12);
+    --tint-strong: rgba(157, 188, 240, 0.2);
+    --ring: rgba(157, 188, 240, 0.5);
+
+    --info-bg: #1e2125;
+    --info-border: rgba(255, 255, 255, 0.12);
+    --info-text: #cfd1d4;
+    --success: #3ecf8e;
+    --highlight: rgba(62, 207, 142, 0.16);
+
+    --shadow-sm: none;
+    --shadow-md: 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 2px 6px rgba(0, 0, 0, 0.3), 0 30px 64px -20px rgba(0, 0, 0, 0.6);
+  }
+
 
 /* ---------- Base ---------- */
 

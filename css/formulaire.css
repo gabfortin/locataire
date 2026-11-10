@@ -43,7 +43,7 @@
   --ring: rgba(15, 107, 114, 0.4);
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:where(:not([data-theme="light"])) {
     --navy: #d6ecee;
     --title-blue: #7cc7cc;
     --action: #0f6b72;
@@ -66,6 +66,30 @@
     --ring: rgba(124, 199, 204, 0.5);
   }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :root:where([data-theme="dark"]) {
+    --navy: #d6ecee;
+    --title-blue: #7cc7cc;
+    --action: #0f6b72;
+    --action-hover: #13808a;
+    --side-bg: #12201f;
+    --option-bg: #1b1f1f;
+    --option-border: rgba(255, 255, 255, 0.14);
+    --selected: #3ecf8e;
+    --selected-bg: rgba(62, 207, 142, 0.12);
+    --req: #ff8a80;
+    --error-bg: rgba(255, 138, 128, 0.12);
+    --primary: #7cc7cc;
+    --primary-2: #9ad6da;
+    --primary-fill: #0f6b72;
+    --primary-fill-hover: #13808a;
+    --grad-1: #0f6b72;
+    --grad-2: #0f6b72;
+    --tint: rgba(124, 199, 204, 0.12);
+    --tint-strong: rgba(124, 199, 204, 0.2);
+    --ring: rgba(124, 199, 204, 0.5);
+  }
+
 
 /* ---------- Couleurs générales ---------- */
 h1, h2, h3, h4, legend { color: var(--navy); }
@@ -366,7 +390,7 @@ body.on-wizard .voice-pill { display: inline-flex; }
   --surface-solid: #ffffff;   /* fenêtres (avis légal, carte) : jamais en verre */
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:where(:not([data-theme="light"])) {
     --glass: rgba(26, 34, 34, 0.66);
     --glass-strong: rgba(26, 34, 34, 0.82);
     --glass-border: rgba(255, 255, 255, 0.08);
@@ -382,6 +406,23 @@ body.on-wizard .voice-pill { display: inline-flex; }
     --surface-solid: #171d1d;
   }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :root:where([data-theme="dark"]) {
+    --glass: rgba(26, 34, 34, 0.66);
+    --glass-strong: rgba(26, 34, 34, 0.82);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hl: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 10px 32px -10px rgba(0, 0, 0, 0.5);
+    --side-bg: rgba(18, 40, 40, 0.62);
+    --option-bg: rgba(255, 255, 255, 0.04);
+    --field-bg: rgba(20, 26, 26, 0.85);
+    --mesh-1: rgba(15, 107, 114, 0.22);
+    --mesh-2: rgba(26, 148, 85, 0.10);
+    --mesh-3: rgba(41, 140, 226, 0.08);
+    --mesh-base: #0d1213;
+    --surface-solid: #171d1d;
+  }
+
 
 /* ---------- Fond : trois taches très discrètes, immobiles ---------- */
 body {
@@ -401,8 +442,11 @@ body {
   border-bottom-color: rgba(15, 107, 114, 0.12);
 }
 @media (prefers-color-scheme: dark) {
-  .site-header { background: rgba(14, 22, 22, 0.6); border-bottom-color: rgba(255, 255, 255, 0.08); }
+  :where(:root:not([data-theme="light"])) .site-header { background: rgba(14, 22, 22, 0.6); border-bottom-color: rgba(255, 255, 255, 0.08); }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :where(:root[data-theme="dark"]) .site-header { background: rgba(14, 22, 22, 0.6); border-bottom-color: rgba(255, 255, 255, 0.08); }
+
 
 /* ---------- Surfaces en verre léger ---------- */
 .cta-card:not(.cta-primary),
@@ -485,16 +529,23 @@ body {
 }
 .check.option:hover { background: var(--glass-strong); border-color: var(--action); }
 @media (prefers-color-scheme: dark) {
-  .check.option:hover { border-color: var(--primary); }
+  :where(:root:not([data-theme="light"])) .check.option:hover { border-color: var(--primary); }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :where(:root[data-theme="dark"]) .check.option:hover { border-color: var(--primary); }
+
 
 /* Barre de progression un peu plus présente, avec une lueur */
 .wz-progress-track { height: 5px; border-radius: 3px; background: rgba(15, 107, 114, 0.14); }
 .wz-progress-fill { box-shadow: 0 0 10px rgba(15, 107, 114, 0.45); }
 @media (prefers-color-scheme: dark) {
-  .wz-progress-track { background: rgba(255, 255, 255, 0.14); }
-  .wz-progress-fill { background: var(--primary); box-shadow: 0 0 10px rgba(124, 199, 204, 0.45); }
+  :where(:root:not([data-theme="light"])) .wz-progress-track { background: rgba(255, 255, 255, 0.14); }
+  :where(:root:not([data-theme="light"])) .wz-progress-fill { background: var(--primary); box-shadow: 0 0 10px rgba(124, 199, 204, 0.45); }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :where(:root[data-theme="dark"]) .wz-progress-track { background: rgba(255, 255, 255, 0.14); }
+  :where(:root[data-theme="dark"]) .wz-progress-fill { background: var(--primary); box-shadow: 0 0 10px rgba(124, 199, 204, 0.45); }
+
 
 /* Bouton principal : même forme carrée, petit reflet et ombre colorée */
 .btn-primary {
@@ -504,8 +555,11 @@ body {
 /* Pied de page translucide */
 .site-footer { background: rgba(255, 255, 255, 0.35); border-top-color: rgba(15, 107, 114, 0.12); }
 @media (prefers-color-scheme: dark) {
-  .site-footer { background: rgba(0, 0, 0, 0.2); border-top-color: rgba(255, 255, 255, 0.08); }
+  :where(:root:not([data-theme="light"])) .site-footer { background: rgba(0, 0, 0, 0.2); border-top-color: rgba(255, 255, 255, 0.08); }
 }
+/* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
+  :where(:root[data-theme="dark"]) .site-footer { background: rgba(0, 0, 0, 0.2); border-top-color: rgba(255, 255, 255, 0.08); }
+
 
 /* Le verre crée un contexte d'empilement : garder la barre et le bouton de voix au-dessus */
 .site-header { z-index: 30; }
@@ -568,7 +622,10 @@ html[dir="rtl"] .scan-body { padding: 0 66px 18px 20px; }
 .scan-status { margin: 12px 0 0; font-size: 0.9rem; font-weight: 600; color: var(--navy); }
 .scan-status.ok { color: var(--selected); }
 .scan-status.warn { color: var(--req); }
-@media (prefers-color-scheme: light) { .scan-status.ok { color: #12733f; } }
+@media (prefers-color-scheme: light) { :where(:root:not([data-theme="dark"])) .scan-status.ok { color: #12733f; } }
+/* Thème clair forcé (futur bouton de thème : <html data-theme="light">), mêmes règles que ci-dessus. */
+ :where(:root[data-theme="light"]) .scan-status.ok { color: #12733f; } 
+
 /* Champ rempli à partir du bail : teinte verte jusqu'à ce que la personne le modifie */
 .wizard-main .field input.autofilled { background: var(--selected-bg); border-color: var(--selected); }
 @media (max-width: 560px) {

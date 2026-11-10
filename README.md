@@ -88,7 +88,7 @@ Puis ouvrir <http://localhost:8000>. En cas de doute, faire un rechargement forc
 
 Le site est publié par GitHub Pages depuis la branche `main`, sur le domaine défini dans `CNAME`.
 
-**À chaque mise en ligne**, changer le numéro de version `?v=` des balises CSS et JS au bas de `index.html` (et dans les trois balises CSS en haut : `style.css`, `raffinements.css` et `formulaire.css`). Sans ce changement, les navigateurs des visiteurs peuvent garder l'ancienne version des fichiers en cache.
+Les `?v=` des balises CSS et JS de `index.html` suivent le numéro de version du site (`version.txt`, x.y.z) : le hook git `pre-commit` (`~/Developer/outils/version.py`) les met à jour à chaque commit. Sans ce changement, les navigateurs des visiteurs pourraient garder l'ancienne version des fichiers en cache.
 
 ### Accès restreint pendant les essais (Cloudflare Access)
 

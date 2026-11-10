@@ -73,7 +73,10 @@ h1, h2, h3, h4, legend { letter-spacing: -0.02em; }
   text-transform: uppercase; letter-spacing: 0.06em;
   color: var(--accent);
 }
-@media (prefers-color-scheme: light) { .wizard-step-label { color: #12733f; } }  /* vert foncé : >= 4.5:1 sur --bg */
+@media (prefers-color-scheme: light) { :where(:root:not([data-theme="dark"])) .wizard-step-label { color: #12733f; } }
+/* Thème clair forcé (futur bouton de thème : <html data-theme="light">), mêmes règles que ci-dessus. */
+ :where(:root[data-theme="light"]) .wizard-step-label { color: #12733f; } 
+  /* vert foncé : >= 4.5:1 sur --bg */
 
 /* Choix sélectionné : fond clair conservé, bordure marine de 2 px, icône pleine */
 .choice-card:has(input:checked) {
