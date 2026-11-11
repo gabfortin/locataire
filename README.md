@@ -18,7 +18,7 @@ générateur de modèle de lettre de mise en demeure, en 8 langues.
 | **Générateur de lettre** | 15 étapes : 13 questions une à la fois, la lettre (lire, écouter, modifier), puis l'envoi (courriel, PDF, poste recommandée) ; première lettre d'avis ou mise en demeure |
 | **Lecteur de bail** | Photo du bail lue **sur l'appareil** (Tesseract.js) pour pré-remplir les coordonnées ; la photo n'est envoyée nulle part |
 | **À propos et avis légal** | À lire et accepter avant d'ouvrir le générateur ; aussi ouvert par le bouton « i » |
-| **Langues** | Français, anglais, espagnol, créole haïtien, arabe, italien, pendjabi, ourdou (arabe et ourdou de droite à gauche) |
+| **Langues** | Lettre écrite dans la langue du bail (français ou anglais), lisible en traduction dans la langue de l'interface. Interface en français, anglais, espagnol, créole haïtien, arabe, italien, pendjabi, ourdou (arabe et ourdou de droite à gauche) |
 | **Accessibilité** | Lecture à voix haute des questions, dictée vocale des réponses, mode clair et sombre selon l'appareil |
 
 Détail de chaque partie (étapes du générateur, contenu de la lettre, règles
@@ -46,6 +46,7 @@ anciennes versions gardées en cache.
 | `fonts/` | Inter (woff2) et Great Vibes (signature électronique, réduite aux caractères latins), hébergées localement, avec leurs licences OFL |
 | `js/i18n.js` | Textes de l'interface dans les 8 langues |
 | `js/letter.js` | Modèle de la lettre (français et anglais) |
+| `js/lettre-traductions.js` | La lettre dans les 6 autres langues de l'interface, pour la lire seulement |
 | `js/pdf.js` | Création du PDF de la lettre |
 | `js/main.js` | Navigation, formulaire, actions sur la lettre |
 | `js/printmap.js` | Cartes des lieux pour imprimer et des bureaux de poste |

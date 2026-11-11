@@ -50,6 +50,7 @@
     applyLanguage(lang);
     updateProgress();
     updateWordCount();
+    if (typeof showLetter === 'function' && lastLetterData && !letterResult.hidden) showLetter();
   }
   langSelect.addEventListener('change', () => setLanguage(langSelect.value));
 
@@ -290,12 +291,47 @@
   let letterPdf = null; // Promise of the PDF Blob (null if it could not be built)
   const emailNote = document.getElementById('email-note');
 
+  // Lettre affichée : dans la langue du bail (« lease », celle qui est envoyée) ou, pour la
+  // lire seulement, dans la langue de l'interface (« mine », js/lettre-traductions.js).
+  let letterView = 'lease';
+  const RTL = ['ar', 'ur'];
+  const viewBox = document.getElementById('letter-view');
+  const viewLease = document.getElementById('letter-view-lease');
+  const viewMine = document.getElementById('letter-view-mine');
+  const viewNote = document.getElementById('letter-view-note');
+  const langName = (code) => {
+    const opt = langSelect.querySelector(`option[value="${code}"]`);
+    return opt ? opt.textContent.replace(/^[^\p{L}]+/u, '').trim() : code;
+  };
+  const shownLang = () => (letterView === 'mine' ? currentLang : (lastLetterData || {}).lease_lang || 'fr');
+  const shownLines = () => (letterView === 'mine' ? generateLetter(lastLetterData, currentLang) : letterLines);
+
+  function showLetter() {
+    if (!lastLetterData) return;
+    const leaseLang = lastLetterData.lease_lang || 'fr';
+    const translatable = currentLang !== leaseLang && Boolean(LETTER_TEXT[currentLang]);
+    if (!translatable) letterView = 'lease';
+    viewBox.hidden = !translatable;
+    viewLease.textContent = `${langName(leaseLang)} (${t('wz.letterView.sent', currentLang)})`;
+    viewMine.textContent = langName(currentLang);
+    viewLease.setAttribute('aria-pressed', String(letterView === 'lease'));
+    viewMine.setAttribute('aria-pressed', String(letterView === 'mine'));
+    viewNote.hidden = letterView !== 'mine';
+    const lang = shownLang();
+    letterTextEl.lang = lang;
+    letterTextEl.dir = RTL.includes(lang) ? 'rtl' : 'ltr';
+    letterTextEl.innerHTML = letterToHtml(shownLines());
+  }
+  viewLease.addEventListener('click', () => { letterView = 'lease'; showLetter(); });
+  viewMine.addEventListener('click', () => { letterView = 'mine'; showLetter(); });
+
   function renderLetter() {
     // Signature électronique : choisie à l'étape 13 (case « J'accepte de signer électroniquement »).
+    // letterLines : toujours la lettre dans la langue du bail (PDF, courriel, impression).
     letterLines = generateLetter(lastLetterData);
-    letterTextEl.innerHTML = letterToHtml(letterLines);
+    showLetter();
     letterPdf = null;
-    getLetterPdf().catch(() => {}); // built right away: the share sheet must open promptly after a click (Safari)
+    getLetterPdf().catch(() => {}); // créé tout de suite : le PDF est prêt quand on clique sur Envoyer ou Télécharger
   }
 
   btnGenerate.addEventListener('click', () => {
@@ -329,6 +365,14 @@
   document.getElementById('btn-send-letter').addEventListener('click', () => showStage('send'));
   document.getElementById('btn-back-letter').addEventListener('click', () => showStage('letter'));
 
+  // « Précédent » à l'étape 14 : retour à la dernière question (13 : ton et signature),
+  // d'où le bouton « Précédent » du formulaire remonte aux autres étapes.
+  document.getElementById('btn-back-step').addEventListener('click', () => {
+    letterResult.hidden = true;
+    form.hidden = false;
+    goToStep(steps.length - 1, true);
+  });
+
   document.getElementById('btn-edit').addEventListener('click', () => {
     letterResult.hidden = true;
     form.hidden = false;
@@ -336,7 +380,6 @@
   });
 
   // ---------- Result actions ----------
-  const letterText = () => letterToText(letterLines);
   // Nom du fichier selon le type de lettre : « avis » (première lettre) ou mise en demeure.
   const pdfName = () => (isAvisLetter(lastLetterData || {}) ? 'avis-au-locateur.pdf' : 'mise-en-demeure.pdf');
 
@@ -366,13 +409,7 @@
 
   const pdfError = document.getElementById('pdf-error');
 
-  document.getElementById('btn-download').addEventListener('click', async () => {
-    pdfError.hidden = true;
-    const file = await getPdfFile();
-    if (!file) {
-      pdfError.hidden = false; // jamais de .txt à la place : la personne réessaie
-      return;
-    }
+  function telecharger(file) {
     const url = URL.createObjectURL(file);
     const a = document.createElement('a');
     a.href = url;
@@ -380,24 +417,46 @@
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  document.getElementById('btn-download').addEventListener('click', async () => {
+    pdfError.hidden = true;
+    const file = await getPdfFile();
+    if (!file) {
+      pdfError.hidden = false; // jamais de .txt à la place : la personne réessaie
+      return;
+    }
+    telecharger(file);
   });
 
-  // Le client de courriel s'ouvre directement (lien mailto:), avec la lettre dans le corps du
-  // message. Un lien mailto: ne peut pas joindre de fichier : le PDF se joint avec le bouton
-  // Télécharger. Le menu de partage du système (navigator.share) n'est pas utilisé, car il ne
-  // permet pas d'ouvrir directement le client de courriel.
-  document.getElementById('btn-email').addEventListener('click', () => {
+  // La lettre part TOUJOURS en PDF (jamais en texte ni en .txt) : le PDF est téléchargé, puis le
+  // client de courriel s'ouvre directement (lien mailto:) avec l'objet et le message ; la personne
+  // y joint le PDF. Un lien mailto: ne peut pas joindre de fichier lui-même. Le menu de partage
+  // du système (navigator.share) n'est pas utilisé : il n'ouvre pas directement le courriel.
+  document.getElementById('btn-email').addEventListener('click', async () => {
+    pdfError.hidden = true;
+    emailNote.hidden = true;
     const data = lastLetterData || {};
     const subject = letterEmailSubject(data);
     const message = letterEmailBody(data);
-    const body = `${message}\n\n---\n\n${letterText()}`.replace(/\n/g, '\r\n');
-    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const file = await getPdfFile();
+    if (!file) {
+      pdfError.hidden = false;
+      return;
+    }
+    telecharger(file);
     emailNote.hidden = false;
+    const mailto = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message.replace(/\n/g, '\r\n'))}`;
+    setTimeout(() => { window.location.href = mailto; }, 400); // laisser partir le téléchargement
   });
 
+  // Impression : toujours la lettre dans la langue du bail, même si la traduction est affichée.
   document.getElementById('btn-print').addEventListener('click', () => {
+    const vue = letterView;
+    if (vue !== 'lease') { letterView = 'lease'; showLetter(); }
     window.print();
+    if (vue !== 'lease') { letterView = vue; showLetter(); }
   });
 
   // ---------- Read aloud: what the tenant wrote, and the letter ----------
@@ -406,7 +465,8 @@
   });
   document.getElementById('btn-read-letter').addEventListener('click', (e) => {
     if (window.locataireSpeech) {
-      window.locataireSpeech.speakText(letterText(), (lastLetterData || {}).lease_lang || 'fr', e.currentTarget);
+      // La version affichée : la lettre (langue du bail) ou sa traduction
+      window.locataireSpeech.speakText(letterToText(shownLines()), shownLang(), e.currentTarget);
     }
   });
 

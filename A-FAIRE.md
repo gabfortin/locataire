@@ -4,3 +4,4 @@
 - **Contenu attendu d'Elvira** : jurisprudence à ajouter ; étape 2 de la page d'information (sans consigne) et étape 4 (« trouver page »).
 - **Accès restreint** à quelques personnes pendant les essais : Cloudflare Access (voir README.md, « Publication »).
 - **Plus tard** : reformulation et correction de la description par une IA (exige un petit serveur qui garde la clé d'API, un consentement explicite et une mise à jour de la confidentialité) ; lecteur de bail : détecter aussi la langue du bail, essayer sur de vrais baux (photos de téléphone, baux remplis à la main).
+- **Relecture des traductions de la lettre** (`js/lettre-traductions.js`, novembre 2026) : la lettre en espagnol, créole, arabe, italien, pendjabi et ourdou, pour la lire seulement, a été traduite en brouillon sans relecture, articles du Code civil compris. À faire relire comme le reste des traductions.

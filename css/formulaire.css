@@ -209,6 +209,8 @@ h1, h2, h3, h4, legend { color: var(--navy); }
   font-size: 0.93rem;
 }
 .wizard-main .wizard-nav { margin-top: 32px; }
+/* Étape 15 : consigne de joindre le PDF au courriel ouvert (mailto: ne joint rien lui-même) */
+.email-attach { color: var(--req); font-weight: 700; }
 
 /* Les notes « base légale » sont maintenant dans la colonne de gauche */
 .wizard-main .law-note { display: none; }
@@ -257,8 +259,22 @@ body.on-wizard .voice-pill { display: inline-flex; }
 .esign-choice .field-hint { margin: 0 0 12px; }
 
 /* Sous la lettre : les boutons d'action, puis « Terminer » (à droite, comme « Étape suivante ») */
-.finish-row { display: flex; justify-content: flex-end; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--option-border); }
+.finish-row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--option-border); }
 .finish-row[hidden] { display: none; }
+/* Étape 14 : lire la lettre dans la langue du bail (envoyée) ou dans la langue de l'interface */
+.letter-view { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0 10px; }
+.letter-view[hidden] { display: none; }
+.letter-view-label { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-inline-end: 4px; }
+.letter-view-btn {
+  font: inherit; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+  padding: 7px 14px; border-radius: 999px;
+  color: var(--text); background: var(--option-bg); border: 1px solid var(--option-border);
+}
+.letter-view-btn:hover { border-color: var(--action); }
+.letter-view-btn[aria-pressed="true"] { color: #fff; background: var(--action); border-color: var(--action); }
+.letter-view-btn:focus-visible { outline: 3px solid var(--ring); outline-offset: 2px; }
+.letter-view-note { margin-top: 0; }
+#letter-text[dir="rtl"] { text-align: right; }
 
 /* Étape 15 : Bravo, puis deux sections « Par courriel » et « Par la poste » */
 .send-section { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--option-border); }
@@ -357,7 +373,7 @@ body.on-wizard .voice-pill { display: inline-flex; }
 }
 
 @media print {
-  .wizard-side, .voice-pill, .result-tools, .finish-row, .done-panel,
+  .wizard-side, .voice-pill, .result-tools, .finish-row, .done-panel, .letter-view, .letter-view-note,
   .req-note { display: none !important; }
   /* « Imprimer » est à l'étape 15 : on imprime la lettre de l'étape 14, même masquée à l'écran */
   #stage-letter[hidden] { display: block !important; }

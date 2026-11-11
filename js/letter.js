@@ -172,8 +172,11 @@ const LETTER_TEXT = {
   },
 };
 
-function letterLang(data) {
-  return LETTER_TEXT[data.lease_lang] || LETTER_TEXT.fr;
+// Langue de la lettre : celle du bail. `lang` sert seulement à LIRE la lettre dans la
+// langue de l'interface (traductions de js/lettre-traductions.js) : la lettre envoyée,
+// téléchargée et imprimée reste dans la langue du bail.
+function letterLang(data, lang) {
+  return LETTER_TEXT[lang] || LETTER_TEXT[data.lease_lang] || LETTER_TEXT.fr;
 }
 
 function formatLetterDate(L, isoDate) {
@@ -206,8 +209,8 @@ function capitalize(s) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-function generateLetter(data) {
-  const L = letterLang(data);
+function generateLetter(data, lang) {
+  const L = letterLang(data, lang);
   const city = (data.tenant_city || L.defaultCity).trim();
   const days = data.deadline_days && Number(data.deadline_days) > 0 ? Number(data.deadline_days) : 10;
   const isGrave = data.category === 'grave';
