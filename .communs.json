@@ -9,6 +9,9 @@
     "js/vendor/carte/maplibre-gl.css": "carte/maplibre-gl.css",
     "js/vendor/carte/carte.js": "carte/carte.js",
     "js/vendor/carte/carte.css": "carte/carte.css",
-    "js/vendor/carte/LICENSE-maplibre.txt": "carte/LICENSE-maplibre.txt"
+    "js/vendor/carte/LICENSE-maplibre.txt": "carte/LICENSE-maplibre.txt",
+    "fonts/inter-latin.woff2": "polices/inter-latin.woff2",
+    "fonts/inter-latin-ext.woff2": "polices/inter-latin-ext.woff2",
+    "fonts/OFL-Inter.txt": "polices/OFL-Inter.txt"
   }
 }
