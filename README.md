@@ -100,7 +100,7 @@ Trois fonctions envoient des données à un tiers, toujours après une action de
 | Fonction | Ce qui est envoyé | À qui |
 |---|---|---|
 | Mesure d'audience (chaque visite) | La page consultée, le site d'origine, le type d'appareil, le pays (déduit de l'adresse IP, qui n'est pas conservée) | GoatCounter |
-| Cartes des lieux | L'adresse du logement | OpenStreetMap (Nominatim), puis tuiles de carte d'OpenStreetMap et Leaflet depuis cdnjs |
+| Cartes des lieux | L'adresse du logement | OpenStreetMap (Nominatim), puis fond de carte d'OpenFreeMap |
 | Dictée vocale | L'enregistrement de la voix | Google, Apple ou Microsoft, selon le navigateur |
 | Envoi par courriel | La lettre | L'application de courriel choisie par la personne |
 
@@ -111,7 +111,7 @@ Toute nouvelle fonction qui envoie des données doit suivre le même principe et
 - [jsPDF](https://github.com/parallax/jsPDF) (MIT), inclus dans `js/vendor/`
 - [Tesseract.js](https://github.com/naptha/tesseract.js) et [tesseract.js-core](https://github.com/naptha/tesseract.js-core) (Apache 2.0), inclus dans `js/vendor/tesseract/` avec leurs licences ; données de langue `fra` et `eng` du projet [tessdata](https://github.com/tesseract-ocr/tessdata) (Apache 2.0), version « best_int » distribuée par tesseract.js-data
 - [Inter](https://rsms.me/inter/) (SIL OFL 1.1), hébergée dans `fonts/` (aucune requête externe), même police que gabfortin.com
-- [Leaflet](https://leafletjs.com) (BSD-2-Clause), chargé depuis cdnjs à l'ouverture d'une carte
+- Composant de carte commun (`js/vendor/carte/`) : [MapLibre GL JS](https://maplibre.org) (BSD-3-Clause), fond [OpenFreeMap](https://openfreemap.org) © [OpenMapTiles](https://www.openmaptiles.org), chargé à l'ouverture d'une carte
 - Données cartographiques © les contributeurs d'[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL), recherche par [Nominatim](https://nominatim.org)
 
 ## Auteurs

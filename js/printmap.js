@@ -1,12 +1,14 @@
 // Maps of nearby places (print shops, Bureau en Gros, libraries, Canada Post offices) around the
 // tenant's address, using OpenStreetMap data through Nominatim.
 // Nothing is sent anywhere until the tenant clicks a map button: the address is then geocoded,
-// nearby places are searched, and Leaflet + OSM tiles are loaded on demand.
+// nearby places are searched, and the map (js/vendor/carte/, OpenFreeMap base map) is loaded on demand.
 // Nominatim's usage policy allows at most 1 request per second, so requests are queued.
 
 (function () {
-  const LEAFLET_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
-  const LEAFLET_JS = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+  // Composant de carte commun (API de Leaflet dessinée par MapLibre, fond OpenFreeMap), hébergé dans le site
+  const CARTE_DIR = 'js/vendor/carte/';
+  const CARTE_CSS = ['maplibre-gl.css', 'carte.css'];
+  const CARTE_JS = ['maplibre-gl.js', 'carte.js'];   // dans cet ordre
   const NOMINATIM_URL = 'https://nominatim.openstreetmap.org/search';
   const NOMINATIM_DELAY_MS = 1100;
   const SEARCH_RADIUS_KM = 4.5;
@@ -70,20 +72,21 @@
   function loadLeaflet() {
     if (window.L) return Promise.resolve();
     if (leafletPromise) return leafletPromise;
-    leafletPromise = new Promise((resolve, reject) => {
+    CARTE_CSS.forEach((f) => {
       const css = document.createElement('link');
       css.rel = 'stylesheet';
-      css.href = LEAFLET_CSS;
+      css.href = CARTE_DIR + f;
       document.head.appendChild(css);
+    });
+    const charger = (f) => new Promise((resolve, reject) => {
       const script = document.createElement('script');
-      script.src = LEAFLET_JS;
+      script.src = CARTE_DIR + f;
       script.onload = () => resolve();
-      script.onerror = () => {
-        leafletPromise = null;
-        reject(new Error('leaflet'));
-      };
+      script.onerror = () => reject(new Error('carte'));
       document.head.appendChild(script);
     });
+    leafletPromise = CARTE_JS.reduce((p, f) => p.then(() => charger(f)), Promise.resolve())
+      .catch((e) => { leafletPromise = null; throw e; });
     return leafletPromise;
   }
 
@@ -252,14 +255,7 @@
   function renderMap(state, home, places) {
     if (!state.map) {
       state.map = L.map(state.canvas, { scrollWheelZoom: false });
-      // tile.openstreetmap.org is a low-volume demo server that blocks third-party apps
-      // (see osm.wiki/Blocked). OSM France's donation-funded mirror explicitly welcomes
-      // external reuse, as long as OpenStreetMap is credited (done below).
-      L.tileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-        subdomains: 'abc',
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(state.map);
+      // Fond de carte : OpenFreeMap (données OpenStreetMap), posé par le composant avec son crédit
     }
     if (state.layer) state.layer.remove();
     state.layer = L.featureGroup().addTo(state.map);
