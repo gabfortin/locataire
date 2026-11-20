@@ -287,11 +287,23 @@
     warn.hidden = false;
   }
 
+  // Animation d'attente (base commune js/chargement.js, scène css/chargement-scanner.css) :
+  // le faisceau balaie le bail, les lignes lues se surlignent avec la vraie progression.
+  const SCENE_SCANNER = '<span class="l-page"><i class="l-titre"></i><i class="l-ligne l-1"></i><i class="l-ligne l-2"></i>' +
+    '<i class="l-ligne l-3"></i><i class="l-ligne l-4"></i><i class="l-ligne l-5"></i><i class="l-ligne l-6"></i>' +
+    '<i class="l-ligne l-7"></i></span><span class="l-faisceau"></span><span class="l-loupe"></span>';
+
   async function scan(box, file) {
     if (!file || busy) return;
     busy = true;
     box.classList.add('busy');
-    say(box, 'scan.loading');
+    const status = box.querySelector('.scan-status');
+    status.hidden = true;                       // la carte d'attente porte le texte (role="status")
+    const attente = window.Chargement && Chargement.creer({
+      scene: SCENE_SCANNER, classe: 'ch-scanner', mode: 'dans', cible: status.parentNode, progres: true, delai: 0,
+      titre: tr('scan.loading'),
+    });
+    if (!attente) say(box, 'scan.loading');
     box.querySelector('.scan-lang').hidden = true;
     let worker = null;
     try {
@@ -304,16 +316,20 @@
         langPath: base + 'lang',
         workerBlobURL: false,
         logger: (m) => {
-          if (m.status === 'recognizing text') say(box, 'scan.reading', { p: Math.round(m.progress * 100) });
+          if (m.status !== 'recognizing text') return;
+          if (attente) attente.titre(tr('scan.reading', { p: Math.round(m.progress * 100) })).progres(m.progress);
+          else say(box, 'scan.reading', { p: Math.round(m.progress * 100) });
         },
       });
       const { data } = await worker.recognize(canvas);
+      if (attente) await attente.fermer();
       const text = data.text || '';
       const filled = apply(parseLease(text), box.closest('.wizard-step'));
       if (filled.length) say(box, 'scan.done', { fields: filled.join(', ') }, 'ok');
       else say(box, 'scan.none', null, 'warn');
       checkLeaseLang(box, detectLeaseLang(text));
     } catch (e) {
+      if (attente) await attente.fermer();
       say(box, 'scan.error', null, 'warn');
     } finally {
       if (worker) worker.terminate();

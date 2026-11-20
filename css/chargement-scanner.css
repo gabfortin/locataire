@@ -1,0 +1,41 @@
+/* ── Scène d’attente « lecture du bail » (base : css/chargement.css, modèle outils/communs/) ──
+   La photo du bail est balayée par un faisceau de scanner ; les lignes lues
+   se surlignent une à une (vraie progression de Tesseract, --ch-p) et une
+   loupe suit le faisceau. */
+.ch-scanner .ch-scene { border-radius: 24px; }
+.l-page {
+  left: 20%; right: 20%; top: 9%; bottom: 9%; border-radius: 6px;
+  background: #fff; box-shadow: 0 6px 18px rgba(0, 0, 0, .18), inset 0 0 0 1px rgba(0, 0, 0, .06);
+  transform: rotate(-3deg);
+}
+.l-titre { position: absolute; left: 12%; top: 8%; width: 50%; height: 7%; border-radius: 2px; background: rgba(var(--ch-rgb), .5); }
+.l-ligne {
+  position: absolute; left: 12%; height: 4.5%; border-radius: 2px; background: rgba(0, 0, 0, .14); overflow: hidden;
+}
+.l-ligne::after {                                   /* surlignée quand elle est lue */
+  content: ""; position: absolute; inset: 0; background: var(--ch-clair); box-shadow: 0 0 6px var(--ch-accent);
+  transform-origin: 0 50%;
+  transform: scaleX(clamp(0, (var(--ch-p) * 8 - var(--l-i)), 1));
+  transition: transform .35s ease-out;
+}
+.l-1 { top: 22%; width: 76%; --l-i: 0; } .l-2 { top: 32%; width: 64%; --l-i: 1; } .l-3 { top: 42%; width: 72%; --l-i: 2; }
+.l-4 { top: 52%; width: 50%; --l-i: 3; } .l-5 { top: 62%; width: 70%; --l-i: 4; } .l-6 { top: 72%; width: 60%; --l-i: 5; }
+.l-7 { top: 82%; width: 40%; --l-i: 6; }
+.l-faisceau {
+  left: 12%; right: 12%; top: 10%; height: 12%;
+  background: linear-gradient(180deg, transparent, rgba(var(--ch-rgb), .35) 45%, var(--ch-clair) 50%, rgba(var(--ch-rgb), .35) 55%, transparent);
+  filter: drop-shadow(0 0 8px var(--ch-accent));
+  animation: l-balaye 1.6s ease-in-out infinite alternate;
+}
+.l-loupe {
+  right: 10%; top: 12%; width: 34px; height: 34px; border-radius: 50%;
+  border: 3px solid var(--ch-accent); background: rgba(255, 255, 255, .25);
+  box-shadow: 0 0 12px rgba(var(--ch-rgb), .7);
+  animation: l-loupe 1.6s ease-in-out infinite alternate;
+}
+.l-loupe::after { content: ""; position: absolute; right: -9px; bottom: -7px; width: 12px; height: 4px; border-radius: 2px; background: var(--ch-accent); transform: rotate(45deg); }
+@keyframes l-balaye { from { transform: translateY(0); } to { transform: translateY(620%); } }
+@keyframes l-loupe { from { transform: translate(0, 0); } to { transform: translate(-30px, 84px); } }
+/* Couleur du formulaire (sarcelle) ; la carte d'attente prend la largeur de l'encadré */
+.ch-scanner { --ch-rgb: 15, 107, 114; --ch-clair: #7cc7cc; }
+.scan-box .ch-dans { margin-top: 12px; }

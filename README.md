@@ -39,6 +39,7 @@ anciennes versions gardées en cache.
 | Fichier | Rôle |
 |---|---|
 | `index.html` | Toutes les pages (accueil, information, générateur, avis légal) |
+| `js/chargement.js`, `css/chargement.css`, `css/chargement-scanner.css` | Animation d'attente de la lecture du bail : base commune (copie de `outils/communs/`) et scène (scanner, vraie progression) |
 | `css/style.css` | Styles : variables de couleur (clair/sombre), composants, icônes en CSS |
 | `css/raffinements.css` | Raffinements chargés après style.css : police Inter, touches « sceau » vertes, lisibilité, formulaire, harmonisation avec le style A |
 | `css/formulaire.css` | Chargé en dernier : style C en sarcelle, mise en page « formulaire informatif » du générateur, fenêtre d'avis légal, bouton rond de la voix, étapes 14 et 15, lecteur de bail ; en fin de fichier, touches de verre (fond discret, verre léger, ombres douces ; fenêtres modales opaques) |
