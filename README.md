@@ -41,10 +41,10 @@ anciennes versions gardées en cache.
 | `index.html` | Toutes les pages (accueil, information, générateur, avis légal) |
 | `js/chargement.js`, `css/chargement.css`, `css/chargement-scanner.css` | Animation d'attente de la lecture du bail : base commune (copie de `outils/communs/`) et scène (scanner, vraie progression) |
 | `css/style.css` | Styles : variables de couleur (clair/sombre), composants, icônes en CSS |
-| `css/raffinements.css` | Raffinements chargés après style.css : police Inter, touches « sceau » vertes, lisibilité, formulaire, harmonisation avec le style A |
+| `css/raffinements.css` | Raffinements chargés après style.css : polices (Source Serif 4, Schibsted Grotesk), touches « sceau » vertes, lisibilité, formulaire, harmonisation avec le style A |
 | `css/formulaire.css` | Chargé en dernier : style C en sarcelle, mise en page « formulaire informatif » du générateur, fenêtre d'avis légal, bouton rond de la voix, étapes 14 et 15, lecteur de bail ; en fin de fichier, touches de verre (fond discret, verre léger, ombres douces ; fenêtres modales opaques) |
 | `assets/icon.svg` | Logo (maison contenant une lettre) : barre du haut et favicon ; apple-touch-icon.png en est la version 180 px |
-| `fonts/` | Inter (woff2) et Great Vibes (signature électronique, réduite aux caractères latins), hébergées localement, avec leurs licences OFL |
+| `fonts/` | Source Serif 4 et Schibsted Grotesk (woff2) et Great Vibes (signature électronique, réduite aux caractères latins), hébergées localement, avec leurs licences OFL |
 | `js/i18n.js` | Textes de l'interface dans les 8 langues |
 | `js/letter.js` | Modèle de la lettre (français et anglais) |
 | `js/lettre-traductions.js` | La lettre dans les 6 autres langues de l'interface, pour la lire seulement |
@@ -111,7 +111,7 @@ Toute nouvelle fonction qui envoie des données doit suivre le même principe et
 
 - [jsPDF](https://github.com/parallax/jsPDF) (MIT), inclus dans `js/vendor/`
 - [Tesseract.js](https://github.com/naptha/tesseract.js) et [tesseract.js-core](https://github.com/naptha/tesseract.js-core) (Apache 2.0), inclus dans `js/vendor/tesseract/` avec leurs licences ; données de langue `fra` et `eng` du projet [tessdata](https://github.com/tesseract-ocr/tessdata) (Apache 2.0), version « best_int » distribuée par tesseract.js-data
-- [Inter](https://rsms.me/inter/) (SIL OFL 1.1), hébergée dans `fonts/` (aucune requête externe), même police que gabfortin.com
+- [Source Serif 4](https://github.com/adobe-fonts/source-serif) et [Schibsted Grotesk](https://github.com/schibsted/schibsted-grotesk) (SIL OFL 1.1), hébergées dans `fonts/` (aucune requête externe)
 - Composant de carte commun (`js/vendor/carte/`) : [MapLibre GL JS](https://maplibre.org) (BSD-3-Clause), fond [OpenFreeMap](https://openfreemap.org) © [OpenMapTiles](https://www.openmaptiles.org), chargé à l'ouverture d'une carte
 - Données cartographiques © les contributeurs d'[OpenStreetMap](https://www.openstreetmap.org/copyright) (ODbL), recherche par [Nominatim](https://nominatim.org)
 

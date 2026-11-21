@@ -211,8 +211,6 @@ a { color: var(--primary); }
 .legal-section,
 .before-box,
 .choice-card,
-.trust-item,
-.pill,
 .map-dialog {
   background: var(--glass);
   border: 1px solid var(--glass-border);
@@ -291,20 +289,6 @@ html[dir="rtl"] .lang-switcher select { background-position: left 12px center; p
 
 .hero { text-align: center; }
 .hero .lead { margin: 0 auto 40px; max-width: 640px; }
-.pill {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 14px;
-  border-radius: var(--r-sm);
-  color: var(--primary);
-  font-weight: 600; font-size: 0.85rem;
-  margin-bottom: 22px;
-}
-.pill::before {
-  content: "";
-  width: 7px; height: 7px; border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
-}
 .hero h1 {
   font-size: clamp(2.1rem, 5vw, 3.2rem);
   line-height: 1.15;
@@ -361,14 +345,10 @@ html[dir="rtl"] .lang-switcher select { background-position: left 12px center; p
 .cta-card:hover .cta-arrow { transform: translateX(4px); opacity: 1; }
 html[dir="rtl"] .cta-card:hover .cta-arrow { transform: translateX(-4px); }
 
-.trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.trust-item {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 8px 16px;
-  border-radius: var(--r-sm);
-  color: var(--text-muted); font-size: 0.88rem; font-weight: 500;
+.home-note {
+  margin: 0 auto; max-width: 640px; text-align: center;
+  color: var(--text-muted); font-size: 0.92rem; line-height: 1.4;
 }
-.trust-icon { color: var(--primary); font-size: 1rem; }
 
 /* ---------- Info page ---------- */
 

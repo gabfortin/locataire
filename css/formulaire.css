@@ -6,7 +6,7 @@
    - Mise en page formulaire informatif, palette sarcelle : titres sarcelle foncé,
      boutons sarcelle, colonne d'information teintée à gauche, une question à la fois.
    - Options sur fond gris clair qui deviennent vertes une fois choisies.
-   - Toujours sobre : aucun dégradé, coins de 4 à 10 px, police Inter.
+   - Toujours sobre : aucun dégradé, coins de 4 à 10 px.
      Seule exception aux coins sobres : la pastille flottante de la voix.
    ========================================================================== */
 
@@ -384,7 +384,7 @@ body.on-wizard .voice-pill { display: inline-flex; }
 /* ═══════════════════════════════════════════════════════════════════════════
    Touches du style « verre » de gabfortin (style B, compteurvelo.com), novembre 2026.
    Même principe que l'hybride D : fond coloré discret et immobile, verre léger,
-   ombres douces. On garde la palette sarcelle, Inter, les boutons carrés et la
+   ombres douces. On garde la palette sarcelle, les polices, les boutons carrés et la
    mise en page. Pas de dérive animée du fond, pas de titre en dégradé.
    Les fenêtres modales restent opaques (--surface-solid).
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -440,15 +440,8 @@ body.on-wizard .voice-pill { display: inline-flex; }
   }
 
 
-/* ---------- Fond : trois taches très discrètes, immobiles ---------- */
-body {
-  background-color: var(--mesh-base);
-  background-image:
-    radial-gradient(42% 38% at 8% 4%, var(--mesh-1), transparent 70%),
-    radial-gradient(38% 34% at 96% 18%, var(--mesh-3), transparent 70%),
-    radial-gradient(46% 40% at 70% 100%, var(--mesh-2), transparent 70%);
-  background-attachment: fixed;
-}
+/* ---------- Fond : uni (le dégradé discret ne reste que dans la barre du haut) ---------- */
+body { background-color: var(--mesh-base); }
 
 /* ---------- Barre du haut : verre ---------- */
 .site-header {
@@ -462,6 +455,14 @@ body {
 }
 /* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
   :where(:root[data-theme="dark"]) .site-header { background: rgba(14, 22, 22, 0.6); border-bottom-color: rgba(255, 255, 255, 0.08); }
+/* Dégradé discret de la barre : les deux taches du haut de l'ancien fond, fixées à la fenêtre
+   comme avant, par-dessus la couleur de verre (déclaré après pour ne pas être effacé par « background »). */
+.site-header {
+  background-image:
+    radial-gradient(42% 38% at 8% 4%, var(--mesh-1), transparent 70%),
+    radial-gradient(38% 34% at 96% 18%, var(--mesh-3), transparent 70%);
+  background-attachment: fixed;
+}
 
 
 /* ---------- Surfaces en verre léger ---------- */
@@ -472,7 +473,6 @@ body {
 .resource-card,
 .legal-section,
 .before-box,
-.pill,
 .wizard-side,
 .letter-paper {
   -webkit-backdrop-filter: var(--glass-blur);
@@ -493,8 +493,7 @@ body {
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), 0 14px 34px -12px rgba(15, 107, 114, 0.55);
 }
 
-/* Pastille et repères en pilules (les boutons restent carrés) */
-.pill { border-radius: 999px; padding: 6px 16px; }
+/* Repères en pilules (les boutons restent carrés) */
 .voice-pill {
   background: var(--glass-strong);
   -webkit-backdrop-filter: var(--glass-blur);
