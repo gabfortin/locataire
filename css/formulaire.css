@@ -440,7 +440,7 @@ body.on-wizard .voice-pill { display: inline-flex; }
   }
 
 
-/* ---------- Fond : uni (le dégradé discret ne reste que dans la barre du haut) ---------- */
+/* ---------- Fond : uni, comme la barre du haut ---------- */
 body { background-color: var(--mesh-base); }
 
 /* ---------- Barre du haut : verre ---------- */
@@ -455,14 +455,6 @@ body { background-color: var(--mesh-base); }
 }
 /* Thème sombre forcé (futur bouton de thème : <html data-theme="dark">), mêmes règles que ci-dessus. */
   :where(:root[data-theme="dark"]) .site-header { background: rgba(14, 22, 22, 0.6); border-bottom-color: rgba(255, 255, 255, 0.08); }
-/* Dégradé discret de la barre : les deux taches du haut de l'ancien fond, fixées à la fenêtre
-   comme avant, par-dessus la couleur de verre (déclaré après pour ne pas être effacé par « background »). */
-.site-header {
-  background-image:
-    radial-gradient(42% 38% at 8% 4%, var(--mesh-1), transparent 70%),
-    radial-gradient(38% 34% at 96% 18%, var(--mesh-3), transparent 70%);
-  background-attachment: fixed;
-}
 
 
 /* ---------- Surfaces en verre léger ---------- */
@@ -684,7 +676,7 @@ html[dir="rtl"] .scan-body { padding: 0 66px 18px 20px; }
    page « À propos et avis légal » (data-goto="legal") : la modale du bloc ne
    sert pas, mais le bloc reste identique à celui des autres sites. */
 :root {
-  --gf-info-1: #0f6b72; --gf-info-2: #0b565c; --gf-info-glow: rgba(11,86,92,.55);
+  --gf-info-1: #0f6b72; --gf-info-2: #0b565c; --gf-info-trait: var(--primary);
   --gf-info-fond: var(--glass-strong); --gf-info-bordure: var(--glass-border);
   --gf-info-rayon: var(--r-xl); --gf-info-fermer: var(--glass);
   --gf-info-titre: var(--text); --gf-info-texte: var(--text-muted); --gf-info-lien: var(--primary);
@@ -693,27 +685,26 @@ html[dir="rtl"] .scan-body { padding: 0 66px 18px 20px; }
 .header-inner .gf-info-btn { margin-inline-start: auto; margin-inline-end: -6px; }
 
 /* ── Bouton « i » + modale « À propos » ──────────────────────────────────────
-   Patron des cartes (MAP-DESIGN-SYSTEM.md), sans l'anneau qui pulse : la
-   pulsation est réservée aux cartes (DESIGN-PAGES.md). Bloc identique dans
-   tous les sites hors cartes ; seules les couleurs --gf-info-* (définies
-   juste au-dessus) changent d'un site à l'autre. Script : apropos.js. */
+   Version sobre (novembre 2026), la même que sur les cartes
+   (MAP-DESIGN-SYSTEM.md) : cercle à contour de 1,5 px, fond transparent, sans
+   dégradé, ombre, pulsation ni grossissement ; teinte légère au survol.
+   Bloc identique dans tous les sites hors cartes ; seules les variables
+   --gf-info-* (définies juste au-dessus) changent d'un site à l'autre.
+   --gf-info-trait : couleur du contour et du « i » (repli : --gf-info-2) ;
+   la faire suivre le mode sombre. Script : apropos.js. */
 .gf-info-btn {
   position: relative;
   display: flex; align-items: center; justify-content: center;
   width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
-  border: none; padding: 0;
-  background: linear-gradient(140deg, var(--gf-info-1), var(--gf-info-2));
-  color: #fff; cursor: pointer;
-  box-shadow: 0 4px 14px -4px var(--gf-info-glow), inset 0 1px 0 rgba(255,255,255,.45);
-  transition: transform .2s cubic-bezier(.22,.68,0,1), box-shadow .2s cubic-bezier(.22,.68,0,1);
+  padding: 0;
+  border: 1.5px solid currentColor;   /* même épaisseur que « Me soutenir » (don.js) */
+  background: transparent;
+  color: var(--gf-info-trait, var(--gf-info-2)); cursor: pointer;
+  transition: background-color .2s ease;
 }
 .gf-info-btn svg { width: 16px; height: 16px; }
-.gf-info-btn:hover {
-  box-shadow: 0 8px 22px -4px var(--gf-info-glow), inset 0 1px 0 rgba(255,255,255,.5);
-  transform: translateY(-1px) scale(1.1);
-}
-.gf-info-btn:active { transform: scale(.94); }
-.gf-info-btn:focus-visible { outline: 2px solid var(--gf-info-2); outline-offset: 3px; }
+.gf-info-btn:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+.gf-info-btn:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
 .gf-info-overlay {
   position: fixed; inset: 0; z-index: 2000;
   background: rgba(10,16,13,.45);
@@ -761,7 +752,33 @@ html[dir="rtl"] .scan-body { padding: 0 66px 18px 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .gf-info-btn, .gf-info-panel { transition: none; }
-  .gf-info-btn:hover { transform: none; }
   .gf-info-panel { transform: none; }
 }
 @media print { .gf-info-btn, .gf-info-overlay { display: none !important; } }
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Sobriété (novembre 2026) : retirer ce qui fait « site généré ».
+   Cartes sans icône, sans flèche ni ombre, coins presque droits ; accueil et
+   pied de page alignés à gauche, comme un guide.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.cta-card,
+.cta-card.cta-primary,
+.cta-card:not(.cta-primary),
+.cta-card:hover,
+.cta-card:not(.cta-primary):hover {
+  box-shadow: none;
+  border-radius: var(--r-sm);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.cta-card:not(.cta-primary) { border: 1px solid var(--option-border); }
+.cta-card:not(.cta-primary):hover { border-color: var(--primary); }
+.cta-card:hover .cta-title,
+.cta-card:focus-visible .cta-title { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+.hero,
+html[dir="rtl"] .hero { text-align: start; }
+.hero .lead { margin-inline: 0; }
+.home-note { margin: 0; text-align: start; }
+.site-footer { text-align: start; }
